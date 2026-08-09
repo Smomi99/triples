@@ -59,7 +59,21 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
+    /*
+      `suppressHydrationWarning` on <html> and <body> only.
+
+      Browser extensions routinely stamp attributes on these two elements before
+      React hydrates — `bis_register`, `__processed_<uuid>__`, injected class
+      names — and each one is reported as a mismatch the page cannot do anything
+      about. The flag is deliberately not applied anywhere else: it suppresses
+      one level deep, so it silences those attributes without hiding a genuine
+      mismatch inside the app.
+    */
+    <html
+      lang="en"
+      className={`${archivo.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/*
           Marks the document as scripted before first paint, which is what gates
@@ -75,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(websiteSchema())} />
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-navy-950 focus:px-4 focus:py-3 focus:text-sm focus:text-paper"

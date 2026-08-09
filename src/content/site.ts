@@ -36,6 +36,14 @@ export type Office = {
   city: string;
   country: string;
   lines: string[];
+  /**
+   * [latitude, longitude], for the homepage globe.
+   *
+   * California is a state rather than a city and the previous site never named
+   * one, so it is plotted at the state's geographic centre instead of a guessed
+   * address.
+   */
+  coords: [number, number];
 };
 
 export const offices: Office[] = [
@@ -50,6 +58,7 @@ export const offices: Office[] = [
       "Block A, Aurangzeb Road",
       "Mohammadpur, Dhaka 1207",
     ],
+    coords: [23.81, 90.41],
   },
   {
     id: "rajshahi",
@@ -57,6 +66,7 @@ export const offices: Office[] = [
     city: "Rajshahi",
     country: "Bangladesh",
     lines: ["Plot 201–203, Block B", "BSCIC Industrial Area", "Sopura, Rajshahi"],
+    coords: [24.37, 88.6],
   },
   {
     id: "guangzhou",
@@ -64,6 +74,7 @@ export const offices: Office[] = [
     city: "Guangzhou",
     country: "China",
     lines: ["Triple S Business Hub"],
+    coords: [23.13, 113.26],
   },
   {
     id: "california",
@@ -71,6 +82,7 @@ export const offices: Office[] = [
     city: "California",
     country: "United States",
     lines: ["Triple S Business Hub"],
+    coords: [36.78, -119.42],
   },
 ];
 

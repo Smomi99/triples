@@ -43,9 +43,11 @@ src/
     ui/                Logo, DivisionVisual, ProjectFigure, SectionIndex, Icons
   content/             all copy and company facts — the single source of truth
     division-detail.ts per-business data the bespoke layouts need
-  lib/                 seo.ts (metadata), jsonld.ts (structured data)
+  lib/                 seo.ts (metadata), jsonld.ts (structured data),
+                       globe.ts (orthographic projection)
 scripts/
   prepare-assets.mjs   image pipeline, brand marks, OG card, legacy redirect stubs
+  prepare-globe.mjs    coastline geometry for the globe (npm run globe)
 assets/original/       untouched source images pulled from the previous site
 ```
 
@@ -145,6 +147,88 @@ Two things that will bite anyone editing it:
 - **No `backdrop-filter` on the cards.** Inside a `preserve-3d` subtree it forces
   a flattening context and the depth collapses.
 
+### The globe
+
+Homepage section 03 is an orthographic globe carrying the four real office
+locations, with great-circle routes drawn from the Dhaka head office to each of
+them. Nothing on it is invented — there are no coverage claims, no lanes and no
+markers the company has not published.
+
+Orthographic projection is what you actually see looking at a sphere from far
+away, so this is a real 3D view rather than a picture of one: rotating it
+recomputes the projection, and a marker on the far hemisphere is genuinely
+behind the globe rather than masked. Turn it 180° and only California is left.
+
+No 3D library, no canvas, no WebGL — `lib/globe.ts` is pure trigonometry over a
+coordinate table, rendered as SVG. A WebGL globe would have cost more than every
+other script on this site put together.
+
+**Coastline data.** `scripts/prepare-globe.mjs` (`npm run globe`) fetches Natural
+Earth 110m land via world-atlas, decodes the TopoJSON and writes
+`content/globe-land.ts`. Two things keep it small enough to ship: polygons are
+never assembled — the globe strokes coastlines, and a TopoJSON arc already *is*
+a coastline segment, so there is no ring stitching or spherical clipping — and
+coordinates are stored as tenths of a degree in flat integer arrays, which is
+sub-pixel at this size. 5,129 source points thin to 1,436, or 13.2 KB.
+
+`MIN_STEP` is set at 2°, which puts coastline vertices about 7px apart at the
+rendered size — finer than a stylised wireframe can show. Going finer costs
+bytes twice over, because the server-rendered globe also carries the resulting
+path data in the HTML, where it competes with the hero image for the first
+megabyte on a mobile connection.
+
+**How it loads.** The section sits well below the fold, so paying for it during
+first load costs LCP for something nobody has scrolled to. It ships as
+`GlobeStatic`, a *server* component — the coastline table it imports never
+reaches the client bundle at all. `GlobePanel` swaps in the interactive version
+via `import()` once the section is within 400px of the viewport. Shipping it
+eagerly measured 93/3.2s LCP on mobile; split, it is 96/2.8s — better than
+before the globe existed.
+
+The static globe renders the first frame of the first leg, so the interactive
+one picks up from exactly there rather than jumping when it takes over.
+
+**The rotation is a camera, not idle spin.** One flight runs at a time and the
+globe turns to hold it in frame, so the motion is going somewhere and finishes
+somewhere. A leg flies for 9s, holds 1.9s at arrival so you can read where it
+landed, then the next leg begins and the globe travels back. The caption names
+the leg in the air.
+
+Tracking *lags* the aircraft by about a second rather than pinning it. Centre it
+exactly and the plane sits motionless while the earth slides underneath, which
+reads as a turntable; behind by a second, the plane visibly crosses the disc and
+the globe follows it.
+
+Latitude is damped to 0.6× rather than followed exactly — the Dhaka–California
+great circle runs over the Arctic, and centring on it literally would swing the
+globe pole-on.
+
+Aircraft trail a lit section of their route and bank with the projection.
+Positions are interpolated between great-circle samples — at 128 steps over a 9s
+traverse, snapping to samples is visibly steppy — and longitude is unwrapped
+across the antimeridian first, or the Dhaka–California lane lurches the wrong way
+round the globe as it crosses the Pacific. Heading is sampled either side of the
+aircraft so it stays defined at both ends of the lane.
+
+Dhaka–Rajshahi draws but is not flown. It spans about 2°: a 200km domestic link
+to the plant, not an international route. `MIN_FLOWN_SPAN` filters it out, which
+also keeps a plane off two markers that already overlap.
+
+**Motion control.** Drag, or arrow keys when focused. One loop advances the
+schedule and eases the camera toward it, throttled to ~30fps and stopped
+entirely by an `IntersectionObserver` when off-screen. The flight clock keeps
+running while you drag or read; only the camera stands down, because that is the
+part that fights for control. It holds your view for 3s after a drag, then eases
+back rather than snapping.
+
+`GlobeArt` — the ~150-path sphere, graticule and coastlines — is `memo`ised and
+takes arrays keyed on the camera alone, so when only the aircraft has moved the
+shallow compare holds and the whole subtree is skipped.
+
+Under `prefers-reduced-motion` nothing animates, but the aircraft still renders
+at its departure point and the globe stays fully steerable: the motion goes, the
+information and the function stay.
+
 ### The fifth business
 
 `upcomingBusiness` in `content/divisions.ts` is a placeholder, deliberately kept
@@ -215,7 +299,7 @@ Lighthouse against the production build:
 | | Performance | Accessibility | Best practices | SEO |
 | --- | --- | --- | --- | --- |
 | Home, desktop | 100 | 100 | 100 | 100 |
-| Home, mobile | 95 | 100 | 100 | 100 |
+| Home, mobile | 96 | 100 | 100 | 100 |
 | `/electronics` | 100 | 100 | 100 | 100 |
 | `/tech-park` | 100 | 100 | 100 | 100 |
 
