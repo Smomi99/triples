@@ -3,7 +3,7 @@ import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { divisions } from "@/content/divisions";
-import { company, contact, legalNav, offices, primaryNav, socials } from "@/content/site";
+import { company, contact, footerNav, legalNav, offices, socials } from "@/content/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -58,7 +58,7 @@ export default function Footer() {
               Company
             </h2>
             <ul className="mt-5 space-y-3">
-              {primaryNav.map((item) => (
+              {footerNav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}

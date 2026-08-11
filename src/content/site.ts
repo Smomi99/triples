@@ -14,9 +14,17 @@ export const company = {
   name: "Triple S Group",
   legalName: "Triple S Group Global LLC",
   shortName: "Triple S",
+  /** The group's own line, from the 2026 company profile. */
+  tagline: "Integrated Global Business Solutions",
   /** Used as the site-wide descriptor in metadata and structured data. */
   descriptor:
-    "A Bangladeshi business group operating across freight forwarding, electrical manufacturing, international sourcing and logistics technology.",
+    "A Bangladesh-based diversified business conglomerate providing integrated solutions across international trade, logistics, engineering and consumer retail.",
+  /** Regions the 2026 profile states the group serves. */
+  regions: ["Asia", "the Middle East", "Africa"],
+  vision:
+    "To establish Triple S Group as a globally recognized business leader delivering innovative, sustainable and technology-driven solutions.",
+  mission:
+    "To create value for clients and partners by ensuring quality, reliability and efficiency through integrated business operations and strategic global partnerships.",
   founded: 2017,
   /** The group's owner began trading and supply operations in 2010. */
   tradingSince: 2010,
@@ -25,10 +33,78 @@ export const company = {
 export const contact = {
   phone: "+88 09613828181",
   phoneHref: "tel:+8809613828181",
-  email: "info@triplesbd.com",
-  emailHref: "mailto:info@triplesbd.com",
+  phoneAlt: "+88 02 223310853",
+  phoneAltHref: "tel:+8802223310853",
+  mobile: "+88 01711 938112",
+  mobileHref: "tel:+8801711938112",
+  email: "shiblee@triplesbd.com",
+  emailHref: "mailto:shiblee@triplesbd.com",
   whatsapp: "https://api.whatsapp.com/send?phone=+8801313368332",
 } as const;
+
+/**
+ * The hero backdrop.
+ *
+ * TO ADD A VIDEO: drop the file at `public/video/hero.mp4` and set `video`
+ * below to "/video/hero.mp4". Add a WebM at the same path with a .webm
+ * extension and set `videoWebm` too — it is typically 30–40% smaller and
+ * browsers that support it will prefer it.
+ *
+ * `image` is not optional and is not a fallback afterthought: it is the poster,
+ * it paints first, it is what shows under reduced motion, on a metered
+ * connection, and if the video fails. Export a still FROM the video so the
+ * swap is invisible.
+ *
+ * Keep the file under ~6MB and around 1920×1080. It is muted and decorative,
+ * so it carries no audio track — strip it, it is dead weight.
+ */
+export type HeroSlide = {
+  slug: string;
+  label: string;
+  caption: string;
+  image: string;
+  accent: string;
+};
+
+export const heroMedia = {
+  /**
+   * One slide per business that has photography. Each is washed in that
+   * business's own colour, so the backdrop identifies rather than decorates.
+   * Slide one is the poster and the video's still frame.
+   */
+  slides: [
+    {
+      slug: "business-hub",
+      label: "Business Hub",
+      caption: "Global sourcing, procurement and industrial supply",
+      image: "/images/scenes/business-hub.jpg",
+      accent: "var(--color-acc-hub-light)",
+    },
+    {
+      slug: "logistics",
+      label: "Logistics",
+      caption: "Air, sea and multimodal freight forwarding",
+      image: "/images/scenes/logistics.jpg",
+      accent: "var(--color-acc-logistics-light)",
+    },
+    {
+      slug: "electronics",
+      label: "Electronics",
+      caption: "LED lighting, switchgear and engineering supply",
+      image: "/images/scenes/electronics.jpg",
+      accent: "var(--color-acc-electronics-light)",
+    },
+    {
+      slug: "green-mart",
+      label: "Green Mart",
+      caption: "Retail and e-commerce across Bangladesh",
+      image: "/images/scenes/green-mart.jpg",
+      accent: "var(--color-acc-retail-light)",
+    },
+  ] as HeroSlide[],
+  video: null as string | null,
+  videoWebm: null as string | null,
+};
 
 export type Office = {
   id: string;
@@ -49,24 +125,23 @@ export type Office = {
 export const offices: Office[] = [
   {
     id: "dhaka",
-    role: "Head office",
+    role: "Corporate office",
     city: "Dhaka",
     country: "Bangladesh",
-    lines: [
-      "Nagar Nirupoma",
-      "House 13/5, 2nd Floor (North side)",
-      "Block A, Aurangzeb Road",
-      "Mohammadpur, Dhaka 1207",
-    ],
-    coords: [23.81, 90.41],
+    lines: ["House 85, Road 4", "Block B, Banani", "Dhaka 1213"],
+    coords: [23.7936, 90.4043],
   },
   {
-    id: "rajshahi",
-    role: "Manufacturing",
-    city: "Rajshahi",
+    id: "chattogram",
+    role: "Port office",
+    city: "Chattogram",
     country: "Bangladesh",
-    lines: ["Plot 201–203, Block B", "BSCIC Industrial Area", "Sopura, Rajshahi"],
-    coords: [24.37, 88.6],
+    lines: [
+      "2446/1/3108, Shofi Manson (1st Floor)",
+      "Boropol Mor, Port Connecting Road",
+      "Chattogram",
+    ],
+    coords: [22.3569, 91.7832],
   },
   {
     id: "guangzhou",
@@ -85,6 +160,7 @@ export const offices: Office[] = [
     coords: [36.78, -119.42],
   },
 ];
+
 
 export const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/triple-s-shipping-ltd/" },
@@ -121,7 +197,17 @@ export type NavItem = {
 export const primaryNav: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Businesses", href: "/businesses" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Industries", href: "/industries" },
+  { label: "Contact", href: "/contact" },
+];
+
+/** The footer carries Projects as well; only the header drops it. */
+export const footerNav: NavItem[] = [
+  { label: "About", href: "/about" },
+  { label: "Businesses", href: "/businesses" },
   { label: "Projects", href: "/projects" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Industries", href: "/industries" },
   { label: "Contact", href: "/contact" },
 ];
@@ -129,4 +215,19 @@ export const primaryNav: NavItem[] = [
 export const legalNav: NavItem[] = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
+];
+
+/**
+ * Registrations and memberships published in the 2026 company profile.
+ * Numbers are transcribed from the certificates reproduced in that document.
+ */
+export const credentials = [
+  { name: "Import Registration Certificate (IRC)", detail: "260326110026419" },
+  { name: "Export Registration Certificate (ERC)", detail: "Trade & indenting" },
+  { name: "VAT registration (BIN)", detail: "000866883-0402" },
+  { name: "e-TIN", detail: "284036296300" },
+  { name: "Dhaka Chamber of Commerce & Industry", detail: "Member GT-1479" },
+  { name: "e-Contractor licence", detail: "Class ABC" },
+  { name: "e-GP enlistment", detail: "Government tendering" },
+  { name: "Trade licence", detail: "TRAD/DNCC/011272/2022" },
 ];

@@ -28,7 +28,7 @@ export type Project = {
   /** Division slug this work sits under. */
   division: string;
   note?: string;
-  status: "Delivered" | "Under construction";
+  status: "Delivered" | "Under construction" | "Design";
   image?: ProjectImage;
   /** Additional imagery of the same project. */
   gallery?: ProjectImage[];
@@ -158,6 +158,16 @@ export const projects: Project[] = [
         kind: "photograph",
       },
     ],
+  },
+  {
+    slug: "rajshahi-city-lighting-master-plan",
+    title: "Rajshahi City Lighting Master Plan",
+    client: "Rajshahi City Corporation",
+    scope: "Urban lighting master plan & design",
+    discipline: "Electrical planning",
+    division: "electronics",
+    note: "Planning, design coordination and technical input for energy-efficient urban lighting. The published imagery is design visualisation, not built work.",
+    status: "Design",
   },
 ];
 

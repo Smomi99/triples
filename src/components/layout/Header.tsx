@@ -118,6 +118,7 @@ export default function Header() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
+    <>
     <header
       /*
         The mega panel is positioned against this value rather than against the
@@ -125,23 +126,23 @@ export default function Header() {
         moves from the trigger straight into the panel instead of detouring
         through the rest of the bar.
       */
-      style={{ "--header-h": scrolled ? "4rem" : "6rem" } as React.CSSProperties}
+      style={{ "--header-h": scrolled ? "5.5rem" : "9.5rem" } as React.CSSProperties}
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
         megaOpen
-          ? "border-b border-transparent bg-navy-950"
+          ? "border-b border-line bg-paper"
           : scrolled
-            ? "border-b border-white/10 bg-navy-950/90 backdrop-blur-md"
-            : "border-b border-transparent bg-transparent"
+            ? "border-b border-line bg-paper/95 backdrop-blur-md"
+            : "border-b border-line bg-paper"
       }`}
     >
       <div className="shell">
         <div
           className={`flex items-center justify-between gap-6 transition-[height] duration-500 ${
-            scrolled ? "h-16" : "h-20 lg:h-24"
+            scrolled ? "h-[5.5rem]" : "h-28 lg:h-[9.5rem]"
           }`}
         >
           <Link href="/" className="shrink-0">
-            <Logo tone="light" />
+            <Logo />
           </Link>
 
           <nav aria-label="Primary" className="hidden lg:block">
@@ -175,10 +176,10 @@ export default function Header() {
                         if (viaKeyboard || !hoverCapable()) setMegaOpen((open) => !open);
                         else setMegaOpen(true);
                       }}
-                      className={`flex items-center gap-2 px-4 py-2 text-sm transition-colors duration-300 ${
+                      className={`flex items-center gap-2 px-4 py-2 text-[1.0625rem] tracking-tight transition-colors duration-300 ${
                         isActive(item.href) || megaOpen
-                          ? "text-paper"
-                          : "text-mist hover:text-paper"
+                          ? "text-ink"
+                          : "text-ink-muted hover:text-ink"
                       }`}
                     >
                       {item.label}
@@ -194,21 +195,21 @@ export default function Header() {
                       /* Opaque, not translucent: a bright masthead headline sits
                          directly behind this panel and reads straight through
                          even a 95% wash. */
-                      className={`fixed inset-x-0 top-[var(--header-h)] overflow-hidden border-b border-white/10 bg-navy-950 transition-[max-height,opacity] duration-500 ${
+                      className={`fixed inset-x-0 top-[var(--header-h)] overflow-hidden border-b border-line bg-paper shadow-[0_24px_48px_-32px_rgb(11_16_32/0.35)] transition-[max-height,opacity] duration-500 ${
                         megaOpen ? "max-h-[32rem] opacity-100" : "pointer-events-none max-h-0 opacity-0"
                       }`}
                     >
                       <div className="shell py-10">
                         <div className="rail">
                           <div>
-                            <p className="eyebrow text-mist-dim">The group</p>
-                            <p className="mt-4 max-w-[13rem] text-sm leading-relaxed text-mist">
+                            <p className="eyebrow text-ink-faint">The group</p>
+                            <p className="mt-4 max-w-[13rem] text-sm leading-relaxed text-ink-muted">
                               Four businesses, one operating standard.
                             </p>
                             <Link
                               href="/businesses"
                               tabIndex={megaOpen ? undefined : -1}
-                              className="mt-6 inline-flex items-center gap-2 text-sm text-brand-400 transition-colors hover:text-paper"
+                              className="mt-6 inline-flex items-center gap-2 text-sm text-brand-600 transition-colors hover:text-ink"
                             >
                               <span className="link-underline">All businesses</span>
                               <ArrowUpRight />
@@ -221,20 +222,20 @@ export default function Header() {
                                 <Link
                                   href={`/${division.slug}`}
                                   tabIndex={megaOpen ? undefined : -1}
-                                  className="group flex items-start gap-5 border-t border-white/10 py-5 transition-colors duration-300 hover:border-white/40"
+                                  className="group flex items-start gap-5 border-t border-line py-5 transition-colors duration-300 hover:border-ink"
                                 >
-                                  <span className="eyebrow mt-1.5 text-mist-dim transition-colors group-hover:text-brand-400">
+                                  <span className="eyebrow mt-1.5 text-ink-faint transition-colors group-hover:text-brand-600">
                                     {division.index}
                                   </span>
                                   <span className="min-w-0">
-                                    <span className="block text-lg tracking-tight text-paper">
+                                    <span className="block text-lg tracking-tight text-ink">
                                       {division.name}
                                     </span>
-                                    <span className="mt-1.5 block text-sm leading-relaxed text-mist">
+                                    <span className="mt-1.5 block text-sm leading-relaxed text-ink-muted">
                                       {division.discipline}
                                     </span>
                                   </span>
-                                  <ArrowUpRight className="ml-auto mt-1.5 shrink-0 text-mist-dim transition-all duration-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper" />
+                                  <ArrowUpRight className="ml-auto mt-1.5 shrink-0 text-ink-faint transition-all duration-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink" />
                                 </Link>
                               </li>
                             ))}
@@ -247,8 +248,8 @@ export default function Header() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`block px-4 py-2 text-sm transition-colors duration-300 ${
-                        isActive(item.href) ? "text-paper" : "text-mist hover:text-paper"
+                      className={`block px-4 py-2 text-[1.0625rem] tracking-tight transition-colors duration-300 ${
+                        isActive(item.href) ? "text-ink" : "text-ink-muted hover:text-ink"
                       }`}
                     >
                       {item.label}
@@ -262,11 +263,11 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <a
               href={contact.phoneHref}
-              className="hidden font-mono text-xs tracking-tight text-mist transition-colors duration-300 hover:text-paper xl:block"
+              className="hidden font-mono text-sm tracking-tight text-ink-muted transition-colors duration-300 hover:text-ink xl:block"
             >
               {contact.phone}
             </a>
-            <Link href="/contact" className="btn btn-light hidden py-3 text-[0.8125rem] sm:inline-flex">
+            <Link href="/contact" className="btn btn-solid hidden py-3 text-[0.8125rem] sm:inline-flex">
               Start a conversation
               <ArrowRight />
             </Link>
@@ -277,7 +278,7 @@ export default function Header() {
               onClick={() => setMobileOpen(true)}
               aria-expanded={mobileOpen}
               aria-controls={mobileId}
-              className="-mr-2 flex h-11 w-11 items-center justify-center text-paper lg:hidden"
+              className="-mr-2 flex h-11 w-11 items-center justify-center text-ink lg:hidden"
             >
               <span className="sr-only">Open menu</span>
               <span aria-hidden className="flex w-5 flex-col gap-[5px]">
@@ -289,80 +290,91 @@ export default function Header() {
           </div>
         </div>
       </div>
+    </header>
 
-      {/* Mobile overlay */}
-      <div
-        id={mobileId}
-        ref={mobilePanel}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menu"
-        hidden={!mobileOpen}
-        className="fixed inset-0 z-50 flex flex-col bg-navy-950 lg:hidden"
-      >
-        <div className="shell flex h-20 shrink-0 items-center justify-between">
-          <Logo tone="light" />
-          <button
-            type="button"
-            onClick={() => {
-              setMobileOpen(false);
-              mobileTrigger.current?.focus();
-            }}
-            className="-mr-2 flex h-11 w-11 items-center justify-center text-paper"
-          >
-            <span className="sr-only">Close menu</span>
-            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden focusable="false">
-              <path d="M2 2l14 14M16 2 2 16" stroke="currentColor" strokeWidth="1.25" />
-            </svg>
-          </button>
-        </div>
+    {/*
+      Rendered OUTSIDE <header> on purpose.
 
-        <div className="shell flex-1 overflow-y-auto overscroll-contain pb-12">
-          <nav aria-label="Mobile">
-            <ul>
-              {primaryNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="flex items-center justify-between border-b border-white/10 py-5 text-2xl tracking-tight text-paper"
-                  >
-                    {item.label}
-                    <ArrowUpRight className="text-mist-dim" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+      The header gets `backdrop-blur` once scrolled, and an element with a
+      backdrop-filter becomes the containing block for its position:fixed
+      descendants. Nested inside, this panel's `inset-0` resolved against the
+      5.5rem header box instead of the viewport, so the menu opened as a sliver
+      behind the bar — but only after scrolling, which is why it looked fine at
+      the top of the page.
+    */}
+    {/* Mobile overlay */}
+    <div
+      id={mobileId}
+      ref={mobilePanel}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu"
+      hidden={!mobileOpen}
+      className="fixed inset-0 z-50 flex flex-col bg-navy-950 lg:hidden"
+    >
+      <div className="shell flex h-20 shrink-0 items-center justify-between">
+        <Logo tone="light" />
+        <button
+          type="button"
+          onClick={() => {
+            setMobileOpen(false);
+            mobileTrigger.current?.focus();
+          }}
+          className="-mr-2 flex h-11 w-11 items-center justify-center text-paper"
+        >
+          <span className="sr-only">Close menu</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden focusable="false">
+            <path d="M2 2l14 14M16 2 2 16" stroke="currentColor" strokeWidth="1.25" />
+          </svg>
+        </button>
+      </div>
 
-          <p className="eyebrow mt-10 text-mist-dim">Businesses</p>
-          <ul className="mt-4">
-            {divisions.map((division) => (
-              <li key={division.slug}>
+      <div className="shell flex-1 overflow-y-auto overscroll-contain pb-12">
+        <nav aria-label="Mobile">
+          <ul>
+            {primaryNav.map((item) => (
+              <li key={item.href}>
                 <Link
-                  href={`/${division.slug}`}
-                  className="flex items-baseline gap-4 border-b border-white/10 py-4"
+                  href={item.href}
+                  className="flex items-center justify-between border-b border-white/10 py-5 text-2xl tracking-tight text-paper"
                 >
-                  <span className="eyebrow text-brand-400">{division.index}</span>
-                  <span>
-                    <span className="block text-paper">{division.name}</span>
-                    <span className="mt-1 block text-sm text-mist">{division.discipline}</span>
-                  </span>
+                  {item.label}
+                  <ArrowUpRight className="text-mist-dim" />
                 </Link>
               </li>
             ))}
           </ul>
+        </nav>
 
-          <div className="mt-10 flex flex-col gap-3">
-            <Link href="/contact" className="btn btn-light justify-center">
-              Start a conversation
-              <ArrowRight />
-            </Link>
-            <a href={contact.phoneHref} className="btn btn-ghost-light justify-center">
-              {contact.phone}
-            </a>
-          </div>
+        <p className="eyebrow mt-10 text-mist-dim">Businesses</p>
+        <ul className="mt-4">
+          {divisions.map((division) => (
+            <li key={division.slug}>
+              <Link
+                href={`/${division.slug}`}
+                className="flex items-baseline gap-4 border-b border-white/10 py-4"
+              >
+                <span className="eyebrow text-brand-400">{division.index}</span>
+                <span>
+                  <span className="block text-paper">{division.name}</span>
+                  <span className="mt-1 block text-sm text-mist">{division.discipline}</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-10 flex flex-col gap-3">
+          <Link href="/contact" className="btn btn-light justify-center">
+            Start a conversation
+            <ArrowRight />
+          </Link>
+          <a href={contact.phoneHref} className="btn btn-ghost-light justify-center">
+            {contact.phone}
+          </a>
         </div>
       </div>
-    </header>
+    </div>
+    </>
   );
 }

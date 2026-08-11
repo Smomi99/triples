@@ -11,6 +11,126 @@
  * wattages, tender categories and team descriptions are the company's own.
  */
 
+/**
+ * How an engagement actually runs, per business.
+ *
+ * The reference material on these pages says what each business sells; none of
+ * it said what happens after you get in touch, which is the question a first
+ * visitor is actually holding. These describe the shape of the work in each
+ * trade — they deliberately carry no timescales, service levels, guarantees or
+ * warranties, because the company publishes none and those are exactly the
+ * claims that would be invented.
+ */
+export type ProcessStep = { name: string; body: string };
+
+export const logisticsProcess: ProcessStep[] = [
+  {
+    name: "Tell us the lane",
+    body: "Origin, destination, commodity, volume, and the date it has to land. If you are not sure which of those matter most, say what the shipment is for and we will ask the rest.",
+  },
+  {
+    name: "Routing and quote",
+    body: "We come back with the routings that fit rather than only the cheapest — sea, air, or a sea–air combination when neither mode alone meets the schedule.",
+  },
+  {
+    name: "Booking and documentation",
+    body: "Space is booked with the carrier and the paperwork is prepared before cargo moves, so the file is complete when it reaches the port rather than after.",
+  },
+  {
+    name: "Origin handling",
+    body: "Collection, consolidation, and pre-shipment inspection where it is wanted — so a problem is found at origin, not on arrival.",
+  },
+  {
+    name: "In transit",
+    body: "The main leg runs and customs is handled at both ends. Value-added work such as labelling, repacking or kitting is done before the cargo leaves origin.",
+  },
+  {
+    name: "Delivery",
+    body: "Final haulage to the door, and the documents that close the file.",
+  },
+];
+
+export const electronicsProcess: ProcessStep[] = [
+  {
+    name: "Send the schedule",
+    body: "A fixture count, a distribution board schedule, or simply a floor area that needs lighting. A drawing is useful but not required to start.",
+  },
+  {
+    name: "Specification",
+    body: "We match the requirement to the range and confirm ratings — wattage, phase, body type — against how the space is actually used.",
+  },
+  {
+    name: "Quotation",
+    body: "Priced against the schedule, with alternatives noted where a different rating or body does the same job for less.",
+  },
+  {
+    name: "Stock or production",
+    body: "Supplied from stock, or produced to order. Sales sits alongside production, so what was specified and what gets built stay in one conversation.",
+  },
+  {
+    name: "Delivery to site",
+    body: "Despatched against the agreed schedule, in the sequence the site needs rather than all at once.",
+  },
+  {
+    name: "After supply",
+    body: "Anything that needs following up comes back to the same team that quoted it.",
+  },
+];
+
+export const businessHubProcess: ProcessStep[] = [
+  {
+    name: "Send the requirement",
+    body: "Part numbers, specifications, or a description of what the plant needs. An incomplete enquiry is still worth sending — identifying the part is part of the job.",
+  },
+  {
+    name: "Technical evaluation",
+    body: "The process team reads the enquiry and confirms exactly what is being asked for before anyone goes looking for it.",
+  },
+  {
+    name: "Supplier identification",
+    body: "Procurement finds and registers suppliers globally, with the Guangzhou office standing in the manufacturing base when the source is Chinese.",
+  },
+  {
+    name: "Quotation",
+    body: "Priced landed, so what you compare is the delivered cost rather than an ex-works figure with the freight left out.",
+  },
+  {
+    name: "Order and inspection",
+    body: "Placed, followed up, and checked before it ships.",
+  },
+  {
+    name: "Delivery and documentation",
+    body: "Shipped and cleared, with the paperwork a tender or an audit will later ask for.",
+  },
+];
+
+export const techParkProcess: ProcessStep[] = [
+  {
+    name: "Describe the process that breaks",
+    body: "The documentation that gets retyped, the tracking that lives in someone's inbox, the report that takes a day to assemble. That is usually where the first build starts.",
+  },
+  {
+    name: "Walk the workflow",
+    body: "We sit with the people doing the work before designing anything, because the process on paper and the process in practice are rarely the same.",
+  },
+  {
+    name: "Scope",
+    body: "What gets built first and what waits. The first release is deliberately narrow enough to be used rather than reviewed.",
+  },
+  {
+    name: "Build",
+    body: "Delivered in working increments, so the thing can be corrected while it is being built rather than after handover.",
+  },
+  {
+    name: "Integrate",
+    body: "Connected to the carriers, customers and finance systems already in use, so it fits the operation instead of sitting beside it.",
+  },
+  {
+    name: "Run",
+    body: "Ongoing support, or a dedicated team working as an extension of your own organisation.",
+  },
+];
+
 /* ------------------------------------------------------------------ *
  * Triple S Logistics
  * ------------------------------------------------------------------ */

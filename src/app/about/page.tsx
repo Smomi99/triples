@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import PageMasthead from "@/components/sections/PageMasthead";
 import CtaSection from "@/components/sections/CtaSection";
+import Founder from "@/components/sections/Founder";
 import SectionIndex from "@/components/ui/SectionIndex";
 import { ArrowRight } from "@/components/ui/Icons";
 import { divisions } from "@/content/divisions";
@@ -161,7 +162,7 @@ export default function AboutPage() {
       <section className="bg-paper-alt py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="04" label="The group" />
+            <SectionIndex index="05" label="The group" />
 
             <div>
               <h2 className="display-md reveal max-w-[18ch]">The businesses, in short.</h2>
@@ -189,6 +190,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <div id="leadership">
+        <Founder index="04" variant="full" />
+      </div>
 
       <CtaSection />
     </>

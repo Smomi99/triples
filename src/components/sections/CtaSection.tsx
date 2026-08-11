@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ArrowRight } from "@/components/ui/Icons";
+import RouteLine from "@/components/ui/RouteLine";
 import { contact } from "@/content/site";
 
 export default function CtaSection({
@@ -13,11 +14,12 @@ export default function CtaSection({
   body?: string;
 }) {
   return (
-    <section className="bg-navy-950 text-paper">
-      <div className="shell py-20 lg:py-32">
+    /* The page's final destination, so it carries the route arriving. */
+    <section className="brand-glow relative isolate overflow-hidden bg-navy-950 text-paper">
+      <div className="shell relative py-20 lg:py-32">
         <div className="rail">
           <p className="eyebrow flex items-baseline gap-3 border-t border-white/15 pt-4 text-mist">
-            <span className="text-brand-400">→</span>
+            <span className="text-orange">→</span>
             <span>{eyebrow}</span>
           </p>
 
@@ -26,7 +28,7 @@ export default function CtaSection({
             <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-mist">{body}</p>
 
             <div className="reveal mt-12 flex flex-col gap-3 sm:flex-row">
-              <Link href="/contact" className="btn btn-light">
+              <Link href="/contact" className="btn btn-primary">
                 Start a conversation
                 <ArrowRight />
               </Link>
@@ -44,6 +46,7 @@ export default function CtaSection({
           </div>
         </div>
       </div>
+      <RouteLine className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 opacity-70 lg:h-40" />
     </section>
   );
 }

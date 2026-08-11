@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import PageMasthead from "@/components/sections/PageMasthead";
+import DivisionHero from "@/components/division/DivisionHero";
 import CtaSection from "@/components/sections/CtaSection";
 import CrossLinks from "@/components/division/CrossLinks";
+import ProcessSteps from "@/components/division/ProcessSteps";
 import SectionIndex from "@/components/ui/SectionIndex";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { getDivision } from "@/content/divisions";
-import { techParkStack } from "@/content/division-detail";
+import { techParkProcess, techParkStack } from "@/content/division-detail";
 import { breadcrumbSchema, divisionSchema, jsonLd } from "@/lib/jsonld";
 import { pageMeta } from "@/lib/seo";
 
@@ -53,16 +54,9 @@ export default function TechParkPage() {
         )}
       />
 
-      <PageMasthead
-        index={techPark.index}
-        label={techPark.discipline}
-        title={techPark.name}
-        lede={techPark.summary}
-        trail={[
-          { name: "Home", path: "/" },
-          { name: "Businesses", path: "/businesses" },
-          { name: techPark.shortName, path: "/tech-park" },
-        ]}
+      <DivisionHero
+        division={techPark}
+        cta={{ label: "Start a build", href: "/contact" }}
       />
 
       {/* 01 — Overview */}
@@ -160,11 +154,20 @@ export default function TechParkPage() {
         </div>
       </section>
 
-      {/* 03 — Capabilities */}
-      <section className="bg-paper py-20 lg:py-28">
+      <ProcessSteps
+        index="03"
+        label="Engagement"
+        title="How a build actually starts."
+        lede="Not with a specification document. Open any step to see what happens at that point."
+        steps={techParkProcess}
+        variant="sheet"
+      />
+
+      {/* 04 — Capabilities */}
+      <section className="bg-paper-alt py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="03" label="Capabilities" />
+            <SectionIndex index="04" label="Capabilities" />
 
             <div>
               <h2 className="display-md reveal max-w-[20ch]">
@@ -196,7 +199,7 @@ export default function TechParkPage() {
         </div>
       </section>
 
-      <CrossLinks current="tech-park" index="04" tone="light" />
+      <CrossLinks current="tech-park" index="05" tone="light" />
 
       <CtaSection
         eyebrow="Start a build"

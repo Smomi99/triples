@@ -37,24 +37,23 @@ export default function DeliveredWork({
                   className="reveal"
                   style={{ "--reveal-delay": `${(i % 3) * 80}ms` } as React.CSSProperties}
                 >
-                  <Link href={`/projects#${project.slug}`} className="group block">
+                  <Link href={`/projects#${project.slug}`} className="card-lift group block overflow-hidden">
                     <figure>
                       {project.image ? (
                         <ProjectFigure
                           image={project.image}
                           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-                          className="aspect-[3/4]"
+                          className="aspect-[4/3]"
                         />
                       ) : (
                         <div
-                          className={`flex aspect-[3/4] items-end border border-line p-5 ${
-                            background === "paper" ? "bg-paper-alt" : "bg-paper"
-                          }`}
+                          /* No border of its own — the card already draws one. */
+                          className="flex aspect-[4/3] items-end bg-paper-alt p-5"
                         >
                           <span className="eyebrow text-ink-faint">{project.status}</span>
                         </div>
                       )}
-                      <figcaption className="mt-5 border-t border-line pt-4 transition-colors duration-300 group-hover:border-ink">
+                      <figcaption className="border-t border-line p-5 transition-colors duration-300">
                         <p className="eyebrow text-ink-faint">{project.scope}</p>
                         <h3 className="mt-3 text-lg tracking-tight">{project.title}</h3>
                         <p className="mt-1.5 text-sm text-ink-muted">{project.client}</p>

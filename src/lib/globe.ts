@@ -129,7 +129,7 @@ export type Marker = { id: string; city: string; point: Point; below: boolean };
 /**
  * Projects the office markers.
  *
- * Dhaka and Rajshahi are ~200km apart, which is a few units at this scale, so
+ * Dhaka and Chattogram are close enough to be a few units apart at this scale, so
  * their labels sit on top of each other. Any marker landing close to one
  * already placed gets its label dropped below the dot instead of above it.
  */
@@ -211,9 +211,9 @@ const TRAIL = 0.22;
 /**
  * Lanes shorter than this carry no aircraft.
  *
- * Dhaka–Rajshahi spans about 2° — a 200km domestic link to the plant, not an
+ * Dhaka–Chattogram spans about 2° — a domestic link to the port office, not an
  * international route. Its line still draws, but flying an aircraft along it
- * would put a plane on top of two markers that already overlap, and would
+ * would put a plane on top of two markers that nearly overlap, and would
  * overstate what that link is.
  */
 const MIN_FLOWN_SPAN = 8;

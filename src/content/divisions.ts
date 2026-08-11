@@ -12,6 +12,21 @@ export type DivisionService = {
   body: string;
 };
 
+/**
+ * The accent each business owns. Same colour wherever the business appears, so
+ * the colour is doing identification work rather than decoration.
+ * `accent` is for light grounds, `accentLight` for the navy ones.
+ */
+export type DivisionAccent = { accent: string; accentLight: string };
+
+export const accents: Record<string, DivisionAccent> = {
+  logistics: { accent: "var(--color-acc-logistics)", accentLight: "var(--color-acc-logistics-light)" },
+  electronics: { accent: "var(--color-acc-electronics)", accentLight: "var(--color-acc-electronics-light)" },
+  "business-hub": { accent: "var(--color-acc-hub)", accentLight: "var(--color-acc-hub-light)" },
+  "tech-park": { accent: "var(--color-acc-tech)", accentLight: "var(--color-acc-tech-light)" },
+  "green-mart": { accent: "var(--color-acc-retail)", accentLight: "var(--color-acc-retail-light)" },
+};
+
 export type Division = {
   slug: string;
   /** Legacy URL on the previous ASP.NET site, redirected in next.config.ts. */
@@ -109,12 +124,12 @@ export const divisions: Division[] = [
     name: "Triple S Electronics",
     shortName: "Electronics",
     discipline: "Electrical apparatus manufacturing",
-    statement: "Switchgear, metering and LED lighting, assembled in Rajshahi.",
+    statement: "Switchgear, metering and LED lighting, assembled in Bangladesh.",
     summary:
       "Electrical apparatus manufacturing and distribution — from circuit protection and metering to industrial LED lighting.",
     body: [
       "Triple S Electronics manufactures and distributes electrical apparatus for domestic, commercial and industrial use. The business works with established electrical apparatus producers, and runs assembly, sales and marketing from its own facility.",
-      "Production is based at the group's plant in the BSCIC Industrial Area at Sopura, Rajshahi. The model pairs back-end process support with front-end sales and marketing, so product specification stays connected to what installers and specifiers actually ask for.",
+      "Production is based at the group's plant in the BSCIC Industrial Area at Sopura, . The model pairs back-end process support with front-end sales and marketing, so product specification stays connected to what installers and specifiers actually ask for.",
       "The category demands familiarity with regulation, commercial terms and energy accounting — a continuous, real-time business where a supply gap is felt immediately on site.",
     ],
     services: [
@@ -232,27 +247,56 @@ export const divisions: Division[] = [
     // No authentic photography exists for the technology business, so pages
     // render a typographic tile rather than a stock developer-at-a-desk shot.
   },
+  {
+    slug: "green-mart",
+    index: "05",
+    name: "Green Mart",
+    shortName: "Green Mart",
+    discipline: "Online retail & consumer goods",
+    statement: "The group's own products, sold direct to the people who use them.",
+    summary:
+      "The group's ecommerce business, selling consumer electronics, home, personal care and lighting online across Bangladesh.",
+    body: [
+      "Green Mart is the group's retail business. It sells online across Bangladesh, from an office in Banani, Dhaka, covering consumer electronics and gadgets, home and living essentials, baby and kids products, beauty and personal care, health and wellness, and fashion.",
+      "It is also where the group's own manufacturing reaches the public. The lighting and decoration range Green Mart carries — domestic, commercial, industrial and outdoor — is the range Triple S Electronics supplies, sold direct rather than through a distributor.",
+      "That is the pattern the whole group runs on: sourcing feeds manufacturing, manufacturing feeds retail, and logistics moves all of it.",
+    ],
+    services: [
+      {
+        name: "Electronics & gadgets",
+        body: "Phones, smartwatches, headphones and cameras.",
+      },
+      {
+        name: "Lighting & decoration",
+        body: "Domestic, commercial, industrial and outdoor — the group's own manufactured range, sold direct.",
+      },
+      {
+        name: "Home & living essentials",
+        body: "Kitchen goods and small appliances.",
+      },
+      {
+        name: "Baby & kids",
+        body: "Newborn care, feeding accessories and toys.",
+      },
+      {
+        name: "Beauty, personal care & health",
+        body: "Personal care, cosmetics and wellness products.",
+      },
+      {
+        name: "Fashion & accessories",
+        body: "Men's, women's and children's ranges.",
+      },
+    ],
+    capabilities: [
+      "Order tracking",
+      "Multiple payment options",
+      "Nationwide delivery",
+      "Wishlist & accounts",
+      "Customer support tickets",
+    ],
+    external: { label: "greenmart-bd.com", href: "https://greenmart-bd.com/" },
+  },
 ];
-
-/**
- * A fifth business is in development.
- *
- * It is deliberately kept out of `divisions`. That array drives the navigation,
- * the footer, the sitemap, cross-links and the Organization structured data —
- * an unannounced business with no page and no confirmed name must not appear in
- * any of them. It shows in one place only: the homepage ecosystem orbit, as an
- * openly unfilled fifth slot.
- *
- * TODO — when the business is confirmed: set `name` and `discipline`, then move
- * this into `divisions` with a slug, summary, statement and page of its own.
- */
-export const upcomingBusiness = {
-  index: "05",
-  /** Placeholder. Replace with the real name. */
-  name: "Fifth business",
-  discipline: "In development",
-  note: "Announcement to follow",
-} as const;
 
 export const divisionsBySlug = Object.fromEntries(divisions.map((d) => [d.slug, d])) as Record<
   string,

@@ -7,7 +7,7 @@ import { featuredProjects } from "@/content/projects";
 
 export default function Proof() {
   return (
-    <section className="bg-paper py-20 lg:py-32">
+    <section className="bg-wash-green py-20 lg:py-32">
       <div className="shell">
         <div className="rail">
           <SectionIndex index="06" label="Proof" />

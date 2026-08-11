@@ -15,14 +15,16 @@ export default function Logo({
   const light = tone === "light";
 
   return (
-    <span className={`flex items-center gap-2.5 ${className}`}>
+    <span className={`flex items-center gap-3 sm:gap-3.5 ${className}`}>
       <Image
+        /* Always the colour mark. The white version exists only for the
+           footer's navy ground, where the mark's darkest stroke disappears. */
         src={light ? "/images/brand/triple-s-mark-light.png" : "/images/brand/triple-s-mark.png"}
         alt=""
         width={256}
         height={320}
         priority
-        className="h-8 w-auto sm:h-9"
+        className="h-11 w-auto sm:h-12 lg:h-14"
       />
       {/*
         No aria-label on the wrapping link: the visible wordmark already names
@@ -32,14 +34,14 @@ export default function Logo({
       */}
       <span className="flex flex-col leading-none">
         <span
-          className={`text-[0.9375rem] font-semibold tracking-[-0.01em] ${
+          className={`text-lg font-semibold tracking-[-0.01em] sm:text-xl lg:text-[1.375rem] ${
             light ? "text-paper" : "text-ink"
           }`}
         >
           TRIPLE S{" "}
         </span>
         <span
-          className={`mt-1 font-mono text-[0.5rem] font-medium tracking-[0.42em] ${
+          className={`mt-1.5 font-mono text-[0.5625rem] font-medium tracking-[0.44em] sm:text-[0.625rem] ${
             light ? "text-mist" : "text-ink-faint"
           }`}
         >

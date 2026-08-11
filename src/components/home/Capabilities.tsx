@@ -12,7 +12,7 @@ import { divisions, divisionsBySlug } from "@/content/divisions";
  */
 export default function Capabilities() {
   return (
-    <section className="bg-paper py-20 lg:py-32">
+    <section className="bg-wash-copper py-20 lg:py-32">
       <div className="shell">
         <div className="rail">
           <SectionIndex index="04" label="Capabilities" />
