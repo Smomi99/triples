@@ -53,13 +53,24 @@ export default function RouteLine({ className = "" }: { className?: string }) {
         <circle cx="968" cy="26" r="2.2" fill="#1c1848" />
       </g>
 
-      {/* In transit. Two markers, offset in time so the lane is never empty. */}
+      {/*
+        In transit. Two markers, offset in time so the lane is never empty.
+
+        cx/cy are set to the start of the path on purpose. Without them a circle
+        defaults to (0,0), so any browser that cannot resolve `offset-path`
+        parked these in the SVG's top-left corner as stationary orange dots —
+        worse than not drawing them. They now sit on the route regardless, and
+        the @supports guard in globals.css hides them where the motion cannot
+        run rather than leaving them stuck at the origin.
+      */}
       {[
         { d: "0s", dur: "7s" },
         { d: "3.5s", dur: "7s" },
       ].map((m) => (
         <circle
           key={m.d}
+          cx="12"
+          cy="78"
           r="5"
           fill="var(--color-orange)"
           className="route-dot"

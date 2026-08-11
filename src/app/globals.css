@@ -741,11 +741,23 @@
     }
   }
 
+  /*
+    Hidden unless the browser can actually run the motion. Otherwise the markers
+    sit at the head of the lane and never leave, which reads as a rendering
+    fault rather than as a route.
+  */
   .route-dot {
-    offset-path: var(--path);
-    offset-rotate: 0deg;
-    animation: route-travel var(--dur, 6s) linear infinite;
-    animation-delay: var(--delay, 0s);
+    display: none;
+  }
+
+  @supports (offset-path: path("M0 0")) {
+    .route-dot {
+      display: block;
+      offset-path: var(--path);
+      offset-rotate: 0deg;
+      animation: route-travel var(--dur, 6s) linear infinite;
+      animation-delay: var(--delay, 0s);
+    }
   }
 
   @keyframes route-pulse {
