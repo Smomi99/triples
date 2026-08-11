@@ -62,8 +62,16 @@ export default function LogisticsPage() {
         cta={{ label: "Get a routing", href: "/contact" }}
       />
 
-      {/* 01 — Overview: statement over a wide image, mission and vision beneath */}
-      <section className="bg-paper py-20 lg:py-28">
+      {/*
+        01 — Overview.
+
+        No bottom padding: this section ends on a full-bleed photograph, so the
+        usual 112px would strand it in white and then Modes adds 112 more —
+        224px of dead space between the image and the next heading. Butted
+        straight against the dark section, the image edge becomes the
+        transition instead.
+      */}
+      <section className="bg-paper pt-20 lg:pt-28">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="Overview" />
