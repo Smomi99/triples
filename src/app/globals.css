@@ -824,14 +824,39 @@
     transform: none;
   }
 
+  /*
+    Wipe reveal, done with a retracting curtain rather than by clipping the
+    element itself.
+
+    Clipping the element was a deadlock: `clip-path: inset(0 0 101%)` reduces
+    its intersection area to zero, so IntersectionObserver never reported it as
+    intersecting, `data-revealed` was never set, and it stayed clipped
+    permanently. It was only ever visible under prefers-reduced-motion, which
+    skips the clip — which is also why screenshot runs (they force reduced
+    motion) never caught it.
+
+    The element now stays unclipped so the observer can see it; a pseudo-element
+    covers it and slides away. --curtain must match the section ground.
+  */
   .js .clip-reveal {
-    clip-path: inset(0 0 101% 0);
-    transition: clip-path 1.1s var(--ease-out-expo);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .js .clip-reveal::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 2;
+    pointer-events: none;
+    background-color: var(--curtain, var(--color-paper));
+    transform-origin: bottom;
+    transition: transform 1.1s var(--ease-out-expo);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
-  .js .clip-reveal[data-revealed="true"] {
-    clip-path: inset(0 0 0 0);
+  .js .clip-reveal[data-revealed="true"]::after {
+    transform: scaleY(0);
   }
 
   /*
@@ -890,6 +915,11 @@
     transform: none !important;
     clip-path: none !important;
     transition: none !important;
+  }
+
+  /* No curtain at all, rather than one that snaps away. */
+  .js .clip-reveal::after {
+    display: none !important;
   }
 
   /*
