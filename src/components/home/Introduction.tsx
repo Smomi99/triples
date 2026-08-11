@@ -1,4 +1,5 @@
 import SectionIndex from "@/components/ui/SectionIndex";
+import CountUp from "@/components/ui/CountUp";
 import { company, offices } from "@/content/site";
 import { divisions } from "@/content/divisions";
 
@@ -7,16 +8,20 @@ import { divisions } from "@/content/divisions";
  * photographic, so this one carries its weight on type and space alone —
  * otherwise every section starts to look the same.
  */
+/*
+  Years are printed, not counted: watching "2017" tick up from zero reads as a
+  quantity rather than a date. The two genuine counts animate.
+*/
 const markers = [
-  { value: String(company.founded), label: "Group established" },
-  { value: String(company.tradingSince), label: "Trading since" },
-  { value: String(divisions.length), label: "Operating businesses" },
-  { value: String(offices.length), label: "Offices" },
+  { value: company.founded, label: "Group established", count: false },
+  { value: company.tradingSince, label: "Trading since", count: false },
+  { value: divisions.length, label: "Operating businesses", count: true },
+  { value: offices.length, label: "Offices", count: true },
 ];
 
 export default function Introduction() {
   return (
-    <section className="bg-paper py-20 lg:py-32">
+    <section className="bg-wash-blue py-20 lg:py-32">
       <div className="shell">
         <div className="rail">
           <SectionIndex index="01" label="Introduction" />
@@ -59,8 +64,12 @@ export default function Introduction() {
                 >
                   {/* Number above label, with DOM order kept dt-then-dd for semantics. */}
                   <dt className="eyebrow order-2 mt-3 text-ink-faint">{marker.label}</dt>
-                  <dd className="order-1 font-mono text-3xl tracking-tight text-ink lg:text-4xl">
-                    {marker.value}
+                  <dd className="order-1 font-mono text-4xl tracking-tight lg:text-5xl">
+                    {marker.count ? (
+                      <CountUp value={marker.value} className="text-orange-ink" />
+                    ) : (
+                      <span className="text-navy-900">{marker.value}</span>
+                    )}
                   </dd>
                 </div>
               ))}

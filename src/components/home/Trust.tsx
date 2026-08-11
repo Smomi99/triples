@@ -12,10 +12,10 @@ const foundation = [
 
 export default function Trust() {
   return (
-    <section className="bg-paper-alt py-20 lg:py-32">
+    <section className="bg-wash-blue py-20 lg:py-32">
       <div className="shell">
         <div className="rail">
-          <SectionIndex index="07" label="Trust" />
+          <SectionIndex index="08" label="Trust" />
 
           <div>
             <h2 className="display-md reveal max-w-[19ch]">

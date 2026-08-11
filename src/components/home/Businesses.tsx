@@ -3,7 +3,7 @@ import Link from "next/link";
 import SectionIndex from "@/components/ui/SectionIndex";
 import DivisionVisual from "@/components/ui/DivisionVisual";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
-import { divisions } from "@/content/divisions";
+import { accents, divisions } from "@/content/divisions";
 
 const [featured, ...supporting] = divisions;
 
@@ -16,17 +16,17 @@ const [featured, ...supporting] = divisions;
  */
 export default function Businesses() {
   return (
-    <section className="bg-navy-950 py-20 text-paper lg:py-32">
+    <section className="bg-wash-indigo py-20 lg:py-32">
       <div className="shell">
         <div className="rail">
-          <SectionIndex index="05" label="Businesses" tone="light" />
+          <SectionIndex index="05" label="Businesses" />
 
           <div>
             <h2 className="display-md reveal max-w-[18ch]">
               One group, four ways in.
             </h2>
             <p
-              className="reveal mt-8 max-w-xl text-lg leading-relaxed text-mist"
+              className="reveal mt-8 max-w-xl text-lg leading-relaxed text-ink-muted"
               style={{ "--reveal-delay": "70ms" } as React.CSSProperties}
             >
               Each business runs its own operations and answers for its own work. They share a
@@ -47,18 +47,21 @@ export default function Businesses() {
           />
 
           <div className="lg:col-span-5 lg:pb-2">
-            <p className="eyebrow flex items-center gap-3 text-brand-400">
+            <p
+              className="eyebrow flex items-center gap-3"
+              style={{ color: accents[featured.slug]?.accent }}
+            >
               <span>{featured.index}</span>
-              <span aria-hidden className="h-px w-8 bg-brand-500/50" />
+              <span aria-hidden className="h-px w-8 bg-current opacity-45" />
               <span>{featured.discipline}</span>
             </p>
 
             <h3 className="display-md mt-5">{featured.name}</h3>
 
-            <p className="mt-6 text-lg leading-relaxed text-mist">{featured.statement}</p>
-            <p className="mt-4 max-w-md leading-relaxed text-mist-dim">{featured.summary}</p>
+            <p className="mt-6 text-lg leading-relaxed text-ink-muted">{featured.statement}</p>
+            <p className="mt-4 max-w-md leading-relaxed text-ink-faint">{featured.summary}</p>
 
-            <span className="btn btn-ghost-light mt-9">
+            <span className="btn btn-outline mt-9">
               Explore {featured.shortName}
               <ArrowRight />
             </span>
@@ -66,15 +69,20 @@ export default function Businesses() {
         </Link>
 
         {/* Supporting */}
-        <ul className="mt-16 border-t border-white/20 lg:mt-24">
+        <ul className="mt-16 border-t border-line-strong lg:mt-24">
           {supporting.map((division, i) => (
             <li key={division.slug}>
               <Link
                 href={`/${division.slug}`}
-                className="group reveal grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-5 border-b border-white/10 py-7 transition-colors duration-500 hover:border-white/40 sm:grid-cols-[4rem_11rem_1fr_auto] sm:gap-x-8 lg:py-9"
-                style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
+                className="group reveal grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-5 border-b border-line py-7 transition-colors duration-500 hover:border-[var(--accent)] sm:grid-cols-[4rem_11rem_1fr_auto] sm:gap-x-8 lg:py-9"
+                style={
+                  {
+                    "--reveal-delay": `${i * 80}ms`,
+                    "--accent": accents[division.slug]?.accent,
+                  } as React.CSSProperties
+                }
               >
-                <span className="eyebrow text-mist-dim transition-colors duration-300 group-hover:text-brand-400 sm:order-1">
+                <span className="eyebrow text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)] sm:order-1">
                   {division.index}
                 </span>
 
@@ -86,7 +94,7 @@ export default function Businesses() {
 
                 <span className="order-3 col-span-3 min-w-0 sm:col-span-1">
                   <span className="display-sm block">{division.name}</span>
-                  <span className="mt-2.5 block max-w-xl text-sm leading-relaxed text-mist sm:text-base">
+                  <span className="mt-2.5 block max-w-xl text-sm leading-relaxed text-ink-muted sm:text-base">
                     {division.summary}
                   </span>
                 </span>
@@ -96,7 +104,7 @@ export default function Businesses() {
                   affordance, whereas at this width the arrow is pushed onto a
                   line of its own and reads as a stray mark.
                 */}
-                <ArrowUpRight className="order-4 hidden h-5 w-5 shrink-0 self-center text-mist-dim transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper sm:block" />
+                <ArrowUpRight className="order-4 hidden h-5 w-5 shrink-0 self-center text-ink-faint transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink sm:block" />
               </Link>
             </li>
           ))}
@@ -105,7 +113,7 @@ export default function Businesses() {
         <div className="reveal mt-12">
           <Link
             href="/businesses"
-            className="inline-flex items-center gap-2 text-sm text-brand-400 transition-colors duration-300 hover:text-paper"
+            className="inline-flex items-center gap-2 text-sm text-brand-600 transition-colors duration-300 hover:text-ink"
           >
             <span className="link-underline">How the four businesses fit together</span>
             <ArrowRight />

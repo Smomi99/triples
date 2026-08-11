@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import PageMasthead from "@/components/sections/PageMasthead";
+import DivisionHero from "@/components/division/DivisionHero";
 import CtaSection from "@/components/sections/CtaSection";
 import CrossLinks from "@/components/division/CrossLinks";
+import ProcessSteps from "@/components/division/ProcessSteps";
 import SectionIndex from "@/components/ui/SectionIndex";
 import DivisionVisual from "@/components/ui/DivisionVisual";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { getDivision } from "@/content/divisions";
-import { logisticsDetail } from "@/content/division-detail";
+import { logisticsDetail, logisticsProcess } from "@/content/division-detail";
 import { industries } from "@/content/industries";
 import { breadcrumbSchema, divisionSchema, jsonLd } from "@/lib/jsonld";
 import { pageMeta } from "@/lib/seo";
@@ -54,16 +55,11 @@ export default function LogisticsPage() {
         )}
       />
 
-      <PageMasthead
-        index={division.index}
-        label={division.discipline}
-        title={division.name}
-        lede={division.summary}
-        trail={[
-          { name: "Home", path: "/" },
-          { name: "Businesses", path: "/businesses" },
-          { name: division.shortName, path: "/logistics" },
-        ]}
+      <DivisionHero
+        division={division}
+        image={"/images/scenes/logistics.jpg"}
+        imageAlt={"Container terminal operations"}
+        cta={{ label: "Get a routing", href: "/contact" }}
       />
 
       {/* 01 — Overview: statement over a wide image, mission and vision beneath */}
@@ -178,11 +174,18 @@ export default function LogisticsPage() {
         </div>
       </section>
 
-      {/* 03 — What travels: three cargo categories */}
-      <section className="bg-paper py-20 lg:py-28">
+      <ProcessSteps
+        index="03"
+        title="What happens after you send us a lane."
+        lede="Freight forwarding is opaque from the outside, so here is the whole sequence. Open any step to see what we are actually doing at that point."
+        steps={logisticsProcess}
+      />
+
+      {/* 04 — What travels: three cargo categories */}
+      <section className="bg-paper-alt py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="03" label="What travels" />
+            <SectionIndex index="04" label="What travels" />
 
             <div>
               <h2 className="display-md reveal max-w-[20ch]">
@@ -206,11 +209,11 @@ export default function LogisticsPage() {
         </div>
       </section>
 
-      {/* 04 — Sectors */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      {/* 05 — Sectors */}
+      <section className="bg-paper py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="04" label="Sectors" />
+            <SectionIndex index="05" label="Sectors" />
 
             <div>
               <h2 className="display-md reveal max-w-[18ch]">Cargo we already know.</h2>
@@ -248,7 +251,7 @@ export default function LogisticsPage() {
         </div>
       </section>
 
-      <CrossLinks current="logistics" index="05" />
+      <CrossLinks current="logistics" index="06" />
 
       <CtaSection
         eyebrow="Get a routing"

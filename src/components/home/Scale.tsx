@@ -22,16 +22,16 @@ export default function Scale() {
 
           <div>
             <h2 className="display-md reveal max-w-[22ch]">
-              A head office in Dhaka, a plant in Rajshahi, and buyers standing in Guangzhou and
-              California.
+              A corporate office in Banani, a desk at the port in Chattogram, and buyers standing in
+              Guangzhou and California.
             </h2>
             <p
               className="reveal mt-8 max-w-2xl text-lg leading-relaxed text-mist"
               style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
             >
-              Triple S Logistics describes its network as reaching across six continents through
-              partnerships with major ocean, air and ground carriers. The overseas offices put the
-              group inside the time zones its customers and suppliers actually work in.
+              The group serves clients across Asia, the Middle East and Africa through partnerships with
+              major ocean, air and ground carriers. The overseas offices put it inside the time zones
+              its customers and suppliers actually work in.
             </p>
           </div>
         </div>

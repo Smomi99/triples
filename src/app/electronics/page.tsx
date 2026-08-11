@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-import PageMasthead from "@/components/sections/PageMasthead";
+import DivisionHero from "@/components/division/DivisionHero";
 import CtaSection from "@/components/sections/CtaSection";
 import CrossLinks from "@/components/division/CrossLinks";
 import DeliveredWork from "@/components/division/DeliveredWork";
+import ProcessSteps from "@/components/division/ProcessSteps";
 import SectionIndex from "@/components/ui/SectionIndex";
 import DivisionVisual from "@/components/ui/DivisionVisual";
 import { getDivision } from "@/content/divisions";
-import { electronicsCatalogue } from "@/content/division-detail";
-import { offices } from "@/content/site";
+import { electronicsCatalogue, electronicsProcess } from "@/content/division-detail";
 import { breadcrumbSchema, divisionSchema, jsonLd } from "@/lib/jsonld";
 import { pageMeta } from "@/lib/seo";
 
@@ -22,12 +22,11 @@ import { pageMeta } from "@/lib/seo";
 */
 
 const division = getDivision("electronics")!;
-const plant = offices.find((office) => office.id === "rajshahi")!;
 
 export const metadata: Metadata = pageMeta({
   title: "Triple S Electronics — Electrical Manufacturing",
   description:
-    "Switches, sockets, MCB and MCCB circuit protection, energy meters and industrial LED lighting, manufactured and distributed from Rajshahi, Bangladesh.",
+    "LED lighting systems, switchgear and electrical components, and project-based supply for industrial, commercial and infrastructure work in Bangladesh.",
   path: "/electronics",
   absoluteTitle: true,
 });
@@ -52,16 +51,11 @@ export default function ElectronicsPage() {
         )}
       />
 
-      <PageMasthead
-        index={division.index}
-        label={division.discipline}
-        title={division.name}
-        lede={division.summary}
-        trail={[
-          { name: "Home", path: "/" },
-          { name: "Businesses", path: "/businesses" },
-          { name: division.shortName, path: "/electronics" },
-        ]}
+      <DivisionHero
+        division={division}
+        image={"/images/scenes/electronics.jpg"}
+        imageAlt={"Factory lighting installed at AKH Knitting & Dyeing"}
+        cta={{ label: "Specify a job", href: "/contact" }}
       />
 
       {/* 01 — Overview, with the image carried tall alongside the text */}
@@ -168,48 +162,65 @@ export default function ElectronicsPage() {
         </div>
       </section>
 
-      {/* 03 — Where it is made */}
-      <section className="bg-paper py-20 lg:py-28">
+      <ProcessSteps
+        index="03"
+        label="Ordering"
+        title="From a schedule to fittings on site."
+        lede="Open any step to see what we need from you and what we handle at that point."
+        steps={electronicsProcess}
+        variant="sheet"
+      />
+
+      {/*
+        04 — Engineering supply.
+
+        Replaces the old plant section: the group's 2026 profile positions this
+        business as electrical products and engineering supply for projects,
+        and no longer publishes a manufacturing address.
+      */}
+      <section className="bg-paper-alt py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="03" label="The plant" />
+            <SectionIndex index="04" label="Engineering supply" />
 
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
               <div className="lg:col-span-6">
-                <h2 className="display-md reveal max-w-[16ch]">Assembled in Rajshahi.</h2>
+                <h2 className="display-md reveal max-w-[18ch]">
+                  Specified for the project, not picked off a shelf.
+                </h2>
                 <p className="reveal mt-8 max-w-lg text-lg leading-relaxed text-ink-muted">
-                  Production runs from the group&rsquo;s facility in the BSCIC Industrial Area at
-                  Sopura. Sales and marketing sit alongside it rather than in a separate office, so
-                  what gets specified and what gets built stay in the same conversation.
+                  The division supplies industrial, commercial and infrastructure projects, which
+                  means the work starts at a schedule rather than at a product code. Ratings, body
+                  types and quantities are confirmed against how the space will actually be used
+                  before anything is quoted.
                 </p>
               </div>
 
               <div className="lg:col-span-5 lg:col-start-8">
-                <div className="reveal border-t border-line-strong pt-6">
-                  <p className="eyebrow text-brand-600">{plant.role}</p>
-                  <p className="display-sm mt-4">
-                    {plant.city}
-                    <span className="mt-1.5 block font-mono text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
-                      {plant.country}
-                    </span>
-                  </p>
-                  <address className="mt-5 not-italic leading-relaxed text-ink-muted">
-                    {plant.lines.map((line) => (
-                      <span key={line} className="block">
-                        {line}
-                      </span>
-                    ))}
-                  </address>
-                </div>
+                <dl className="reveal">
+                  {[
+                    ["LED lighting systems", "Domestic, commercial, industrial and outdoor."],
+                    ["Switchgear & components", "Protection, metering and wiring accessories."],
+                    ["Project-based supply", "Scheduled to the sequence a site needs."],
+                  ].map(([name, body], i) => (
+                    <div
+                      key={name}
+                      className={`border-t py-6 ${i === 0 ? "border-line-strong" : "border-line"}`}
+                    >
+                      <dt className="display-sm">{name}</dt>
+                      <dd className="mt-3 leading-relaxed text-ink-muted">{body}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <DeliveredWork division="electronics" index="04" />
+      <DeliveredWork division="electronics" index="05" background="paper" />
 
-      <CrossLinks current="electronics" index="05" />
+      <CrossLinks current="electronics" index="06" tone="light" />
 
       <CtaSection
         eyebrow="Specify a job"

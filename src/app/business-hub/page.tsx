@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
-import PageMasthead from "@/components/sections/PageMasthead";
+import DivisionHero from "@/components/division/DivisionHero";
 import CtaSection from "@/components/sections/CtaSection";
 import CrossLinks from "@/components/division/CrossLinks";
 import DeliveredWork from "@/components/division/DeliveredWork";
+import ProcessSteps from "@/components/division/ProcessSteps";
 import SectionIndex from "@/components/ui/SectionIndex";
 import { getDivision } from "@/content/divisions";
-import { businessHubDetail } from "@/content/division-detail";
+import { businessHubDetail, businessHubProcess } from "@/content/division-detail";
 import { offices } from "@/content/site";
 import { breadcrumbSchema, divisionSchema, jsonLd } from "@/lib/jsonld";
 import { pageMeta } from "@/lib/seo";
@@ -51,16 +52,11 @@ export default function BusinessHubPage() {
         )}
       />
 
-      <PageMasthead
-        index={division.index}
-        label={division.discipline}
-        title={division.name}
-        lede={division.summary}
-        trail={[
-          { name: "Home", path: "/" },
-          { name: "Businesses", path: "/businesses" },
-          { name: division.shortName, path: "/business-hub" },
-        ]}
+      <DivisionHero
+        division={division}
+        image={"/images/scenes/business-hub.jpg"}
+        imageAlt={"Port and container handling"}
+        cta={{ label: "Send a requirement", href: "/contact" }}
       />
 
       {/* 01 — The name, read out as three words */}
@@ -172,11 +168,19 @@ export default function BusinessHubPage() {
         </div>
       </section>
 
-      {/* 03 — Offices, presented as the reach they buy */}
-      <section className="bg-paper py-20 lg:py-28">
+      <ProcessSteps
+        index="03"
+        label="Sourcing"
+        title="What happens to an enquiry."
+        lede="An incomplete enquiry is still worth sending — identifying the part is part of the job. Open any step to see who picks it up."
+        steps={businessHubProcess}
+      />
+
+      {/* 04 — Offices, presented as the reach they buy */}
+      <section className="bg-paper-alt py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="03" label="Reach" />
+            <SectionIndex index="04" label="Reach" />
 
             <div>
               <h2 className="display-md reveal max-w-[22ch]">
@@ -221,11 +225,11 @@ export default function BusinessHubPage() {
         </div>
       </section>
 
-      {/* 04 — How the organisation is set up */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      {/* 05 — How the organisation is set up */}
+      <section className="bg-paper py-20 lg:py-28">
         <div className="shell">
           <div className="rail">
-            <SectionIndex index="04" label="Inside" />
+            <SectionIndex index="05" label="Inside" />
 
             <div>
               <h2 className="display-md reveal max-w-[20ch]">
@@ -256,9 +260,9 @@ export default function BusinessHubPage() {
         </div>
       </section>
 
-      <DeliveredWork division="business-hub" index="05" background="paper" />
+      <DeliveredWork division="business-hub" index="06" />
 
-      <CrossLinks current="business-hub" index="06" tone="light" />
+      <CrossLinks current="business-hub" index="07" tone="light" />
 
       <CtaSection
         eyebrow="Send a requirement"

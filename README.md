@@ -37,6 +37,7 @@ src/
   components/
     layout/            Header (client), Footer
     home/              the eight homepage sections
+    green-mart/        the group's ecommerce business (greenmart-bd.com)
     sections/          PageMasthead, CtaSection — shared across pages
     division/          CrossLinks, DeliveredWork — the two blocks the business
                        pages genuinely share
@@ -53,7 +54,7 @@ assets/original/       untouched source images pulled from the previous site
 
 **Content lives in `src/content`, not in components.** Changing a service
 description, an office address or a project caption means editing one object in
-one file. `site.ts` holds company facts, `divisions.ts` the four businesses,
+one file. `site.ts` holds company facts, `divisions.ts` the five businesses,
 `projects.ts` delivered work, `industries.ts` and `capabilities.ts` the
 supporting indexes.
 
@@ -69,11 +70,95 @@ say so before the copy does:
 | `/electronics` | A datasheet | Specification table — group code, item, rating |
 | `/business-hub` | A flow | Imports and exports opposed across a centre rule |
 | `/tech-park` | A blueprint | Four numbered layers on a drafting grid, read bottom-up |
+| `/green-mart` | A shopfront | Colour-blocked aisle grid on a full green ground |
 
-They share only `PageMasthead`, `CtaSection`, `CrossLinks` and `DeliveredWork`
-— the parts where consistency helps the visitor rather than flattening the
-businesses into one another. Section counts, backgrounds and rhythm differ per
-page.
+Each opens with `DivisionHero` — a full-bleed landing header in that business's
+own colour. The photograph under it is **duotoned**: desaturated first, then the
+accent multiplied in. Desaturating first is the whole trick; multiplying a
+colour into a colour photograph muddies to brown. It also means the company's
+only photography — 380–1200px wide — reads as treatment rather than as a soft
+crop when it fills a 2000px header.
+
+Tech Park and Green Mart have no relevant photography, so they get the colour
+field and linework alone. Inventing a stock "tech" image would say less than the
+colour does, and say it dishonestly. Drop a file in `public/images/scenes/` and
+pass `image` to `DivisionHero` when real photography exists.
+
+They share only `PageMasthead`, `CtaSection`, `CrossLinks`, `DeliveredWork` and
+`ProcessSteps` — the parts where consistency helps the visitor rather than
+flattening the businesses into one another. Section counts, backgrounds and
+rhythm differ per page.
+
+### Colour
+
+The palette is drawn from the Triple S mark — three ascending strokes in bright
+blue, indigo and deep navy — and extended so the site is not only navy and
+off-white.
+
+**Each business owns an accent**, and it is the same colour wherever that
+business appears: the hero rail, the ecosystem orbit, its card, its own page.
+The colour is doing identification work, not decoration. Three come from the
+logo's own strokes; copper is the fourth, a warm complement that also picks up
+the accent the previous site used, so the group still reads as itself to anyone
+who knew the old one. All four are set at tones clearing 4.5:1 on both paper
+grounds, because they land on 11px mono labels where the large-text allowance
+does not apply.
+
+**`--color-tint`** gives the light half of the site a third register. The rhythm
+previously alternated between off-white and full navy, which is what made the
+whole site read as dark. The homepage now runs
+
+```
+hero DARK · intro paper · ecosystem tint · globe DARK · capabilities paper
+· businesses paper-alt · proof paper · trust tint · CTA DARK
+```
+
+— three dark sections out of nine, down from five, with no two adjacent.
+
+### The hero backdrop, and adding a video
+
+**To add a video:** drop the file at `public/video/hero.mp4` and set `video` in
+`heroMedia` (`content/site.ts`) to `"/video/hero.mp4"`. Add a WebM at the same
+path and set `videoWebm` too — it is typically 30–40% smaller and supporting
+browsers will prefer it. Keep it under ~6MB, around 1920×1080, and strip the
+audio track: it plays muted, so audio is dead weight.
+
+`image` is not a fallback afterthought. It is the poster, it paints first, and
+it is what remains under `prefers-reduced-motion`, on Data Saver, on a 2G
+connection, and if the video fails to load. **Export the still from the video**
+so the crossfade between them is invisible.
+
+The video element is only created once those checks pass, and mounts on
+`requestIdleCallback`, so it never competes with the headline for first paint.
+With no video configured, no video element exists at all.
+
+The scrim over it is deliberately light — weighted to the bottom-left where the
+headline and buttons sit, and kept off the top-right so the picture is visible.
+An earlier version buried the photograph under two near-opaque gradients at 45%
+opacity: legible, but there was no point having a photograph at all.
+
+### How it works — the process sections
+
+Every business page carries an expandable "how an engagement runs" section.
+The reference material on these pages said what each business *sells*; none of
+it said what happens after you get in touch, which is the question a first-time
+visitor is actually holding.
+
+They are built on native `<details>` — interactive with **zero JavaScript**.
+The browser owns keyboard operation, focus order and the open state, so there
+is nothing to hydrate and nothing to re-implement less well than the element
+already does it. Steps are independent rather than an exclusive accordion, the
+first is open on load so the pattern is discoverable, and collapsed copy stays
+in the DOM where search engines still read it.
+
+`::details-content` animates the open/close where supported and simply snaps
+where it is not, which is the correct thing to degrade to. `interpolate-size:
+allow-keywords` on `html` is what lets it transition to `auto` height. The
+transition is wrapped in `prefers-reduced-motion: no-preference`.
+
+The step copy deliberately carries no timescales, service levels, guarantees or
+warranties — the company publishes none, and those are exactly the claims that
+would be invented.
 
 ---
 
@@ -81,16 +166,15 @@ page.
 
 Tokens are defined in `src/app/globals.css` under `@theme`.
 
-**Colour** is taken from the logo itself — three ascending strokes in bright
-blue, indigo and deep navy. The orange used across the previous site came from
-the purchased template, not from the brand mark, so it is not carried over. If
-orange is in fact part of the brand, `--color-brand-600` is the one token to
-change.
+**Colour** starts at the logo — three ascending strokes in bright blue, indigo
+and deep navy — and extends into the four division accents and the tinted
+ground. See [Colour](#colour) above for how those are used.
 
-Two tones are set slightly off their "natural" values to clear WCAG AA at the
-11px mono label size: `--color-brand-600` sits a shade below the logo's blue,
-and `--color-ink-faint` / `--color-mist-dim` are pinned to the darkest and
-lightest points that still pass on every ground they appear on.
+Several tones are set slightly off their "natural" values to clear WCAG AA at
+the 11px mono label size: `--color-brand-600` sits a shade below the logo's
+blue, the four `--color-acc-*` accents are pitched to pass on both paper
+grounds, and `--color-ink-faint` / `--color-mist-dim` are pinned to the darkest
+and lightest points that still pass on every ground they appear on.
 
 **Type** is Archivo for everything and IBM Plex Mono for indices, labels and
 data. Both are self-hosted by `next/font` at build time. Archivo ships with the
@@ -300,8 +384,12 @@ Lighthouse against the production build:
 | --- | --- | --- | --- | --- |
 | Home, desktop | 100 | 100 | 100 | 100 |
 | Home, mobile | 96 | 100 | 100 | 100 |
-| `/electronics` | 100 | 100 | 100 | 100 |
-| `/tech-park` | 100 | 100 | 100 | 100 |
+| `/logistics`, desktop | 100 | 100 | 100 | 100 |
+| `/business-hub`, mobile | 94 | 100 | 100 | 100 |
+
+`/business-hub` is the longest page and measures 94 on throttled mobile,
+repeatably. The only opportunity Lighthouse reports is unused framework
+JavaScript — the page itself ships no client components beyond the header.
 
 Desktop LCP 0.6 s, CLS 0. Mobile LCP 2.7 s, CLS 0. No horizontal overflow at
 320, 375, 390, 414, 768, 1024, 1280, 1440 or 1920px.
