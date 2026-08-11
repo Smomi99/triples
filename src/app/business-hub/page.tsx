@@ -60,7 +60,7 @@ export default function BusinessHubPage() {
       />
 
       {/* 01 — The name, read out as three words */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="The name" />
@@ -107,7 +107,7 @@ export default function BusinessHubPage() {
         The arrows point away from the centre on each side, so the page states
         the shape of the business before the lists are read.
       */}
-      <section className="bg-navy-950 py-20 text-paper lg:py-28">
+      <section className="bg-navy-950 py-16 text-paper lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="02" label="Trade" tone="light" />
@@ -177,7 +177,7 @@ export default function BusinessHubPage() {
       />
 
       {/* 04 — Offices, presented as the reach they buy */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      <section className="bg-paper-alt py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="04" label="Reach" />
@@ -226,7 +226,7 @@ export default function BusinessHubPage() {
       </section>
 
       {/* 05 — How the organisation is set up */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="05" label="Inside" />

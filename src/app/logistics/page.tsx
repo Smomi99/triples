@@ -71,7 +71,7 @@ export default function LogisticsPage() {
         straight against the dark section, the image edge becomes the
         transition instead.
       */}
-      <section className="bg-paper pt-20 lg:pt-28">
+      <section className="bg-paper pt-16 lg:pt-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="Overview" />
@@ -137,7 +137,7 @@ export default function LogisticsPage() {
         at each service, so the seven modes read as points along one route
         rather than as seven unrelated rows.
       */}
-      <section className="bg-navy-950 py-20 text-paper lg:py-28">
+      <section className="bg-navy-950 py-16 text-paper lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="02" label="Modes" tone="light" />
@@ -190,7 +190,7 @@ export default function LogisticsPage() {
       />
 
       {/* 04 — What travels: three cargo categories */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      <section className="bg-paper-alt py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="04" label="What travels" />
@@ -218,7 +218,7 @@ export default function LogisticsPage() {
       </section>
 
       {/* 05 — Sectors */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="05" label="Sectors" />

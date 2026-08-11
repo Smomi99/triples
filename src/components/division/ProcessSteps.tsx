@@ -43,7 +43,7 @@ export default function ProcessSteps({
   const bg = background ?? (dark ? "bg-navy-950 text-paper" : "bg-paper");
 
   return (
-    <section className={`${bg} py-20 lg:py-28`}>
+    <section className={`${bg} py-16 lg:py-20`}>
       <div className="shell">
         <div className="rail">
           <SectionIndex index={index} label={label} tone={dark ? "light" : "dark"} />

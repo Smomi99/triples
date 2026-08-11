@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         ]}
       />
 
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <p className="eyebrow border-t border-line-strong pt-4 text-ink-faint">

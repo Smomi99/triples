@@ -15,7 +15,7 @@ import { offices } from "@/content/site";
  */
 export default function Scale() {
   return (
-    <section className="bg-navy-950 py-20 text-paper lg:py-32">
+    <section className="bg-navy-950 py-16 text-paper lg:py-24">
       <div className="shell">
         <div className="rail">
           <SectionIndex index="03" label="Scale" tone="light" />

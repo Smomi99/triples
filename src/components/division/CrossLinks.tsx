@@ -23,7 +23,7 @@ export default function CrossLinks({
   const light = tone === "light";
 
   return (
-    <section className={light ? "bg-navy-950 py-20 text-paper lg:py-28" : "bg-paper py-20 lg:py-28"}>
+    <section className={light ? "bg-navy-950 py-16 text-paper lg:py-20" : "bg-paper py-16 lg:py-20"}>
       <div className="shell">
         <div className="rail">
           <SectionIndex index={index} label="Elsewhere in the group" tone={tone} />

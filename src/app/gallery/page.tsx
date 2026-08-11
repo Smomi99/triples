@@ -94,7 +94,7 @@ export default function GalleryPage() {
         return (
           <section
             key={division.slug}
-            className={`py-20 lg:py-28 ${gi % 2 === 0 ? "bg-paper" : "bg-tint"}`}
+            className={`py-16 lg:py-20 ${gi % 2 === 0 ? "bg-paper" : "bg-tint"}`}
           >
             <div className="shell">
               <div className="rail">

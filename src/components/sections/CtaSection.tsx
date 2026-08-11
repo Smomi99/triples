@@ -16,7 +16,7 @@ export default function CtaSection({
   return (
     /* The page's final destination, so it carries the route arriving. */
     <section className="brand-glow relative isolate overflow-hidden bg-navy-950 text-paper">
-      <div className="shell relative py-20 lg:py-32">
+      <div className="shell relative py-16 lg:py-24">
         <div className="rail">
           <p className="eyebrow flex items-baseline gap-3 border-t border-white/15 pt-4 text-mist">
             <span className="text-orange">→</span>

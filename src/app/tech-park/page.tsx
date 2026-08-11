@@ -60,7 +60,7 @@ export default function TechParkPage() {
       />
 
       {/* 01 — Overview */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="Overview" />
@@ -110,7 +110,7 @@ export default function TechParkPage() {
         the block reads the way a stack diagram does: the foundation is at the
         bottom of the page as well as at the bottom of the system.
       */}
-      <section className="relative bg-navy-950 py-20 text-paper lg:py-28" style={GRID_BACKGROUND}>
+      <section className="relative bg-navy-950 py-16 text-paper lg:py-20" style={GRID_BACKGROUND}>
         <div className="shell relative">
           <div className="rail">
             <SectionIndex index="02" label="The stack" tone="light" />
@@ -164,7 +164,7 @@ export default function TechParkPage() {
       />
 
       {/* 04 — Capabilities */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      <section className="bg-paper-alt py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="04" label="Capabilities" />

@@ -27,7 +27,7 @@ export default function Founder({
   const full = variant === "full";
 
   return (
-    <section className={`${full ? "bg-paper" : "bg-wash-copper"} py-20 lg:py-28`}>
+    <section className={`${full ? "bg-paper" : "bg-wash-copper"} py-16 lg:py-20`}>
       <div className="shell">
         <div className="rail">
           <SectionIndex index={index} label="Leadership" />

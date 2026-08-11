@@ -52,7 +52,7 @@ export default function ProjectsPage() {
       {clients.map((group, groupIndex) => (
         <section
           key={group.client}
-          className={groupIndex % 2 === 0 ? "bg-paper py-20 lg:py-28" : "bg-paper-alt py-20 lg:py-28"}
+          className={groupIndex % 2 === 0 ? "bg-paper py-16 lg:py-20" : "bg-paper-alt py-16 lg:py-20"}
         >
           <div className="shell">
             <div className="rail">

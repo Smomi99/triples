@@ -54,7 +54,7 @@ export default function GreenMartPage() {
       />
 
       {/* 01 — Overview */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="Overview" />
@@ -87,7 +87,7 @@ export default function GreenMartPage() {
         the group that sells to the public, and it should feel like a shop.
       */}
       <section
-        className="py-20 text-paper lg:py-28"
+        className="py-16 text-paper lg:py-20"
         style={{ backgroundColor: "var(--color-acc-retail)" }}
       >
         <div className="shell">
@@ -131,7 +131,7 @@ export default function GreenMartPage() {
       </section>
 
       {/* 03 — Buying from it */}
-      <section className="bg-tint py-20 lg:py-28">
+      <section className="bg-tint py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="03" label="Buying" />

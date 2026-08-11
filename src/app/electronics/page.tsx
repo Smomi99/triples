@@ -59,7 +59,7 @@ export default function ElectronicsPage() {
       />
 
       {/* 01 — Overview, with the image carried tall alongside the text */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="Overview" />
@@ -103,7 +103,7 @@ export default function ElectronicsPage() {
         rating in two columns. Rows are hairline-ruled rather than boxed so the
         table reads as a printed datasheet.
       */}
-      <section className="bg-navy-950 py-20 text-paper lg:py-28">
+      <section className="bg-navy-950 py-16 text-paper lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="02" label="Catalogue" tone="light" />
@@ -178,7 +178,7 @@ export default function ElectronicsPage() {
         business as electrical products and engineering supply for projects,
         and no longer publishes a manufacturing address.
       */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      <section className="bg-paper-alt py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="04" label="Engineering supply" />

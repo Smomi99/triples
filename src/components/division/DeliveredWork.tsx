@@ -22,7 +22,7 @@ export default function DeliveredWork({
   if (related.length === 0) return null;
 
   return (
-    <section className={`${background === "paper" ? "bg-paper" : "bg-paper-alt"} py-20 lg:py-28`}>
+    <section className={`${background === "paper" ? "bg-paper" : "bg-paper-alt"} py-16 lg:py-20`}>
       <div className="shell">
         <div className="rail">
           <SectionIndex index={index} label="Delivered" />

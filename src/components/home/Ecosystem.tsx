@@ -23,7 +23,7 @@ const STEP = 360 / SLOTS.length;
 
 export default function Ecosystem() {
   return (
-    <section className="bg-wash-teal py-20 lg:py-28">
+    <section className="bg-wash-teal py-16 lg:py-20">
       <div className="shell">
         <div className="rail">
           <SectionIndex index="02" label="Ecosystem" />

@@ -47,7 +47,7 @@ export default function AboutPage() {
       />
 
       {/* Story */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="01" label="Story" />
@@ -90,7 +90,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="bg-navy-950 py-20 text-paper lg:py-28">
+      <section className="bg-navy-950 py-16 text-paper lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="02" label="Values" tone="light" />
@@ -119,7 +119,7 @@ export default function AboutPage() {
       </section>
 
       {/* Locations */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="03" label="Locations" />
@@ -159,7 +159,7 @@ export default function AboutPage() {
       </section>
 
       {/* The group at a glance */}
-      <section className="bg-paper-alt py-20 lg:py-28">
+      <section className="bg-paper-alt py-16 lg:py-20">
         <div className="shell">
           <div className="rail">
             <SectionIndex index="05" label="The group" />

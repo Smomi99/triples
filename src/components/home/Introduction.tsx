@@ -21,7 +21,7 @@ const markers = [
 
 export default function Introduction() {
   return (
-    <section className="bg-wash-blue py-20 lg:py-32">
+    <section className="bg-wash-blue py-16 lg:py-24">
       <div className="shell">
         <div className="rail">
           <SectionIndex index="01" label="Introduction" />
