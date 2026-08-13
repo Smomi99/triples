@@ -179,11 +179,11 @@ export default function ContactForm() {
         </p>
       </div>
 
-      {!ENDPOINT && (
+      {/* {!ENDPOINT && (
         <p className="mt-6 font-mono text-[0.6875rem] leading-relaxed tracking-[0.06em] text-ink-faint uppercase">
           This form opens your email client — nothing is stored on this website.
         </p>
-      )}
+      )} */}
     </form>
   );
 }

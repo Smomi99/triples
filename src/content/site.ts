@@ -48,8 +48,8 @@ export const contact = {
   phoneAltHref: "tel:+8802223310853",
   mobile: "+88 01711 938112",
   mobileHref: "tel:+8801711938112",
-  email: "shiblee@triplesbd.com",
-  emailHref: "mailto:shiblee@triplesbd.com",
+  email: "info@triplesbd.com",
+  emailHref: "mailto:info@triplesbd.com",
   whatsapp: "https://api.whatsapp.com/send?phone=+8801313368332",
 } as const;
 
