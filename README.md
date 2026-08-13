@@ -109,11 +109,11 @@ previously alternated between off-white and full navy, which is what made the
 whole site read as dark. The homepage now runs
 
 ```
-hero DARK · intro paper · ecosystem tint · globe DARK · capabilities paper
+hero DARK · intro paper · globe DARK · capabilities paper
 · businesses paper-alt · proof paper · trust tint · CTA DARK
 ```
 
-— three dark sections out of nine, down from five, with no two adjacent.
+— three dark sections out of eight, down from five, with no two adjacent.
 
 ### The hero backdrop, and adding a video
 
@@ -196,8 +196,13 @@ sequence arrives at once rather than merely arriving slowly without animation.
 
 ### The ecosystem orbit
 
-Homepage section 02 is a genuine 3D scene, built with CSS transforms and no
-library. The businesses ride an orbital plane tilted back in space; the plane
+`EcosystemOrbit`, which runs inside the Introduction (section 01) beside the
+copy describing the same five businesses, is a genuine 3D scene built with CSS
+transforms and no library. It had its own section once, at 02; the orbit was
+that section's only content, so when the orbit moved the section went with it
+and everything below shifted up one.
+
+The businesses ride an orbital plane tilted back in space; the plane
 turns, and each card counter-rotates by exactly the same amount so it always
 faces the viewer and stays readable while its position travels. Depth is real —
 cards on the far side are further from the camera and perspective shrinks them,
@@ -213,6 +218,15 @@ rotateZ(a) translateX(r) rotateZ(-(spin + a)) rotateX(-tilt) translate(-50%,-50%
 Plane and cards run the same duration on a `linear` curve, which is what keeps
 `spin` identical in both places. Slot angles are `i · 72° + 90°`, so five
 businesses sit evenly around the ring with the first nearest the camera.
+
+Sizing is all derived from `--r`, so the `compact` prop — which the Introduction
+uses — is a single class, `.orbit3d-stage--compact`, that changes the radius,
+the card width and the box around them. Two things do not scale linearly with
+it. `perspective` has to stay long relative to `--r` (dropping it in proportion
+blew the near card up to 1.7× its own width), and the discipline line under each
+name is dropped, because five cards 72° apart on a small ring sit about 150px
+from each other and a card tall enough to hold "Electrical apparatus
+manufacturing" overlaps its neighbours and buries the mark.
 
 It rotates only once scrolled into view, and pauses on `:hover` and
 `:focus-within` so it is never moving while being read or tabbed through. Under
@@ -233,10 +247,12 @@ Two things that will bite anyone editing it:
 
 ### The globe
 
-Homepage section 03 is an orthographic globe carrying the four real office
-locations, with great-circle routes drawn from the Dhaka head office to each of
-them. Nothing on it is invented — there are no coverage claims, no lanes and no
-markers the company has not published.
+Homepage section 02, Coverage, is an orthographic globe carrying the four real
+office locations, with great-circle legs flying out from the Dhaka head office
+to each region the group says it ships into. The offices and their coordinates
+are published facts; the five regions are the group's own coverage claim, and
+they live in one place — `coverage` in `content/site.ts` — so the section copy
+and the marks on the globe cannot drift apart.
 
 Orthographic projection is what you actually see looking at a sphere from far
 away, so this is a real 3D view rather than a picture of one: rotating it
@@ -294,9 +310,22 @@ across the antimeridian first, or the Dhaka–California lane lurches the wrong 
 round the globe as it crosses the Pacific. Heading is sampled either side of the
 aircraft so it stays defined at both ends of the lane.
 
-Dhaka–Rajshahi draws but is not flown. It spans about 2°: a 200km domestic link
-to the plant, not an international route. `MIN_FLOWN_SPAN` filters it out, which
-also keeps a plane off two markers that already overlap.
+**The legs are coverage, not scheduled services.** One arc runs from Dhaka to
+each region in `coverage` (`content/site.ts`) — Asia, the Middle East, Africa,
+Europe, the USA — anchored at a point inside the region rather than at a city,
+far enough from the office pins that the two sets of labels do not collide.
+
+As a leg lands, that region is marked and named, and it stays marked: `arrived()`
+counts up with the schedule and holds at the full set instead of resetting on
+each loop, so a full run builds the coverage map rather than replaying one leg at
+a time. Regions show as hollow dots until reached — which is also the frame
+`GlobeStatic` renders, so the handover to the interactive globe does not pop.
+Orange rings are regions; the blue dots remain offices, and the two never merge.
+Under `prefers-reduced-motion` the clock never advances, so the globe resolves
+straight to the finished set rather than sitting on an empty map forever.
+
+The office links still draw underneath as a dim layer, so Dhaka–Chattogram is
+visible as geography without an aircraft being flown down a 2° domestic hop.
 
 **Motion control.** Drag, or arrow keys when focused. One loop advances the
 schedule and eases the camera toward it, throttled to ~30fps and stopped

@@ -1,15 +1,17 @@
 import GlobeArt from "@/components/home/GlobeArt";
 import GlobeFlights from "@/components/home/GlobeFlights";
+import GlobeRegions from "@/components/home/GlobeRegions";
 import {
+  arcs,
   cameraFor,
   coastlines,
+  coverageLanes,
   flightAt,
-  flownLanes,
   graticule,
   markers,
   routes,
 } from "@/lib/globe";
-import type { Office } from "@/content/site";
+import { coverage, type Office } from "@/content/site";
 
 /**
  * The globe as a server component: no JavaScript, no hydration, no bundle.
@@ -24,11 +26,25 @@ import type { Office } from "@/content/site";
 export default function GlobeStatic({ offices }: { offices: Office[] }) {
   /* The first frame of the first leg, so the interactive globe picks up from
      exactly here rather than jumping when it takes over. */
-  const lanes = flownLanes(offices);
+  const hub = offices.find((o) => o.id === "dhaka") ?? offices[0];
+  const lanes = hub ? coverageLanes(hub, coverage) : [];
   const lane = lanes[0];
   const camera = cameraFor(lane, 0);
   const rot = ((camera.lon % 360) + 360) % 360;
   const lat = camera.lat;
+
+  /* One placement pass over both sets, the same as the interactive globe, so a
+     region label never lands on an office label. */
+  const projected = markers(
+    [
+      ...offices.map((o) => ({ id: o.id, city: o.city, coords: o.coords })),
+      ...coverage.map((r) => ({ id: r.id, city: r.name, coords: r.coords })),
+    ],
+    rot,
+    lat
+  );
+  const pins = projected.slice(0, offices.length);
+  const regionPins = projected.slice(offices.length);
 
   return (
     <>
@@ -36,14 +52,19 @@ export default function GlobeStatic({ offices }: { offices: Office[] }) {
         <GlobeArt
           grid={graticule(rot, lat)}
           coasts={coastlines(rot, lat)}
-          routes={routes(offices, rot, lat)}
+          routes={[...routes(offices, rot, lat), ...arcs(lanes, rot, lat)]}
         />
+
+        {/* Nothing reached yet, matching the interactive globe's opening frame
+            so the handover in GlobePanel does not pop. Regions show as hollow
+            dots until a leg lands on them. */}
+        <GlobeRegions regions={regionPins} reached={0} />
 
         {/* The first leg at its departure point. This is also the state anyone
             with reduced motion or no JavaScript keeps. */}
         <GlobeFlights flight={lane ? flightAt(lane, 0, rot, lat) : null} />
 
-        {markers(offices, rot, lat).map(({ id, city, point, below }) =>
+        {pins.map(({ id, city, point, below }) =>
           point.visible ? (
             <g key={id} transform={`translate(${point.x.toFixed(1)} ${point.y.toFixed(1)})`}>
               <circle r="1.7" fill="var(--color-brand-400)" stroke="#0a1226" strokeWidth="0.6" />
@@ -64,7 +85,7 @@ export default function GlobeStatic({ offices }: { offices: Office[] }) {
 
       <p className="mt-5 text-center">
         <span className="eyebrow text-brand-400">
-          {lane ? `${lane.from} → ${lane.to}` : "Office network"}
+          {lane ? `${lane.from} → ${lane.to}` : "Coverage"}
         </span>
         <span className="mt-1.5 block font-mono text-[0.6875rem] tracking-[0.14em] text-mist-dim uppercase">
           Drag to rotate

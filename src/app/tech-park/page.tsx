@@ -54,10 +54,12 @@ export default function TechParkPage() {
         )}
       />
 
-      <DivisionHero
-        division={techPark}
-        cta={{ label: "Start a build", href: "/contact" }}
-      />
+     <DivisionHero
+               division={division}
+               image={"/images/scenes/techpark.png"}
+               imageAlt={"Techpark Images"}
+               
+             />
 
       {/* 01 — Overview */}
       <section className="bg-paper py-16 lg:py-20">

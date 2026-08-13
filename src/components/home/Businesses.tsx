@@ -19,7 +19,7 @@ export default function Businesses() {
     <section className="bg-wash-indigo py-16 lg:py-24">
       <div className="shell">
         <div className="rail">
-          <SectionIndex index="05" label="Businesses" />
+          <SectionIndex index="04" label="Businesses" />
 
           <div>
             <h2 className="display-md reveal max-w-[18ch]">

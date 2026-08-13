@@ -4,25 +4,31 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import GlobeArt from "@/components/home/GlobeArt";
 import GlobeFlights from "@/components/home/GlobeFlights";
+import GlobeRegions from "@/components/home/GlobeRegions";
 import {
+  arcs,
+  arrived,
   cameraFor,
   coastlines,
+  coverageLanes,
   flightAt,
-  flownLanes,
   graticule,
+  isHolding,
   markers,
   routes,
   schedule,
 } from "@/lib/globe";
-import type { Office } from "@/content/site";
+import { coverage, type Office } from "@/content/site";
 
 /*
   The interactive globe.
 
   The rotation is not idle spin — it is a camera. One flight runs at a time and
   the globe turns to hold it in frame, so the motion is going somewhere and
-  finishes somewhere. When a leg lands the view settles on the destination, then
-  the next leg begins and the globe travels back.
+  finishes somewhere. When a leg lands the view settles on the destination, the
+  region it reached is marked and named, then the next leg begins and the globe
+  travels back. Over a full run the marks accumulate into the coverage map, so
+  the animation is building an argument rather than looping an effect.
 
   Tracking lags the aircraft rather than pinning it. Centre it exactly and the
   plane sits motionless while the earth slides underneath, which reads as a
@@ -49,11 +55,24 @@ export default function Globe({
   activeId: string | null;
   onSelect: (id: string | null) => void;
 }) {
-  const lanes = useMemo(() => flownLanes(offices), [offices]);
+  const lanes = useMemo(() => {
+    const hub = offices.find((o) => o.id === "dhaka") ?? offices[0];
+    return hub ? coverageLanes(hub, coverage) : [];
+  }, [offices]);
   const start = useMemo(() => cameraFor(lanes[0], 0), [lanes]);
 
   const [view, setView] = useState<View>({ clock: 0, lon: start.lon, lat: start.lat });
   const [dragging, setDragging] = useState(false);
+  /*
+    Under reduced motion the clock never advances, so nothing would ever land
+    and no region would ever be marked. The coverage is the point of the
+    section, not the animation, so it resolves straight to the finished set.
+  */
+  const [still, setStill] = useState(false);
+
+  useEffect(() => {
+    setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; from: number } | null>(null);
@@ -167,11 +186,33 @@ export default function Globe({
   const { index, t } = schedule(view.clock, lanes.length);
   const lane = lanes[index];
 
+  const holding = isHolding(view.clock);
+  const reached = still ? lanes.length : arrived(view.clock, lanes.length);
+
   /* Keyed on the camera alone, so GlobeArt's memo holds while only the aircraft moves. */
   const coasts = useMemo(() => coastlines(rot, lat), [rot, lat]);
   const grid = useMemo(() => graticule(rot, lat), [rot, lat]);
-  const drawnRoutes = useMemo(() => routes(offices, rot, lat), [offices, rot, lat]);
-  const pins = useMemo(() => markers(offices, rot, lat), [offices, rot, lat]);
+  /* Office links and coverage arcs share one dim layer; the flown lane lights up over it. */
+  const drawnRoutes = useMemo(
+    () => [...routes(offices, rot, lat), ...arcs(lanes, rot, lat)],
+    [offices, lanes, rot, lat]
+  );
+  /*
+    Offices and regions go through one placement pass, not two. `markers` drops
+    a label below its dot when something is already sitting where it would go,
+    and it can only do that for pins it has been shown — projected separately,
+    "Asia" landed on top of "Chattogram". Offices lead, so a region is the one
+    that gives way.
+  */
+  const placed = useMemo(() => {
+    const all = [
+      ...offices.map((o) => ({ id: o.id, city: o.city, coords: o.coords })),
+      ...coverage.map((r) => ({ id: r.id, city: r.name, coords: r.coords })),
+    ];
+    const projected = markers(all, rot, lat);
+    return { pins: projected.slice(0, offices.length), regions: projected.slice(offices.length) };
+  }, [offices, rot, lat]);
+  const { pins, regions: regionPins } = placed;
   const flight = useMemo(
     () => (lane ? flightAt(lane, t, rot, lat) : null),
     [lane, t, rot, lat]
@@ -184,7 +225,7 @@ export default function Globe({
         viewBox="-112 -112 224 224"
         className={`w-full touch-pan-y select-none ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
         role="img"
-        aria-label="Interactive globe showing Triple S Group office locations and the routes between them. Use the left and right arrow keys to rotate."
+        aria-label="Interactive globe showing Triple S Group office locations and the regions the group ships into, marked as each route arrives. Use the left and right arrow keys to rotate."
         tabIndex={0}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -193,6 +234,15 @@ export default function Globe({
         onKeyDown={onKeyDown}
       >
         <GlobeArt grid={grid} coasts={coasts} routes={drawnRoutes} />
+
+        {/* Under the aircraft, so a marked region never sits on top of the
+            thing that is still flying toward it. */}
+        <GlobeRegions
+          regions={regionPins}
+          reached={reached}
+          landing={holding && !still ? index : null}
+        />
+
         <GlobeFlights flight={flight} />
 
         {pins.map(({ id, city, point, below }) => {
@@ -232,8 +282,14 @@ export default function Globe({
       {/* Announced politely, so the leg change is available to a screen reader
           without interrupting whatever it is reading. */}
       <p aria-live="polite" className="mt-5 text-center">
-        <span className="eyebrow text-brand-400">
-          {lane ? `${lane.from} → ${lane.to}` : "Office network"}
+        {/* Switches to the arrival on landing, so the announcement carries the
+            same information the mark on the globe just did. */}
+        <span className={holding ? "eyebrow text-orange-soft" : "eyebrow text-brand-400"}>
+          {lane
+            ? holding
+              ? `${lane.to} — covered`
+              : `${lane.from} → ${lane.to}`
+            : "Coverage"}
         </span>
         <span className="mt-1.5 block font-mono text-[0.6875rem] tracking-[0.14em] text-mist-dim uppercase">
           Drag to rotate

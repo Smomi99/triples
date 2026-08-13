@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
 
-import type { Office } from "@/content/site";
+import { coverage, type Office } from "@/content/site";
 
 type GlobeProps = {
   offices: Office[];
@@ -11,12 +11,17 @@ type GlobeProps = {
 };
 
 /**
- * Pairs the globe with the office list and keeps one selection between them.
+ * Pairs the globe with the reading of it.
  *
- * The list is the content; the globe is the view of it. Hovering or focusing a
- * row lights its marker, and hovering a marker lights the row — so the same
- * information is reachable with a pointer, a keyboard, or a screen reader
- * reading the list alone.
+ * The panel beside the globe used to be the four office addresses, cross-linked
+ * to their markers. That made the section about where the group has desks. The
+ * section is about how far it ships, so the panel now states the shape of that
+ * — one origin, five regions — and lists the same five the globe marks, in the
+ * same order it flies them and the same colour it marks them in. Anyone reading
+ * the list alone gets the claim without needing the animation to have run.
+ *
+ * The full addresses have not been deleted from the site; they are what the
+ * Contact page is for.
  *
  * `children` is the server-rendered static globe. It is what ships in the HTML
  * and what stays if JavaScript never arrives. The interactive version is
@@ -55,10 +60,12 @@ export default function GlobePanel({
 
   return (
     <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-      <div ref={holder} className="reveal lg:col-span-6 xl:col-span-7">
-        {/* The caption names the leg currently in the air, so it belongs to the
-            globe rather than to this panel. */}
-        <div className="mx-auto w-full max-w-[34rem] lg:max-w-none">
+      <div ref={holder} className="reveal lg:col-span-6">
+        {/* Capped rather than fluid. Left to fill its column the globe became
+            the section instead of illustrating it, and the arcs are legible
+            long before it gets that big. The caption naming the leg in the air
+            belongs to the globe, so it sits inside this box. */}
+        <div className="mx-auto w-full max-w-[19rem] sm:max-w-[23rem] lg:max-w-[26rem]">
           {Interactive ? (
             <Interactive offices={offices} activeId={activeId} onSelect={setActiveId} />
           ) : (
@@ -67,54 +74,49 @@ export default function GlobePanel({
         </div>
       </div>
 
-      <ol className="lg:col-span-6 xl:col-span-5">
-        {offices.map((office, i) => {
-          const active = activeId === office.id;
+      <div className="lg:col-span-6">
+        <p className="eyebrow reveal text-brand-400">One origin, five regions</p>
 
-          return (
+        <p
+          className="reveal mt-6 text-lg leading-relaxed text-mist"
+          style={{ "--reveal-delay": "60ms" } as React.CSSProperties}
+        >
+          Every leg on the globe leaves from the same place. Dhaka is the corporate office;
+          Chattogram is the desk at the port. Between them they are where the group&rsquo;s freight,
+          sourcing and trade work starts, whichever business is carrying it.
+        </p>
+
+        <p
+          className="reveal mt-6 text-lg leading-relaxed text-mist"
+          style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
+        >
+          Guangzhou and California put the group&rsquo;s own buyers inside the time zones its
+          suppliers and customers work in. Everything past them runs on partnerships with major
+          ocean, air and ground carriers.
+        </p>
+
+        {/* The same five, in the order the globe flies them and the colour it
+            marks them in — so the list and the animation are one statement. */}
+        <ul
+          className="reveal mt-10 border-t border-white/15"
+          style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
+        >
+          {coverage.map((region) => (
             <li
-              key={office.id}
-              className="reveal"
-              style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
+              key={region.id}
+              className="flex items-center gap-4 border-b border-white/10 py-3.5"
             >
-              <div
-                tabIndex={0}
-                onPointerEnter={() => setActiveId(office.id)}
-                onPointerLeave={() => setActiveId(null)}
-                onFocus={() => setActiveId(office.id)}
-                onBlur={() => setActiveId(null)}
-                className={`relative border-t py-5 pl-6 transition-colors duration-300 outline-none ${
-                  active ? "border-brand-400/70" : "border-white/15"
-                }`}
-              >
-                <span
-                  aria-hidden
-                  className={`absolute left-0 top-5 h-2 w-2 rounded-full transition-all duration-300 ${
-                    active ? "scale-125 bg-brand-400" : "bg-white/25"
-                  }`}
-                />
-
-                <p className="eyebrow text-brand-400">{office.role}</p>
-
-                <p className="mt-3 flex items-baseline gap-3">
-                  <span className="display-sm">{office.city}</span>
-                  <span className="font-mono text-[0.6875rem] tracking-[0.14em] text-mist-dim uppercase">
-                    {office.country}
-                  </span>
-                </p>
-
-                <address className="mt-3 text-sm not-italic leading-relaxed text-mist">
-                  {office.lines.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </address>
-              </div>
+              <span
+                aria-hidden
+                className="h-1.5 w-1.5 shrink-0 rounded-full bg-orange-soft"
+              />
+              <span className="font-mono text-[0.8125rem] tracking-[0.12em] text-paper uppercase">
+                {region.name}
+              </span>
             </li>
-          );
-        })}
-      </ol>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

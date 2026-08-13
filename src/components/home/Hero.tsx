@@ -40,8 +40,7 @@ export default function Hero() {
           className="lede rise mt-10 max-w-2xl text-mist"
           style={{ "--reveal-delay": "220ms" } as React.CSSProperties}
         >
-          A Bangladesh-based conglomerate spanning international trade, logistics, engineering and
-          consumer retail — serving clients across Asia, the Middle East and Africa.
+          A Bangladesh-based conglomerate spanning international trade, logistics, engineering and E-commerce — serving clients across Asia, Europe, the Middle East , Africa and USA.
         </p>
 
         <div

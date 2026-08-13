@@ -21,11 +21,16 @@ import { heroMedia, type HeroSlide } from "@/content/site";
  * A video, when configured, replaces the whole carousel: it is the stronger
  * asset and running both would be two things competing for the same space.
  */
-const SLIDE_MS = 6000;
+const SLIDE_MS = 4200;
 
-export default function HeroCarousel({ onSlideChange }: { onSlideChange?: (i: number) => void }) {
+export default function HeroCarousel({
+  active,
+  onAdvance,
+}: {
+  active: number;
+  onAdvance: () => void;
+}) {
   const slides: HeroSlide[] = heroMedia.slides;
-  const [active, setActive] = useState(0);
   /*
     Only the first slide is in the initial HTML. Shipping all four cost 4
     points and 0.6s of LCP on throttled mobile for images nobody sees until
@@ -84,7 +89,7 @@ export default function HeroCarousel({ onSlideChange }: { onSlideChange?: (i: nu
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !timer) {
-          timer = window.setInterval(() => setActive((i) => (i + 1) % slides.length), SLIDE_MS);
+          timer = window.setInterval(onAdvance, SLIDE_MS);
         } else if (!entry.isIntersecting && timer) {
           window.clearInterval(timer);
           timer = 0;
@@ -98,36 +103,38 @@ export default function HeroCarousel({ onSlideChange }: { onSlideChange?: (i: nu
       observer.disconnect();
       if (timer) window.clearInterval(timer);
     };
-  }, [playing, ready, slides.length]);
-
-  useEffect(() => onSlideChange?.(active), [active, onSlideChange]);
+  }, [playing, ready, slides.length, onAdvance]);
 
   return (
     <div ref={rootRef} className="grain absolute inset-0 -z-10">
-      {(ready ? slides : slides.slice(0, 1)).map((slide, i) => (
-        <div
-          key={slide.slug}
-          aria-hidden
-          className="absolute inset-0 transition-opacity duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{ opacity: !playing && i === active ? 1 : 0 }}
-        >
-          <Image
-            src={slide.image}
-            alt=""
-            fill
-            sizes="100vw"
-            quality={74}
-            priority={i === 0}
-            loading={i === 0 ? "eager" : "lazy"}
-            className="object-cover object-center"
-          />
-          {/* The business's colour, laid over its own photograph. */}
+      {slides.map((slide, i) =>
+        /* Before the idle mount, only the poster exists — plus whichever slide
+           a click asked for, so an early click is not a blank hero. */
+        ready || i === 0 || i === active ? (
           <div
-            className="absolute inset-0 opacity-25 mix-blend-multiply"
-            style={{ backgroundColor: slide.accent }}
-          />
-        </div>
-      ))}
+            key={slide.slug}
+            aria-hidden
+            className="absolute inset-0 transition-opacity duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{ opacity: !playing && i === active ? 1 : 0 }}
+          >
+            <Image
+              src={slide.image}
+              alt=""
+              fill
+              sizes="100vw"
+              quality={85}
+              priority={i === 0}
+              loading={i === 0 ? "eager" : "lazy"}
+              className="object-cover object-center"
+            />
+            {/* The business's colour, laid over its own photograph. */}
+            <div
+              className="absolute inset-0 opacity-25 mix-blend-multiply"
+              style={{ backgroundColor: slide.accent }}
+            />
+          </div>
+        ) : null
+      )}
 
       {showVideo && heroMedia.video && (
         <video

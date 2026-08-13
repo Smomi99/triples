@@ -63,7 +63,7 @@ export default function DivisionHero({
               fill
               priority
               sizes="100vw"
-              quality={72}
+              quality={85}
               /* Desaturated first: multiplying an accent into a colour
                  photograph muddies to brown. Greyscale + contrast gives the
                  accent clean tonal range to sit in. */

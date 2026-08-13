@@ -10,7 +10,7 @@ export default function Proof() {
     <section className="bg-wash-green py-16 lg:py-24">
       <div className="shell">
         <div className="rail">
-          <SectionIndex index="06" label="Proof" />
+          <SectionIndex index="05" label="Proof" />
 
           <div>
             <h2 className="display-md reveal max-w-[20ch]">

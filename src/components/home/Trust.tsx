@@ -15,7 +15,7 @@ export default function Trust() {
     <section className="bg-wash-blue py-16 lg:py-24">
       <div className="shell">
         <div className="rail">
-          <SectionIndex index="08" label="Trust" />
+          <SectionIndex index="07" label="Trust" />
 
           <div>
             <h2 className="display-md reveal max-w-[19ch]">

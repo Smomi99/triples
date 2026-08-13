@@ -53,7 +53,7 @@ export default function ElectronicsPage() {
 
       <DivisionHero
         division={division}
-        image={"/images/scenes/electronics.jpg"}
+        image={"/images/scenes/electronics.png"}
         imageAlt={"Factory lighting installed at AKH Knitting & Dyeing"}
         cta={{ label: "Specify a job", href: "/contact" }}
       />

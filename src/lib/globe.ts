@@ -196,6 +196,32 @@ export function routes(
 
 export type Lane = ReturnType<typeof lanes>[number];
 
+/**
+ * The lanes the globe actually flies: Bangladesh out to each coverage region.
+ *
+ * These are reach, not scheduled services — one arc per region the group says
+ * it ships into, anchored at a point inside that region rather than at a city.
+ * Same shape as an office lane, so the camera, the trail and the aircraft code
+ * do not care which kind they are given.
+ */
+export function coverageLanes(
+  hub: { city: string; coords: [number, number] },
+  regions: { id: string; name: string; coords: [number, number] }[]
+): Lane[] {
+  return regions.map((region) => ({
+    id: region.id,
+    from: hub.city,
+    to: region.name,
+    path: greatCircle(hub.coords, region.coords),
+    span: angularSpan(hub.coords, region.coords),
+  }));
+}
+
+/** Every lane drawn as a faint arc, whether or not it is the one being flown. */
+export function arcs(list: Lane[], rotLon: number, rotLat: number): string[] {
+  return list.flatMap((lane) => toPaths(lane.path, rotLon, rotLat));
+}
+
 export type Flight = {
   id: string;
   trail: string[];
@@ -207,22 +233,6 @@ export type Flight = {
 
 /** How much of the lane behind the aircraft is lit as a trail. */
 const TRAIL = 0.22;
-
-/**
- * Lanes shorter than this carry no aircraft.
- *
- * Dhaka–Chattogram spans about 2° — a domestic link to the port office, not an
- * international route. Its line still draws, but flying an aircraft along it
- * would put a plane on top of two markers that nearly overlap, and would
- * overstate what that link is.
- */
-const MIN_FLOWN_SPAN = 8;
-
-export function flownLanes(
-  offices: { id: string; city: string; coords: [number, number] }[]
-): Lane[] {
-  return lanes(offices).filter((lane) => lane.span >= MIN_FLOWN_SPAN);
-}
 
 /* --- Schedule ----------------------------------------------------------- *
  *
@@ -243,6 +253,25 @@ export function schedule(clock: number, laneCount: number): { index: number; t: 
 
   // Smoothstep, so departure and arrival ease rather than start at full speed.
   return { index, t: raw * raw * (3 - 2 * raw) };
+}
+
+/** True once the aircraft has landed and the view is holding on the arrival. */
+export function isHolding(clock: number): boolean {
+  return clock % CYCLE >= FLIGHT_MS;
+}
+
+/**
+ * How many regions have been reached by `clock`.
+ *
+ * Counts up as legs land and then holds at the full set rather than resetting
+ * when the schedule wraps — the marks are the coverage the run has built up, so
+ * clearing them on every loop would keep undoing the point the globe is making.
+ * A region is counted the moment its leg lands, which is the hold, not the end
+ * of the cycle.
+ */
+export function arrived(clock: number, laneCount: number): number {
+  if (laneCount === 0) return 0;
+  return Math.min(laneCount, Math.floor(clock / CYCLE) + (isHolding(clock) ? 1 : 0));
 }
 
 /**

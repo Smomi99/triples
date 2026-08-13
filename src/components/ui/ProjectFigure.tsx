@@ -28,7 +28,11 @@ export default function ProjectFigure({
         alt={image.alt}
         fill
         sizes={sizes}
-        quality={82}
+        /* These sources are 330–520px on the long edge and get displayed
+           larger than that, so the browser is already upscaling them. Anything
+           the encoder throws away is magnified along with the rest. See the
+           `qualities` note in next.config.ts. */
+        quality={95}
         priority={priority}
         className="object-cover"
       />

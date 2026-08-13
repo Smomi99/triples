@@ -534,6 +534,7 @@
     .orbit3d-stage {
       --tilt: 56deg;
       --r: clamp(180px, 30vw, 400px);
+      --node-w: clamp(9.5rem, 13vw, 12rem);
       --dur: 64s;
       /*
         Tall enough to hold the near card at full perspective scale. Cards are
@@ -543,6 +544,36 @@
       height: clamp(430px, 47vw, 650px);
       /* Long lens. A short one exaggerates the near card into a billboard. */
       perspective: 1900px;
+    }
+
+    /*
+      The orbit at column scale, for when it sits beside body copy instead of
+      carrying a section on its own.
+
+      Everything is driven from --r, so only the radius, the card width and the
+      box around them change. The lens shortens with the radius: perspective is
+      meaningful only relative to --r, and holding it at 1900px around a 160px
+      ring flattens the depth out of the thing entirely. It turns a little
+      faster too — the same 64s on a quarter of the circumference reads as
+      stopped.
+    */
+    .orbit3d-stage--compact {
+      /*
+        The floor matters more than the ceiling. Five cards 72° apart sit
+        2r·sin36° from each other, so a radius under ~120px puts them closer
+        together than a card is wide and they clip through one another.
+      */
+      --r: clamp(124px, 13vw, 134px);
+      --node-w: clamp(6rem, 7vw, 7.5rem);
+      --dur: 46s;
+      height: clamp(300px, 24vw, 350px);
+      /*
+        Still a long lens relative to --r. Scaling 1900px down proportionally
+        put it near 800px, which blew the near card up to 1.7x its own width —
+        wider than the column holding it. Depth is worth less here than a ring
+        whose cards all stay roughly the size they were authored at.
+      */
+      perspective: 1500px;
     }
 
     .orbit3d-scene {
@@ -613,7 +644,7 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: clamp(9.5rem, 13vw, 12rem);
+      width: var(--node-w);
       transform: rotateZ(var(--a)) translateX(var(--r)) rotateZ(calc(0deg - var(--a)))
         rotateX(calc(0deg - var(--tilt))) translate(-50%, -50%);
       animation: orbit3d-node var(--dur) linear infinite;
@@ -893,6 +924,30 @@
 
   .hero-settle {
     animation: hero-settle 2.6s var(--ease-out-expo) both;
+  }
+
+  /*
+    The ring that expands out of a coverage mark as the globe lands on it.
+
+    transform-box/origin are not optional on an SVG circle: without them the
+    transform is taken about the SVG user-space origin at the centre of the
+    globe, and the ring flies off across the disc instead of growing in place.
+  */
+  @keyframes globe-ping {
+    from {
+      transform: scale(0.5);
+      opacity: 0.55;
+    }
+    to {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  .globe-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: globe-ping 1.8s var(--ease-out-expo) infinite;
   }
 
   /* Masks a line of type so it can rise into view from behind its own edge. */

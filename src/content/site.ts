@@ -1,9 +1,9 @@
 /**
  * Single source of truth for company facts.
  *
- * Everything here is taken from the previous triplesbd.com site. Nothing is
- * invented — no client names, revenue figures, headcounts, certifications or
- * statistics that the company has not published itself. Where a number would
+ * Everything here is taken from the previous triplesbd.com site, except where a
+ * field says otherwise in its own comment. Nothing is invented — no client
+ * names, revenue figures, headcounts or certifications. Where a number would
  * normally appear in a corporate template, this site uses a verifiable fact
  * (founding year, office cities, division count) or nothing at all.
  */
@@ -19,8 +19,12 @@ export const company = {
   /** Used as the site-wide descriptor in metadata and structured data. */
   descriptor:
     "A Bangladesh-based diversified business conglomerate providing integrated solutions across international trade, logistics, engineering and consumer retail.",
-  /** Regions the 2026 profile states the group serves. */
-  regions: ["Asia", "the Middle East", "Africa"],
+  /**
+   * Regions the group states it serves. The 2026 profile named Asia, the
+   * Middle East and Africa; Europe and the USA were added to the claim
+   * afterwards. See `coverage` for the same list with globe anchors.
+   */
+  regions: ["Asia", "Europe", "the Middle East", "Africa", "the USA"],
   vision:
     "To establish Triple S Group as a globally recognized business leader delivering innovative, sustainable and technology-driven solutions.",
   mission:
@@ -28,6 +32,13 @@ export const company = {
   founded: 2017,
   /** The group's owner began trading and supply operations in 2010. */
   tradingSince: 2010,
+  /**
+   * Clients served, stated by the group rather than taken from the old site.
+   * Unlike the other figures here it is not externally checkable, so it is
+   * rendered as "300+" — a floor the group is willing to stand behind — and it
+   * lives here so there is one place to correct it.
+   */
+  clients: 300,
 } as const;
 
 export const contact = {
@@ -91,14 +102,14 @@ export const heroMedia = {
       slug: "electronics",
       label: "Electronics",
       caption: "LED lighting, switchgear and engineering supply",
-      image: "/images/scenes/electronics.jpg",
+      image: "/images/scenes/electronics.png",
       accent: "var(--color-acc-electronics-light)",
     },
     {
       slug: "green-mart",
       label: "Green Mart",
       caption: "Retail and e-commerce across Bangladesh",
-      image: "/images/scenes/green-mart.jpg",
+      image: "/images/scenes/green-mart.png",
       accent: "var(--color-acc-retail-light)",
     },
   ] as HeroSlide[],
@@ -121,6 +132,32 @@ export type Office = {
    */
   coords: [number, number];
 };
+
+/**
+ * A region the group ships into, and where to put it on the globe.
+ *
+ * `coords` is a regional anchor, not an address — a point far enough inside the
+ * landmass to read as "this region" when the globe marks it, and far enough
+ * from the office pins that the two sets of labels do not collide. Asia sits
+ * down over the Malay peninsula for exactly that reason: anywhere nearer the
+ * Bay of Bengal and its label lands on top of Chattogram's.
+ *
+ * Order is the order the globe flies them: outward from Bangladesh, west across
+ * the Gulf and Africa, up into Europe, then over the pole to the USA.
+ */
+export type CoverageRegion = {
+  id: string;
+  name: string;
+  coords: [number, number];
+};
+
+export const coverage: CoverageRegion[] = [
+  { id: "asia", name: "Asia", coords: [3.1, 101.7] },
+  { id: "middle-east", name: "Middle East", coords: [24.5, 47.0] },
+  { id: "africa", name: "Africa", coords: [2.0, 21.5] },
+  { id: "europe", name: "Europe", coords: [49.5, 9.5] },
+  { id: "usa", name: "USA", coords: [39.5, -98.35] },
+];
 
 export const offices: Office[] = [
   {

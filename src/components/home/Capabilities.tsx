@@ -15,12 +15,12 @@ export default function Capabilities() {
     <section className="bg-wash-copper py-16 lg:py-24">
       <div className="shell">
         <div className="rail">
-          <SectionIndex index="04" label="Capabilities" />
+          <SectionIndex index="03" label="Capabilities" />
 
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
               <div className="lg:sticky lg:top-32">
-                <h2 className="display-md reveal">Ask the group, not the department.</h2>
+                {/* <h2 className="display-md reveal">Ask the group, not the department.</h2> */}
                 <p
                   className="reveal mt-8 max-w-md text-lg leading-relaxed text-ink-muted"
                   style={{ "--reveal-delay": "70ms" } as React.CSSProperties}

@@ -235,7 +235,7 @@ export const businessHubDetail = {
     inbound: {
       label: "Into Bangladesh",
       note: "Sourced globally, qualified, and delivered against a local requirement.",
-      items: ["Cosmetics", "Toiletries", "Machinery", "Chemicals", "Handling equipment"],
+      items: ["Essentinal commodities","Cosmetics", "Toiletries", "Machinery", "Chemicals", "Handling equipment"],
     },
     outbound: {
       label: "Out of Bangladesh",

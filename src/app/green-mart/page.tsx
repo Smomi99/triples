@@ -46,13 +46,13 @@ export default function GreenMartPage() {
           ])
         )}
       />
-
-      <DivisionHero
-        division={division}
-        eyebrow="Online retail · Banani, Dhaka"
-        cta={{ label: `Visit ${store.label}`, href: store.href }}
-      />
-
+        <DivisionHero
+          division={division}
+          image={"/images/scenes/green-mart.png"}
+          imageAlt={"Ecommerce-Images"}
+          eyebrow="Online retail · Banani, Dhaka"
+          cta={{ label: `Visit ${store.label}`, href: store.href }}
+        />
       {/* 01 — Overview */}
       <section className="bg-paper py-16 lg:py-20">
         <div className="shell">

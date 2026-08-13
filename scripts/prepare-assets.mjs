@@ -102,8 +102,21 @@ async function crop(file, outFile, ratio, { maxWidth = 1600 } = {}) {
 
   if (w > maxWidth) pipeline.resize({ width: maxWidth });
 
+  /*
+    Encoded at 92, not 82.
+
+    These sources are already small — 330 to 520px on the long edge — and they
+    are then displayed larger than that, so the browser upscales them. Every
+    artefact the encoder leaves behind is magnified along with the picture. At
+    82 this step was cutting files that arrived at 28-84KB down to 16-49KB,
+    which is real detail thrown away to save bytes that were never the problem:
+    the whole project set is under half a megabyte either way.
+
+    The optimizer downstream re-encodes again on top of this, so what it is
+    handed wants to be as close to the source as is reasonable.
+  */
   await pipeline
-    .jpeg({ quality: 82, mozjpeg: true, chromaSubsampling: "4:4:4" })
+    .jpeg({ quality: 92, mozjpeg: true, chromaSubsampling: "4:4:4" })
     .toFile(path.join(OUT, outFile));
 
   const out = await sharp(path.join(OUT, outFile)).metadata();

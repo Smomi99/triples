@@ -23,6 +23,10 @@ export default function Logo({
         alt=""
         width={256}
         height={320}
+        /* A flat-colour mark, where lossy compression shows as ringing along
+           the stroke edges rather than as softness in a texture. It is a few KB
+           either way at this size, and it is the logo. */
+        quality={95}
         priority
         className="h-11 w-auto sm:h-12 lg:h-14"
       />

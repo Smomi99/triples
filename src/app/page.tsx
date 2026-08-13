@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 
 import Hero from "@/components/home/Hero";
 import Introduction from "@/components/home/Introduction";
-import Ecosystem from "@/components/home/Ecosystem";
-import Scale from "@/components/home/Scale";
+import Coverage from "@/components/home/Coverage";
 import Capabilities from "@/components/home/Capabilities";
 import Businesses from "@/components/home/Businesses";
 import Proof from "@/components/home/Proof";
@@ -21,24 +20,27 @@ export const metadata: Metadata = pageMeta({
 });
 
 /*
-  The page is a single argument, read top to bottom: who the group is, how the
-  four businesses relate, how far it reaches, what it can be asked for, which
+  The page is a single argument, read top to bottom: who the group is and how
+  the businesses relate, how far it reaches, what it can be asked for, which
   business does which work, what it has already delivered, what it holds itself
   to, and how to begin.
+
+  The Ecosystem section used to sit at 02 and carried the orbit alone. The orbit
+  now runs inside the Introduction next to the copy describing the same five
+  businesses, so the section went with it and everything below shifted up one.
 */
 export default function HomePage() {
   return (
     <>
       <Hero />
       <Introduction />
-      <Ecosystem />
-      <Scale />
+      <Coverage />
       <Capabilities />
       <Businesses />
       <Proof />
-      <Founder index="07" />
+      <Founder index="06" />
       <Trust />
-      <CtaSection eyebrow="09 · Start" />
+      <CtaSection eyebrow="08 · Start" />
     </>
   );
 }

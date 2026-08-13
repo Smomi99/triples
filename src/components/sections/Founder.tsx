@@ -46,6 +46,9 @@ export default function Founder({
                     width={230}
                     height={230}
                     sizes="240px"
+                    /* A 230px source shown at 240px, so it is upscaled on every
+                       screen and on a 2x one it is doing it twice over. */
+                    quality={95}
                     className="h-auto w-full"
                   />
                   <span

@@ -66,7 +66,7 @@ export default function DivisionVisual({
         fill
         sizes={sizes}
         priority={priority}
-        quality={80}
+        quality={85}
         className="object-cover"
       />
       {/* Ties disparate source imagery into one palette and keeps overlaid type legible. */}
