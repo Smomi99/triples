@@ -10,7 +10,7 @@ import type { ProcessStep } from "@/content/division-detail";
  * that the rows do anything.
  *
  * `variant` changes the structure rather than just the colours, because these
- * four business pages are deliberately different compositions and a single
+ * Five business pages are deliberately different compositions and a single
  * repeated block would flatten them back into one template.
  */
 export default function ProcessSteps({

@@ -15,9 +15,9 @@ import { accents, type Division } from "@/content/divisions";
  * which would look soft blown up to 2000. Under a heavy colour wash and the
  * grain film, that softness reads as treatment rather than as a bad crop.
  *
- * Businesses with no relevant photography (software, retail) get the colour
- * field and linework alone. That is deliberate: inventing a stock "tech" image
- * would say less than the colour does, and say it dishonestly.
+ * `image` stays optional. Every business now supplies one, but the colour-field
+ * fallback is what renders if a division's image is ever cleared, and it is a
+ * better answer than a broken frame.
  */
 export default function DivisionHero({
   division,

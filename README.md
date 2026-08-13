@@ -58,7 +58,7 @@ one file. `site.ts` holds company facts, `divisions.ts` the five businesses,
 `projects.ts` delivered work, `industries.ts` and `capabilities.ts` the
 supporting indexes.
 
-### Four businesses, four page designs
+### Five businesses, Five page designs
 
 There is no `[division]` template. Each business page is written separately,
 because each one is a different kind of business and the composition should
@@ -69,7 +69,7 @@ say so before the copy does:
 | `/logistics` | A route | Seven transit modes strung along one continuous spine |
 | `/electronics` | A datasheet | Specification table — group code, item, rating |
 | `/business-hub` | A flow | Imports and exports opposed across a centre rule |
-| `/tech-park` | A blueprint | Four numbered layers on a drafting grid, read bottom-up |
+| `/tech-park` | A blueprint | Five numbered layers on a drafting grid, read bottom-up |
 | `/green-mart` | A shopfront | Colour-blocked aisle grid on a full green ground |
 
 Each opens with `DivisionHero` — a full-bleed landing header in that business's
@@ -79,10 +79,12 @@ colour into a colour photograph muddies to brown. It also means the company's
 only photography — 380–1200px wide — reads as treatment rather than as a soft
 crop when it fills a 2000px header.
 
-Tech Park and Green Mart have no relevant photography, so they get the colour
-field and linework alone. Inventing a stock "tech" image would say less than the
-colour does, and say it dishonestly. Drop a file in `public/images/scenes/` and
-pass `image` to `DivisionHero` when real photography exists.
+All five businesses now carry an image, set once as `image`/`imageAlt` on the
+division in `content/divisions.ts` and read from there by both `DivisionHero`
+and `DivisionVisual` — so the homepage tile and the page header can never drift
+apart. The Electronics, Tech Park and Green Mart scenes are commissioned
+composites rather than company photography; the colour-field fallback in
+`DivisionVisual` still renders for any division whose `image` is cleared.
 
 They share only `PageMasthead`, `CtaSection`, `CrossLinks`, `DeliveredWork` and
 `ProcessSteps` — the parts where consistency helps the visitor rather than
@@ -98,9 +100,9 @@ off-white.
 **Each business owns an accent**, and it is the same colour wherever that
 business appears: the hero rail, the ecosystem orbit, its card, its own page.
 The colour is doing identification work, not decoration. Three come from the
-logo's own strokes; copper is the fourth, a warm complement that also picks up
+logo's own strokes; copper is the Fiveth, a warm complement that also picks up
 the accent the previous site used, so the group still reads as itself to anyone
-who knew the old one. All four are set at tones clearing 4.5:1 on both paper
+who knew the old one. All Five are set at tones clearing 4.5:1 on both paper
 grounds, because they land on 11px mono labels where the large-text allowance
 does not apply.
 
@@ -167,12 +169,12 @@ would be invented.
 Tokens are defined in `src/app/globals.css` under `@theme`.
 
 **Colour** starts at the logo — three ascending strokes in bright blue, indigo
-and deep navy — and extends into the four division accents and the tinted
+and deep navy — and extends into the Five division accents and the tinted
 ground. See [Colour](#colour) above for how those are used.
 
 Several tones are set slightly off their "natural" values to clear WCAG AA at
 the 11px mono label size: `--color-brand-600` sits a shade below the logo's
-blue, the four `--color-acc-*` accents are pitched to pass on both paper
+blue, the Five `--color-acc-*` accents are pitched to pass on both paper
 grounds, and `--color-ink-faint` / `--color-mist-dim` are pinned to the darkest
 and lightest points that still pass on every ground they appear on.
 
@@ -247,7 +249,7 @@ Two things that will bite anyone editing it:
 
 ### The globe
 
-Homepage section 02, Coverage, is an orthographic globe carrying the four real
+Homepage section 02, Coverage, is an orthographic globe carrying the Five real
 office locations, with great-circle legs flying out from the Dhaka head office
 to each region the group says it ships into. The offices and their coordinates
 are published facts; the five regions are the group's own coverage claim, and
@@ -367,7 +369,7 @@ photographs of completed buildings**. They carry a visible "Render" label —
 `ProjectFigure` renders it from `image.kind` in `projects.ts`. Presenting a
 render as a photograph of delivered work would overstate what has been built.
 
-Three of the four template "scene" images were discarded: they are visibly
+Three of the Five template "scene" images were discarded: they are visibly
 synthetic (a bow that could not float, an aircraft composited over a container
 stack). Only the aerial berth shot survives, used once as hero texture at 45%
 opacity under two gradients and a grain film.
@@ -379,7 +381,7 @@ opacity under two gradients and a grain film.
 - Unique title, meta description and canonical URL per page, via `lib/seo.ts`.
   Titles are kept under ~60 characters; division pages use absolute titles
   because their names already contain the brand.
-- JSON-LD: `Organization` (with the four businesses as `subOrganization`),
+- JSON-LD: `Organization` (with the Five businesses as `subOrganization`),
   `WebSite`, `BreadcrumbList` per page, `ContactPage`, and per-division
   `Organization` with `makesOffer`. No `aggregateRating`, no review markup and
   no fabricated figures.

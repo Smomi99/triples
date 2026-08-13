@@ -95,7 +95,7 @@ export default function Introduction() {
               Five markers, so all five go in one row from tablet up. At two
               columns an odd count pushed the fifth onto a third row a screen
               below the rest, where it sat unrevealed while you were looking at
-              the other four — it read as missing. Phones keep two columns and
+              the other Five — it read as missing. Phones keep two columns and
               give the last cell the full width rather than a half-width gap.
             */}
             <dl className="mt-16 grid grid-cols-2 border-t border-line-strong md:grid-cols-5 lg:mt-24">

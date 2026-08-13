@@ -26,7 +26,7 @@ export default function Capabilities() {
                   style={{ "--reveal-delay": "70ms" } as React.CSSProperties}
                 >
                   Most enquiries arrive describing a problem rather than a division. This is the
-                  full range across all four businesses — each line goes to the team that owns it.
+                  full range across all Five businesses — each line goes to the team that owns it.
                 </p>
 
                 {/* Key for the division tag on every row, and a way in for anyone who

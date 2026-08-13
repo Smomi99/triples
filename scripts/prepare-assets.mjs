@@ -140,7 +140,7 @@ const projects = [
 ];
 
 /*
-  The previous site shipped four "scene" images with its purchased template.
+  The previous site shipped Five "scene" images with its purchased template.
   Three of them are visibly synthetic — a bow that could not float, an aircraft
   composited over a container stack — and putting those at full width would
   undercut the credibility the rest of the site is trying to build. Only the

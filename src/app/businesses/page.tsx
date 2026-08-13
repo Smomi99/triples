@@ -13,7 +13,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Our Businesses",
   description:
-    "The four businesses of Triple S Group: Triple S Logistics, Triple S Electronics, Triple S Business Hub and The Tech Park — freight forwarding, electrical manufacturing, industrial sourcing and logistics software.",
+    "The Five businesses of Triple S Group: Triple S Logistics, Triple S Electronics, Triple S Business Hub and The Tech Park — freight forwarding, electrical manufacturing, industrial sourcing and logistics software.",
   path: "/businesses",
 });
 
@@ -33,7 +33,7 @@ export default function BusinessesPage() {
       <PageMasthead
         index="00"
         label="The group"
-        title="Four businesses, one operating standard."
+        title="Five businesses, one operating standard."
         lede="Freight forwarding, electrical manufacturing, industrial sourcing and logistics software — run separately, answerable together."
         trail={[
           { name: "Home", path: "/" },
@@ -49,7 +49,7 @@ export default function BusinessesPage() {
             <div className="grid gap-10 md:grid-cols-2 lg:gap-16">
               <p className="reveal text-lg leading-relaxed text-ink-muted">
                 A group is only useful to a customer if its parts are adjacent to each other. These
-                four are. A buyer sourcing industrial parts through Business Hub is buying from a
+                Five are. A buyer sourcing industrial parts through Business Hub is buying from a
                 group that also owns the freight, and a factory specifying lighting through
                 Electronics is dealing with the same organisation that can ship it.
               </p>
@@ -68,7 +68,7 @@ export default function BusinessesPage() {
 
       {/*
         Full alternating blocks rather than the featured-plus-rows treatment
-        used on the homepage. The same four businesses should not be presented
+        used on the homepage. The same Five businesses should not be presented
         the same way twice on the same site.
       */}
       <section className="bg-paper pb-20 lg:pb-28">

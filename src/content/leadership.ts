@@ -9,7 +9,7 @@ export const founder = {
   name: "Md Safanur Rahman Shiblee",
   role: "Founder & Chief Executive Officer",
   years: 23,
-  portrait: "/images/people/safanur-rahman-shiblee.jpg",
+  portrait: "/images/people/safanur-rahman-shiblee.png",
   portraitAlt: "Md Safanur Rahman Shiblee, Founder and CEO of Triple S Group",
   /** The line used where there is only room for one. */
   lead:

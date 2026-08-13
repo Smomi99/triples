@@ -13,13 +13,20 @@ import { breadcrumbSchema, divisionSchema, jsonLd } from "@/lib/jsonld";
 import { pageMeta } from "@/lib/seo";
 
 /*
-  The Tech Park is the only business with no photography and no physical
-  product, so its page is drawn rather than shown: a blueprint grid, monospace
-  labels, and the service lines stacked as numbered layers from L1 up. The
-  composition is the argument — this is the layer underneath the other three.
+  The Tech Park sells no physical product, so below the hero its page is drawn
+  rather than shown: a blueprint grid, monospace labels, and the service lines
+  stacked as numbered layers from L1 up. The composition is the argument — this
+  is the layer underneath the other four.
 */
 
-const division = getDivision("logistics")!;
+/*
+  Named for what it is. This page quotes the logistics division's stated vision
+  as the reason Tech Park exists, so it needs that sibling's record as well as
+  its own — and while the sibling was called `division`, the hero was handed it
+  by mistake and rendered the Tech Park header under Logistics' name, accent
+  and photograph.
+*/
+const logistics = getDivision("logistics")!;
 const techPark = getDivision("tech-park")!;
 
 export const metadata: Metadata = pageMeta({
@@ -54,12 +61,11 @@ export default function TechParkPage() {
         )}
       />
 
-     <DivisionHero
-               division={division}
-               image={"/images/scenes/techpark.png"}
-               imageAlt={"Techpark Images"}
-               
-             />
+      <DivisionHero
+        division={techPark}
+        image={techPark.image}
+        imageAlt={techPark.imageAlt}
+      />
 
       {/* 01 — Overview */}
       <section className="bg-paper py-16 lg:py-20">
@@ -86,14 +92,14 @@ export default function TechParkPage() {
                 {/* Why it exists — the sibling division's own stated vision */}
                 <figure className="lg:col-span-5">
                   <blockquote className="reveal border-t border-line-strong pt-8">
-                    <p className="display-sm">&ldquo;{division.vision}&rdquo;</p>
+                    <p className="display-sm">&ldquo;{logistics.vision}&rdquo;</p>
                   </blockquote>
                   <figcaption className="eyebrow mt-6 text-ink-faint">
                     <Link
                       href="/logistics"
                       className="inline-flex items-center gap-2 transition-colors hover:text-brand-600"
                     >
-                      <span className="link-underline">{division.name}</span>
+                      <span className="link-underline">{logistics.name}</span>
                       <ArrowUpRight className="h-3 w-3" />
                     </Link>
                     <span className="ml-2">— stated vision</span>
@@ -118,7 +124,7 @@ export default function TechParkPage() {
             <SectionIndex index="02" label="The stack" tone="light" />
 
             <div>
-              <h2 className="display-md reveal max-w-[18ch]">Four layers, built in order.</h2>
+              <h2 className="display-md reveal max-w-[18ch]">Five layers, built in order.</h2>
               <p
                 className="reveal mt-8 max-w-2xl text-lg leading-relaxed text-mist"
                 style={{ "--reveal-delay": "70ms" } as React.CSSProperties}

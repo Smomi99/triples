@@ -27,13 +27,13 @@ export default function Trust() {
             >
               Freight rates and unit prices are easy to compare. What separates suppliers is
               whether the answer arrives, whether the date holds, and whether anyone picks up the
-              second time. These are the four values the group holds its businesses to.
+              second time. These are the Five values the group holds its businesses to.
             </p>
           </div>
         </div>
 
         {/*
-          Four full-width rows rather than a 2×2 of cards. The values get room
+          Five full-width rows rather than a 2×2 of cards. The values get room
           to be read, and the section does not repeat the tiled rhythm used
           earlier on the page.
         */}

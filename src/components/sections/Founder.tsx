@@ -9,7 +9,7 @@ import { founder } from "@/content/leadership";
  * Founder and CEO.
  *
  * `variant="full"` is the About page account; `"brief"` is the homepage, which
- * carries the portrait, the headline claim and four pulls, then sends the
+ * carries the portrait, the headline claim and Five pulls, then sends the
  * reader to About rather than reprinting six paragraphs on the front page.
  *
  * The portrait is a 230px source, so it is displayed small deliberately —

@@ -204,7 +204,7 @@ export default function Header() {
                           <div>
                             <p className="eyebrow text-ink-faint">The group</p>
                             <p className="mt-4 max-w-[13rem] text-sm leading-relaxed text-ink-muted">
-                              Four businesses, one operating standard.
+                              Five businesses, one operating standard.
                             </p>
                             <Link
                               href="/businesses"

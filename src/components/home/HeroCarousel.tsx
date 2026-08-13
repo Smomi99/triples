@@ -32,7 +32,7 @@ export default function HeroCarousel({
 }) {
   const slides: HeroSlide[] = heroMedia.slides;
   /*
-    Only the first slide is in the initial HTML. Shipping all four cost 4
+    Only the first slide is in the initial HTML. Shipping all Five cost 4
     points and 0.6s of LCP on throttled mobile for images nobody sees until
     six seconds in; the rest mount once the browser is idle.
   */

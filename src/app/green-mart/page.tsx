@@ -48,8 +48,8 @@ export default function GreenMartPage() {
       />
         <DivisionHero
           division={division}
-          image={"/images/scenes/green-mart.png"}
-          imageAlt={"Ecommerce-Images"}
+          image={division.image}
+          imageAlt={division.imageAlt}
           eyebrow="Online retail · Banani, Dhaka"
           cta={{ label: `Visit ${store.label}`, href: store.href }}
         />

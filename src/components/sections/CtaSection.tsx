@@ -7,7 +7,7 @@ import { contact } from "@/content/site";
 export default function CtaSection({
   eyebrow = "Get in touch",
   title = "Tell us what you need moved, made or sourced.",
-  body = "One enquiry reaches all four businesses. We will route it to the team that handles it and come back to you directly.",
+  body = "One enquiry reaches all Five businesses. We will route it to the team that handles it and come back to you directly.",
 }: {
   eyebrow?: string;
   title?: string;

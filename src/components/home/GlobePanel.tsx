@@ -13,7 +13,7 @@ type GlobeProps = {
 /**
  * Pairs the globe with the reading of it.
  *
- * The panel beside the globe used to be the four office addresses, cross-linked
+ * The panel beside the globe used to be the Five office addresses, cross-linked
  * to their markers. That made the section about where the group has desks. The
  * section is about how far it ships, so the panel now states the shape of that
  * — one origin, five regions — and lists the same five the globe marks, in the

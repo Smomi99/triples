@@ -7,7 +7,7 @@ import { divisions } from "@/content/divisions";
 /**
  * The one block every business page shares. Each page composes its own
  * sections, but they all end by pointing at the other three — that
- * cross-linking is what makes the group read as a group rather than as four
+ * cross-linking is what makes the group read as a group rather than as Five
  * separate sites, and it is the main internal-link path for search.
  */
 export default function CrossLinks({

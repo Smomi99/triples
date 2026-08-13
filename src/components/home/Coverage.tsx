@@ -8,7 +8,7 @@ import { coverage, offices } from "@/content/site";
  *
  * A stock image of a port would say nothing here that the words do not already
  * say, and the group has no photography of its own offices. So the visual
- * moment is the geography itself: an orthographic globe carrying the four real
+ * moment is the geography itself: an orthographic globe carrying the Five real
  * office locations, with a leg flying out from Dhaka to each region the group
  * says it ships into. As a leg lands, that region is marked and named, and the
  * marks stay — by the end of a run the globe is holding the whole claim at once
@@ -22,7 +22,7 @@ import { coverage, offices } from "@/content/site";
 /**
  * Dhaka alone goes on the globe.
  *
- * Four pins and the links between them made the picture about the group's own
+ * Five pins and the links between them made the picture about the group's own
  * desks, which is the Contact page's job; the section is about how far it
  * ships. One origin, five arcs, five marks. Passing a single office is enough
  * to say that — `lanes()` finds no other office to draw a link to, and the

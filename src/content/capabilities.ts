@@ -1,6 +1,6 @@
 /**
  * A single flat index of what the group can actually be asked to do, drawn
- * across all four businesses. It exists so a visitor who does not yet know
+ * across all Five businesses. It exists so a visitor who does not yet know
  * which division they need can still find their way in — and so each line can
  * carry an internal link to the business that owns it.
  */

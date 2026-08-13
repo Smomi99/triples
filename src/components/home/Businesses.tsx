@@ -10,7 +10,7 @@ const [featured, ...supporting] = divisions;
 /**
  * One business given the floor, three set beneath it as rows.
  *
- * Four equal cards would flatten the group into a menu; this keeps the
+ * Five equal cards would flatten the group into a menu; this keeps the
  * flagship reading as the flagship while still presenting the other three as
  * peers of each other rather than afterthoughts.
  */
@@ -23,7 +23,7 @@ export default function Businesses() {
 
           <div>
             <h2 className="display-md reveal max-w-[18ch]">
-              One group, four ways in.
+              One group, Five ways in.
             </h2>
             <p
               className="reveal mt-8 max-w-xl text-lg leading-relaxed text-ink-muted"
@@ -115,7 +115,7 @@ export default function Businesses() {
             href="/businesses"
             className="inline-flex items-center gap-2 text-sm text-brand-600 transition-colors duration-300 hover:text-ink"
           >
-            <span className="link-underline">How the four businesses fit together</span>
+            <span className="link-underline">How the Five businesses fit together</span>
             <ArrowRight />
           </Link>
         </div>

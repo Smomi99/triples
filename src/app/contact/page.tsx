@@ -11,7 +11,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Contact",
   description:
-    "Contact Triple S Group in Dhaka, Bangladesh. Call +88 09613828181, email info@triplesbd.com, or send an enquiry to reach any of the group's four businesses.",
+    "Contact Triple S Group in Dhaka, Bangladesh. Call +88 09613828181, email info@triplesbd.com, or send an enquiry to reach any of the group's Five businesses.",
   path: "/contact",
 });
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
       <PageMasthead
         index="00"
         label="Contact"
-        title="One enquiry reaches all four businesses."
+        title="One enquiry reaches all Five businesses."
         lede="Tell us what you need moved, made or sourced. We will route it to the team that handles it and reply directly."
         trail={[
           { name: "Home", path: "/" },

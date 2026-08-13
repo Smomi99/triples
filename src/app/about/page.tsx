@@ -14,7 +14,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "About",
   description:
-    "Triple S Group was formed in 2017 in Dhaka, Bangladesh, built on trading and supply operations running since 2010. Today it operates four businesses across logistics, manufacturing, sourcing and technology.",
+    "Triple S Group was formed in 2017 in Dhaka, Bangladesh, built on trading and supply operations running since 2010. Today it operates Five businesses across logistics, manufacturing, sourcing and technology.",
   path: "/about",
 });
 
@@ -39,7 +39,7 @@ export default function AboutPage() {
         index="00"
         label="About"
         title="A trading business that turned into a group."
-        lede={`Triple S Group was formed in ${company.founded}, on operations its owner had been running since ${company.tradingSince}. It now works across four businesses from four locations.`}
+        lede={`Triple S Group was formed in ${company.founded}, on operations its owner had been running since ${company.tradingSince}. It now works across Five businesses from Five locations.`}
         trail={[
           { name: "Home", path: "/" },
           { name: "About", path: "/about" },
@@ -96,7 +96,7 @@ export default function AboutPage() {
             <SectionIndex index="02" label="Values" tone="light" />
 
             <div>
-              <h2 className="display-md reveal max-w-[16ch]">Four words, used as a test.</h2>
+              <h2 className="display-md reveal max-w-[16ch]">Five words, used as a test.</h2>
 
               <dl className="mt-14 grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:mt-20">
                 {values.map((value, i) => (

@@ -1,5 +1,5 @@
 /**
- * The four operating businesses of Triple S Group.
+ * The Five operating businesses of Triple S Group.
  *
  * Copy is rewritten from the previous site for clarity and grammar, but every
  * claim traces back to something the company published. Statements the company
@@ -159,8 +159,9 @@ export const divisions: Division[] = [
       "Panel lighting — 2ft × 2ft and 2ft × 4ft",
       "Surface lighting — square and round, 6W to 18W",
     ],
-    image: "/images/projects/akh-factory-lighting-2.jpg",
-    imageAlt: "Overhead tube lighting above the sewing lines of a garments factory production floor",
+    image: "/images/scenes/electronics.png",
+    imageAlt:
+      "Consumer electronics arranged in front of a container port at dusk, with a cargo ship, gantry cranes and an airliner overhead",
   },
   {
     slug: "business-hub",
@@ -244,8 +245,9 @@ export const divisions: Division[] = [
       "Technology outsourcing",
       "Systems integration",
     ],
-    // No authentic photography exists for the technology business, so pages
-    // render a typographic tile rather than a stock developer-at-a-desk shot.
+    image: "/images/scenes/techpark.png",
+    imageAlt:
+      "Glass office buildings around a landscaped plaza at dusk, with lit server racks behind glass and circuit-trace lighting set into the paving",
   },
   {
     slug: "green-mart",
@@ -295,6 +297,9 @@ export const divisions: Division[] = [
       "Customer support tickets",
     ],
     external: { label: "greenmart-bd.com", href: "https://greenmart-bd.com/" },
+    image: "/images/scenes/green-mart.png",
+    imageAlt:
+      "An online storefront shown on a laptop and a phone, surrounded by shopping baskets, parcels and household goods in green tones",
   },
 ];
 
