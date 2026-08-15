@@ -33,63 +33,67 @@ export default function Introduction() {
             <h2 className="display-md reveal ">
               Five businesses built to work together
             </h2>
+          </div>
+        </div>
 
+        {/*
+          Orbit left, copy right. The orbit is the same five businesses the
+          prose is describing, so it belongs next to the sentence rather than a
+          section away from it. On phones it flattens to a card list and goes
+          below the copy — a stack of five cards ahead of the text would bury
+          the paragraph that explains it.
+
+          Outside the rail, like the counts below it. Everything under the "01
+          Introduction" heading now starts at the same left edge, so the section
+          reads as one band rather than as a heading with two differently
+          indented things beneath it. It also hands the orbit a much wider
+          track: --r is a fraction of the column it is given, and inside the
+          rail that column was 416px at lg — narrow enough that the cards
+          collided with each other on the way round.
+        */}
+        <div className="mt-14 grid items-center gap-10 lg:mt-20 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
+          <EcosystemOrbit compact className="order-2 lg:order-1" />
+
+          <div className="order-1 flex flex-col gap-8 lg:order-2">
             {/*
-              Orbit left, copy right. The orbit is the same five businesses the
-              prose is describing, so it belongs next to the sentence rather
-              than a section away from it. On phones it flattens to a card list
-              and goes below the copy — a stack of five cards ahead of the text
-              would bury the paragraph that explains it.
-
-              The orbit's track widens above lg and the ring grows into it: --r
-              is a fraction of this column, not of the viewport. It holds at
-              26rem through lg itself, where the copy beside it has none to give.
+              Carried up from the old Ecosystem section, which the orbit was the
+              whole of. It is the caption to the ring beside it, so it leads the
+              column.
             */}
-            <div className="mt-14 grid items-center gap-10 lg:mt-20 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] 2xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)]">
-              <EcosystemOrbit compact className="order-2 lg:order-1" />
-
-              <div className="order-1 flex flex-col gap-8 lg:order-2">
-                {/*
-                  Carried up from the old Ecosystem section, which the orbit
-                  was the whole of. It is the caption to the ring beside it, so
-                  it leads the column.
-                */}
-                <div>
-                  <h3
-                    className="display-sm reveal"
-                    style={{ "--reveal-delay": "40ms" } as React.CSSProperties}
-                  >
-                    Five businesses. One centre.
-                  </h3>
-                  <p
-                    className="reveal mt-5 text-lg leading-relaxed text-ink-muted"
-                    style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
-                  >
-                    The group is not a holding company that collects unrelated firms. Each business
-                    was built out of what the one before it needed — and each one still answers to
-                    the same centre.
-                  </p>
-                </div>
-
-                <p
-                  className="reveal text-lg leading-relaxed text-ink-muted"
-                  style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
-                >
-                  Triple S Group was formed in {company.founded}, on trading and supply operations
-                  its owner had been running since {company.tradingSince}. What started as a single
-                  trading business now spans freight forwarding, electrical manufacturing,
-                  industrial procurement and the software that runs underneath them.
-                </p>
-                <p
-                  className="reveal text-lg leading-relaxed text-ink-muted"
-                  style={{ "--reveal-delay": "220ms" } as React.CSSProperties}
-                >
-                  The group is run by technical and management professionals, and its businesses sit
-                  close together on purpose. Freight, manufacturing, procurement and technology are
-                  adjacent enough that most enquiries never have to leave the group to be answered.
-                </p>
-              </div>
+            <div>
+              <h3
+                className="display-sm reveal"
+                style={{ "--reveal-delay": "40ms" } as React.CSSProperties}
+              >
+                Five businesses. One centre.
+              </h3>
+              <p
+                className="reveal mt-5 text-lg leading-relaxed text-ink-muted"
+                style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
+              >
+                The group is not a holding company that collects unrelated firms. Each business was
+                built out of what the one before it needed — and each one still answers to the same
+                centre.
+              </p>
             </div>
+
+            <p
+              className="reveal text-lg leading-relaxed text-ink-muted"
+              style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
+            >
+              Triple S Group was formed in {company.founded}, on trading and supply operations its
+              owner had been running since {company.tradingSince}. What started as a single trading
+              business now spans freight forwarding, electrical manufacturing, industrial
+              procurement and the software that runs underneath them.
+            </p>
+            <p
+              className="reveal text-lg leading-relaxed text-ink-muted"
+              style={{ "--reveal-delay": "220ms" } as React.CSSProperties}
+            >
+              The group is run by technical and management professionals, and its businesses sit
+              close together on purpose. Freight, manufacturing, procurement and technology are
+              adjacent enough that most enquiries never have to leave the group to be answered.
+            </p>
           </div>
         </div>
 

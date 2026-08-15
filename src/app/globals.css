@@ -95,7 +95,7 @@
   --color-mist: #b9c2da;
   --color-mist-dim: #8d97b4;
 
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -137,12 +137,25 @@
   h4 {
     text-wrap: balance;
     font-weight: 500;
-    letter-spacing: -0.03em;
+    /* Relaxed for Poppins along with the display sizes — see .display-xl. */
+    letter-spacing: -0.02em;
     line-height: 1.02;
   }
 
   p {
     text-wrap: pretty;
+  }
+
+  /*
+    Pinned, because the browser default is 700 and 700 is not loaded. With
+    `font-synthesis-weight: none` the browser would silently fall back to the
+    nearest weight it has — which is this — so the rule changes nothing except
+    making the intent legible. 600 is also the heaviest thing anywhere else on
+    the site, so a bold run inside a paragraph now matches the buttons.
+  */
+  strong,
+  b {
+    font-weight: 600;
   }
 
   ::selection {
@@ -200,35 +213,44 @@
     line-height: 1;
   }
 
-  /* Fluid display sizes. Lower bounds stay readable on a 320px viewport. */
+  /*
+    Fluid display sizes. Lower bounds stay readable on a 320px viewport.
+
+    Tracking is looser than it was under Archivo. A grotesque has flat-sided
+    round letters and takes tight negative tracking well; Poppins is geometric,
+    its o/e/c/g are near-perfect circles, and at -0.045em those circles start
+    touching their neighbours at headline size. These values are roughly
+    two-thirds of the old ones — still tight enough to hold the display type
+    together, not so tight that the counters close up.
+  */
   .display-xl {
     font-size: clamp(2.75rem, 9vw, 7.25rem);
     line-height: 0.94;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.03em;
   }
 
   .display-lg {
     font-size: clamp(2.25rem, 6vw, 4.75rem);
     line-height: 0.98;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.028em;
   }
 
   .display-md {
     font-size: clamp(1.75rem, 3.6vw, 3rem);
     line-height: 1.04;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.024em;
   }
 
   .display-sm {
     font-size: clamp(1.375rem, 2.2vw, 1.875rem);
     line-height: 1.14;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.018em;
   }
 
   .lede {
     font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
     line-height: 1.55;
-    letter-spacing: -0.011em;
+    letter-spacing: -0.006em;
   }
 
   /* Buttons — square-edged, hairline-led, no pill shapes or drop shadows. */
@@ -599,27 +621,41 @@
     .orbit3d-stage--compact {
       /*
         Sized from the column, not the viewport. The orbit is a fixed-fraction
-        figure — two radii and a card span its full width — so 33cqw and 26cqw
-        add up to 92% of whatever it is given and it can never outgrow the
-        track. The floor still matters more than the ceiling: five cards 72°
-        apart sit 2r·sin36° from each other, and a radius under ~120px puts
-        them closer together than a card is wide.
+        figure — two radii and a card span its full width — so 33cqw and 25cqw
+        add up to 91% of whatever it is given and it can never outgrow the
+        track.
+
+        The card-width FLOOR is the load-bearing number here, and not for the
+        reason it looks. At 8.375rem the text column inside a card is 134 − 28 =
+        106px, which sets "Triple S Business Hub" as "Triple S / Business Hub"
+        with about 14px to spare at the 14px name size. Lose that and it breaks
+        to three lines, the card grows from 86px tall to 104px, and three-line
+        cards on a ring this size collide with each other as they come round —
+        which is what was pulling the orbit apart mid-revolution.
+
+        Widening the cards past this does not help either: beyond ~140px at the
+        narrowest column they start overlapping on width instead. The window is
+        genuinely narrow, and both walls were found by stepping every pair of
+        cards through a full revolution at every column width the orbit can be
+        handed. Closest approach across all of them is now 8.8px.
       */
-      --r: clamp(120px, 33cqw, 178px);
-      --node-w: clamp(6.5rem, 26cqw, 8.75rem);
+      --r: clamp(140px, 33cqw, 215px);
+      --node-w: clamp(8.375rem, 25cqw, 10rem);
       /*
-        Shallower than the section-scale ring, and this is what stopped the mark
-        being swallowed. The clearance between a card and the mark is the
-        ellipse's minor axis, r·cos(tilt); at 56° that was about 75px — less
-        than the mark's radius plus half a card, so the two cards crossing top
-        and bottom sat squarely over the logo twice a revolution. 40° opens the
-        ellipse out far enough that neither of them reaches it.
+        Shallower than the section-scale ring, and this is what keeps the mark
+        clear. The distance between a card and the mark is the ellipse's minor
+        axis, r·cos(tilt); at 56° that was about 75px — less than the mark's
+        radius plus half a card, so the two cards crossing top and bottom sat
+        squarely over the logo twice a revolution. 36° opens the ellipse out far
+        enough that nothing reaches the centre, and it buys the vertical
+        separation the cards need from each other at the same time.
       */
-      --tilt: 40deg;
-      --core-z: calc(var(--r) * 0.72);
+      --tilt: 36deg;
+      /* Must exceed sin(36°) = 0.588 — see .orbit3d-core. */
+      --core-z: calc(var(--r) * 0.7);
       --dur: 46s;
       /* The near card's full extent: r·cos(tilt) each side of centre, plus a card. */
-      height: calc(var(--r) * 1.55 + 7.5rem);
+      height: calc(var(--r) * 1.62 + 6.5rem);
       /*
         Still a long lens relative to --r. Scaling 1900px down proportionally
         put it near 800px, which blew the near card up to 1.7x its own width —
@@ -661,6 +697,32 @@
       transform-style: preserve-3d;
     }
 
+    /*
+      The ring and the spokes live in here, sharing the cards' 3D space, and the
+      seam that produces is a known and accepted cost.
+
+      A card is an upright quad; the ring lies in the tilted plane. Two surfaces
+      that cross have no paint order — they have an intersection, which the
+      browser resolves by splitting the polygons and drawing each fragment at
+      its own depth. So the line is painted through each card it crosses, and
+      the seam travels as the ring turns.
+
+      Three things were tried. Offsetting the ring in z does not work: near the
+      horizontal extremes the ring runs almost straight at the camera and sweeps
+      about ±70px of depth inside the width of a single card, so no offset stays
+      behind one across its own footprint. Shrinking the ring does work, but the
+      largest radius that never touches a card is 0.40·r — a hairline circle
+      stranded between the mark and nothing. Moving the track out of .orbit3d-
+      scene to a sibling of it also works, and completely: siblings of a `flat`
+      parent composite by paint order rather than being depth-sorted, so the
+      whole track lands behind all five cards with no intersection to resolve.
+
+      That last one was built and rejected on the look. Putting the ring behind
+      everything flattens the picture — the reason it reads as an orbit at all
+      is that the near arc passes in FRONT of the far cards, and you lose that
+      the moment the track stops sharing a depth buffer with them. The seam is
+      the price of the weave. Keep it.
+    */
     .orbit3d-plane {
       position: absolute;
       inset: 0;
@@ -750,7 +812,12 @@
       transform: translate(-50%, -50%) translateZ(var(--core-z));
     }
 
-    /* Only turn once the section has actually been seen. */
+    /*
+      Only turn once the section has actually been seen, and both keyed together
+      — the plane and the cards run the same keyframes at the same duration on a
+      linear curve, which is what keeps a card upright while its position
+      travels. Start or stop one without the other and they drift apart.
+    */
     [data-revealed="true"] .orbit3d-plane,
     [data-revealed="true"] .orbit3d-node {
       animation-play-state: running;

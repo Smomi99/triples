@@ -40,6 +40,15 @@ export type TradeSpecTable = {
   rows: { label: string; value: string }[];
 };
 
+/**
+ * Intrinsic dimensions are carried with every image so next/image can reserve
+ * the box before the file lands. Several of these are small — the commodity
+ * plates are 288–441px on their long edge, lifted from the trade portfolio —
+ * which is why the gallery contains rather than crops them, and why they are
+ * never given a slot wider than they are.
+ */
+export type TradeImage = { src: string; alt: string; width: number; height: number };
+
 export type TradeCategory = {
   slug: string;
   direction: TradeDirection;
@@ -51,9 +60,21 @@ export type TradeCategory = {
   statement: string;
   summary: string;
   body: string[];
+  /** Full-bleed band under the masthead. */
+  banner?: TradeImage;
   range: { label: string; note: string; items: TradeRangeItem[] };
+  /** Plates of the goods themselves, shown with the range. */
+  gallery?: (TradeImage & { caption: string })[];
+  /** A sub-programme inside the category with its own origin and plate. */
+  programme?: {
+    label: string;
+    title: string;
+    note: string;
+    items: string[];
+    image: TradeImage;
+  };
   specs?: TradeSpecTable[];
-  packaging?: TradeRangeItem[];
+  packaging?: { items: TradeRangeItem[]; figure?: TradeImage & { caption: string } };
   /** What the category legally or practically demands before it can move. */
   compliance?: { label: string; note: string; items: string[] };
   certifications?: {
@@ -188,6 +209,12 @@ export const tradeCategories: TradeCategory[] = [
     statement: "Sugar, rice, wheat and edible oil, bought at origin and landed in bulk.",
     summary:
       "Bulk food staples — sugar, rice, wheat, edible oils, corn and urea — sourced from origin mills and refineries for wholesalers, processors and government procurement.",
+    banner: {
+      src: "/images/scenes/business-hub/commodity-banner.jpg",
+      alt: "Four panels: wheat grain in a bowl on hessian sacking, filled cooking-oil bottles on a production line, milled white rice running through a hand onto a sack, and raw and refined sugar in a bowl and spoon",
+      width: 3474,
+      height: 1483,
+    },
     body: [
       "Essential commodities are the largest line the trade desk runs, and the one where the result is decided before the goods ever move: at origin, in the choice of mill or refinery and the grade contracted for. The division sources sugar, rice, wheat and edible oils both within Bangladesh and across international markets, supplying wholesalers, retailers, food manufacturers and government procurement bodies.",
       "Volume is what makes the pricing work and origin relationships are what make the volume reliable. Partnerships are held with producers and exporters in more than one origin for each commodity, so a lane that closes — a crop that fails, an export duty that changes overnight — does not take the contract with it.",
@@ -230,6 +257,75 @@ export const tradeCategories: TradeCategory[] = [
           body: "Kazakhstan origin.",
         },
       ],
+    },
+    gallery: [
+      {
+        src: "/images/scenes/business-hub/wheat.png",
+        alt: "A ripening wheat field, a combine harvester working at sunset, and threshed wheat grain",
+        caption: "Wheat",
+        width: 361,
+        height: 155,
+      },
+      {
+        src: "/images/scenes/business-hub/rice.png",
+        alt: "White, brown and red rice varieties arranged around a wooden spoon",
+        caption: "Rice",
+        width: 288,
+        height: 175,
+      },
+      {
+        src: "/images/scenes/business-hub/corn.png",
+        alt: "A combine harvesting maize, cobs in husk, and a bowl of loose kernels",
+        caption: "Corn",
+        width: 330,
+        height: 153,
+      },
+      {
+        src: "/images/scenes/business-hub/soybeanoil.png",
+        alt: "A soybean field, soybean plants in leaf, and harvested soybeans",
+        caption: "Soybean",
+        width: 441,
+        height: 153,
+      },
+      {
+        src: "/images/scenes/business-hub/sunflower-oil.jpg",
+        alt: "A bowl and scoop of sunflower seed beside a glass carafe of sunflower oil and cut sunflower heads",
+        caption: "Sunflower oil",
+        width: 1440,
+        height: 846,
+      },
+      {
+        src: "/images/scenes/business-hub/palm-oil.jpg",
+        alt: "Ripe palm fruit resting on a palm frond beside a glass jar of palm oil",
+        caption: "Palm oil",
+        width: 1648,
+        height: 910,
+      },
+      {
+        src: "/images/scenes/business-hub/oil.png",
+        alt: "Bottles moving along an edible-oil filling line, and finished bottles packed for despatch",
+        caption: "Refining & bottling",
+        width: 384,
+        height: 172,
+      },
+    ],
+    /*
+      A distinct offer from the sunflower line in the range above, which is
+      Russian and European origin. Both appear in the trade portfolio and they
+      are not the same programme, so the page keeps them apart rather than
+      reconciling them into one origin claim.
+    */
+    programme: {
+      label: "Types of oil",
+      title: "Five oils on a single origin.",
+      note: "A separate programme from the sunflower supply above: crude and refined oil out of Thailand, quoted by type. Analyses for four of the five are published further down.",
+      items: ["Sunflower oil", "Soybean oil", "Corn oil", "Palm oil", "Rapeseed oil"],
+      image: {
+        src: "/images/scenes/business-hub/types-of-oil-thailand.png",
+        alt: "A map of Thailand filled with the national flag, labelled Origin Thailand, beside six photographs captioned sunflower oil, soybean oil, corn oil, palm oil and rapeseed oil",
+        width: 697,
+        height: 518,
+      },
     },
     specs: [
       {
@@ -417,32 +513,43 @@ export const tradeCategories: TradeCategory[] = [
         ],
       },
     ],
-    packaging: [
-      {
-        name: "Bulk vessel",
-        body: "Whole cargo holds for grain, sugar and fertiliser, discharged at the receiving port.",
+    packaging: {
+      items: [
+        {
+          name: "Bulk vessel",
+          body: "Whole cargo holds for grain, sugar and fertiliser, discharged at the receiving port.",
+        },
+        {
+          name: "Flexitank",
+          body: "A lined bladder inside a standard container, for edible oil moving in container lots rather than parcel tanker.",
+        },
+        {
+          name: "IBC tote",
+          body: "Intermediate bulk containers, for oil going to a blender or processor in smaller quantities.",
+        },
+        {
+          name: "Big bag / FIBC",
+          body: "Bulk bags for sugar, corn and urea, handled by forklift at both ends.",
+        },
+        {
+          name: "Road tanker",
+          body: "Bulk discharge direct to a refinery, blending plant or bottling line.",
+        },
+        {
+          name: "Retail packs",
+          body: "Bottled, tinned and pouched cooking oil, under a brand or a buyer's own label.",
+        },
+      ],
+      figure: {
+        src: "/images/scenes/business-hub/dorma-sunflower-oil.jpg",
+        alt: "Corn, rapeseed, soybean and sunflower seed heaped beneath a glass carafe of oil, with a drop falling into a black and gold cooking-oil tin branded Dorma",
+        /* Dorma is a third party's mark. The caption says what the plate is
+           rather than claiming the brand. */
+        caption: "Retail packaging, from the division's trade portfolio.",
+        width: 1574,
+        height: 2378,
       },
-      {
-        name: "Flexitank",
-        body: "A lined bladder inside a standard container, for edible oil moving in container lots rather than parcel tanker.",
-      },
-      {
-        name: "IBC tote",
-        body: "Intermediate bulk containers, for oil going to a blender or processor in smaller quantities.",
-      },
-      {
-        name: "Big bag / FIBC",
-        body: "Bulk bags for sugar, corn and urea, handled by forklift at both ends.",
-      },
-      {
-        name: "Road tanker",
-        body: "Bulk discharge direct to a refinery, blending plant or bottling line.",
-      },
-      {
-        name: "Retail packs",
-        body: "Bottled and pouched cooking oil, under a buyer's own label.",
-      },
-    ],
+    },
     certifications: {
       note: "Standards the commodity supply is certified against, as published in the division's trade portfolio. Certification sits with the producing mills, refineries and packers — it is what the goods are certified to, not a claim about the trading desk.",
       registration: { label: "GACC registration", value: "72422000185" },

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -81,6 +82,7 @@ export default async function TradeCategoryPage({
   const sections = [
     "trade",
     "range",
+    ...(category.programme ? ["programme"] : []),
     ...(category.specs ? ["specs"] : []),
     ...(category.packaging ? ["packaging"] : []),
     ...(category.compliance ? ["compliance"] : []),
@@ -132,6 +134,28 @@ export default async function TradeCategoryPage({
           </p>
         }
       />
+
+      {/*
+        Full-bleed, at the plate's own ratio rather than a chosen crop — it is a
+        four-panel composite and cropping it to a standard band would cut a
+        commodity out of the picture. Sits between the navy masthead and the
+        first section, so it reads as the page opening rather than decoration
+        dropped into the copy.
+      */}
+      {category.banner && (
+        <div className="relative w-full overflow-hidden bg-navy-950">
+          <Image
+            src={category.banner.src}
+            alt={category.banner.alt}
+            width={category.banner.width}
+            height={category.banner.height}
+            sizes="100vw"
+            quality={85}
+            priority
+            className="h-auto w-full"
+          />
+        </div>
+      )}
 
       {/* The trade itself */}
       <section className="bg-paper py-16 lg:py-20">
@@ -230,10 +254,101 @@ export default async function TradeCategoryPage({
                   </div>
                 ))}
               </dl>
+
+              {/*
+                Contained, not cropped, on a white plate.
+
+                These are composite plates off the trade portfolio rather than
+                photographs — three-panel strips at 288–441px, in ratios from
+                1.6:1 to 2.9:1. `object-cover` in a uniform box would cut a
+                panel off the wide ones, and letting each keep its own ratio
+                gives a grid with ragged rows. A fixed box the image sits inside
+                is the honest answer: nothing is lost and the row lines up.
+              */}
+              {category.gallery && (
+                <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+                  {category.gallery.map((plate, i) => (
+                    <li
+                      key={plate.src}
+                      className="reveal"
+                      style={{ "--reveal-delay": `${Math.min(i, 5) * 55}ms` } as React.CSSProperties}
+                    >
+                      <div className="flex aspect-[3/2] items-center justify-center overflow-hidden border border-tint-line bg-paper p-2">
+                        <Image
+                          src={plate.src}
+                          alt={plate.alt}
+                          width={plate.width}
+                          height={plate.height}
+                          sizes="(min-width: 1024px) 15vw, 45vw"
+                          quality={95}
+                          className="max-h-full w-auto object-contain"
+                        />
+                      </div>
+                      <p className="mt-3 font-mono text-[0.6875rem] tracking-[0.08em] text-ink-faint uppercase">
+                        {plate.caption}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>
       </section>
+
+      {/* A sub-programme with its own origin */}
+      {category.programme && (
+        <section className="bg-paper py-16 lg:py-20">
+          <div className="shell">
+            <div className="rail">
+              <SectionIndex index={at("programme")} label={category.programme.label} />
+
+              <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start lg:gap-16">
+                <div>
+                  <h2 className="display-md reveal max-w-[18ch]">{category.programme.title}</h2>
+                  <p className="reveal mt-8 max-w-xl text-lg leading-relaxed text-ink-muted">
+                    {category.programme.note}
+                  </p>
+
+                  {/*
+                    The plate carries these five as text baked into pixels. They
+                    are set again here so the list is selectable, searchable and
+                    readable to anything that cannot see the image.
+                  */}
+                  <ul className="mt-10 border-t border-line-strong">
+                    {category.programme.items.map((item, i) => (
+                      <li
+                        key={item}
+                        className="reveal flex items-baseline gap-4 border-b border-line py-4"
+                        style={
+                          { "--reveal-delay": `${Math.min(i, 5) * 55}ms` } as React.CSSProperties
+                        }
+                      >
+                        <span aria-hidden className="font-mono text-[0.625rem] text-brand-600">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-lg tracking-tight">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <figure className="reveal">
+                  <Image
+                    src={category.programme.image.src}
+                    alt={category.programme.image.alt}
+                    width={category.programme.image.width}
+                    height={category.programme.image.height}
+                    sizes="(min-width: 1024px) 26rem, 100vw"
+                    quality={95}
+                    className="h-auto w-full border border-tint-line bg-paper"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/*
         Specification.
@@ -310,18 +425,39 @@ export default async function TradeCategoryPage({
                   The mode is agreed with the discharge point, not assumed from the order size.
                 </p>
 
-                <ul className="mt-14 grid gap-x-12 border-t border-line-strong sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-                  {category.packaging.map((mode, i) => (
-                    <li
-                      key={mode.name}
-                      className="reveal border-b border-line py-6"
-                      style={{ "--reveal-delay": `${Math.min(i, 5) * 55}ms` } as React.CSSProperties}
-                    >
-                      <p className="text-lg tracking-tight">{mode.name}</p>
-                      <p className="mt-2.5 text-sm leading-relaxed text-ink-muted">{mode.body}</p>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-14 grid gap-12 lg:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,17rem)] lg:items-start lg:gap-16">
+                  <ul className="grid gap-x-12 border-t border-line-strong sm:grid-cols-2">
+                    {category.packaging.items.map((mode, i) => (
+                      <li
+                        key={mode.name}
+                        className="reveal border-b border-line py-6"
+                        style={
+                          { "--reveal-delay": `${Math.min(i, 5) * 55}ms` } as React.CSSProperties
+                        }
+                      >
+                        <p className="text-lg tracking-tight">{mode.name}</p>
+                        <p className="mt-2.5 text-sm leading-relaxed text-ink-muted">{mode.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {category.packaging.figure && (
+                    <figure className="reveal">
+                      <Image
+                        src={category.packaging.figure.src}
+                        alt={category.packaging.figure.alt}
+                        width={category.packaging.figure.width}
+                        height={category.packaging.figure.height}
+                        sizes="(min-width: 1024px) 17rem, 60vw"
+                        quality={95}
+                        className="h-auto w-full max-w-xs border border-tint-line bg-paper"
+                      />
+                      <figcaption className="mt-3 max-w-xs font-mono text-[0.6875rem] leading-relaxed tracking-[0.08em] text-ink-faint uppercase">
+                        {category.packaging.figure.caption}
+                      </figcaption>
+                    </figure>
+                  )}
+                </div>
               </div>
             </div>
           </div>

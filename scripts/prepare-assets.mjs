@@ -127,16 +127,16 @@ const PORTRAIT = 3 / 4;
 const LANDSCAPE = 16 / 9;
 
 const projects = [
-  ["jetty-light.jpg", "projects/payra-jetty-lighting.jpg"],
-  ["jetty-light1.jpg", "projects/payra-jetty-lighting-2.jpg"],
+  ["jetty-light.jpg", "projects/payra-jetty-lighting.png"],
+  ["jetty-light1.jpg", "projects/payra-jetty-lighting-2.png"],
   ["street-light.jpg", "projects/payra-street-lighting.jpg"],
   ["street-light1.jpg", "projects/payra-street-lighting-2.jpg"],
   ["building.jpg", "projects/payra-multipurpose-building.jpg"],
-  ["dormitory.png", "projects/payra-officer-dormitory.jpg"],
+  ["dormitory.png", "projects/payra-officer-dormitory.png"],
   ["rack.jpg", "projects/payra-warehouse-racking.jpg"],
   ["rack1.jpg", "projects/payra-warehouse-racking-2.jpg"],
-  ["factory-light.jpg", "projects/akh-factory-lighting.jpg"],
-  ["factory-light1.jpg", "projects/akh-factory-lighting-2.jpg"],
+  ["factory-light.jpg", "projects/akh-factory-lighting.png"],
+  ["factory-light1.jpg", "projects/akh-factory-lighting-2.png"],
 ];
 
 /*

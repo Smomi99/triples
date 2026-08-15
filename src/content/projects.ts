@@ -44,13 +44,13 @@ export const projects: Project[] = [
     division: "electronics",
     status: "Delivered",
     image: {
-      src: "/images/projects/payra-jetty-lighting.jpg",
+      src: "/images/projects/payra-jetty-lighting.png",
       alt: "Technicians fitting flood light arrays to a high-mast pole at Payra Port",
       kind: "photograph",
     },
     gallery: [
       {
-        src: "/images/projects/payra-jetty-lighting-2.jpg",
+        src: "/images/projects/payra-jetty-lighting-2.png",
         alt: "A high-mast flood light lit at dusk over the jetty apron at Payra Port",
         kind: "photograph",
       },
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     status: "Delivered",
     note: "Delivered under a third-party licence.",
     image: {
-      src: "/images/projects/payra-officer-dormitory.jpg",
+      src: "/images/projects/payra-officer-dormitory.png",
       alt: "Architectural render of the officer dormitory at Payra Port",
       kind: "render",
     },
@@ -147,13 +147,13 @@ export const projects: Project[] = [
     division: "electronics",
     status: "Delivered",
     image: {
-      src: "/images/projects/akh-factory-lighting-2.jpg",
+      src: "/images/projects/akh-factory-lighting-2.png",
       alt: "Overhead tube lighting above the sewing lines on the AKH Knitting & Dyeing production floor",
       kind: "photograph",
     },
     gallery: [
       {
-        src: "/images/projects/akh-factory-lighting.jpg",
+        src: "/images/projects/akh-factory-lighting.png",
         alt: "The AKH Knitting & Dyeing factory building",
         kind: "photograph",
       },

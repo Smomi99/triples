@@ -62,6 +62,13 @@ export default function EcosystemOrbit({
           </div>
 
           <div className="orbit3d-plane">
+            {/*
+              In the scene, sharing the cards' 3D space on purpose — the ring
+              weaves in front of the far cards and behind the near ones, which
+              is what sells the depth. It costs the intersection seam where a
+              card crosses the line; that trade was made deliberately. See the
+              note in globals.css before moving these.
+            */}
             <span aria-hidden className="orbit3d-ring hidden md:block" />
             <span aria-hidden className="orbit3d-ring orbit3d-ring--inner hidden md:block" />
 
@@ -92,9 +99,16 @@ export default function EcosystemOrbit({
                         }`}
                       />
                     </span>
+                    {/*
+                      14px, not 15px, and the half-step is doing real work: it
+                      is what keeps "Triple S Business Hub" on two lines with
+                      room to spare rather than by a hair. A third line makes
+                      the card tall enough to hit its neighbours as the ring
+                      turns — see the --node-w note in globals.css.
+                    */}
                     <span
                       className={`block leading-tight tracking-tight ${
-                        compact ? "mt-3 text-[0.9375rem]" : "mt-3.5 text-base"
+                        compact ? "mt-3 text-[0.875rem]" : "mt-3.5 text-base"
                       }`}
                     >
                       {slot.name}

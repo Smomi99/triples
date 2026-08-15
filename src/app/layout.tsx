@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Poppins } from "next/font/google";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -11,15 +11,22 @@ import "./globals.css";
 
 /*
   Two families, both self-hosted by next/font at build time so there is no
-  render-blocking request to a font CDN. Archivo carries the industrial
-  grotesque voice; Plex Mono is reserved for indices, labels and data.
+  render-blocking request to a font CDN. Poppins carries the voice; Plex Mono is
+  reserved for indices, labels and data.
 */
-const archivo = Archivo({
+const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-archivo",
-  // Weight axis only. Shipping the optional `wdth` axis as well cost 88 KB for
-  // a variation the design never uses, and it was the heaviest asset on the page.
+  /*
+    Poppins is not a variable font on Google Fonts, so weights are enumerated
+    and each one is a separate file. Three, because three is what the design
+    uses: 400 for body, 500 for headings and the eyebrow, 600 for buttons and
+    links. `font-synthesis-weight: none` in globals.css means nothing here can
+    be faked, so a weight that is used has to be listed — and one that is not
+    used is pure download.
+  */
+  weight: ["400", "500", "600"],
+  variable: "--font-poppins",
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -71,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     */
     <html
       lang="en"
-      className={`${archivo.variable} ${plexMono.variable}`}
+      className={`${poppins.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>
