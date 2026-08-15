@@ -118,9 +118,53 @@ export const divisions: Division[] = [
     external: { label: "tslebiz.com", href: "https://tslebiz.com" },
   },
   {
+    slug: "business-hub",
+    legacyPath: "/Home/BusinessHub",
+    index: "02",
+    name: "Triple S Business Hub",
+    shortName: "Business Hub",
+    discipline: "Sourcing, procurement & trade",
+    statement: "One vendor between you and a thousand industrial suppliers.",
+    summary:
+      "Procurement and distribution of industrial and commercial spare parts, consumables and equipment — with offices in Dhaka, Guangzhou and California.",
+    body: [
+      "Triple S Business Hub provides procurement and distribution solutions for industrial and commercial spare parts, consumables, equipment and services. Its focus is business-to-business: mechanical, electrical and instrumentation products, safety equipment, chemicals and related industrial supply.",
+      "Offices in Dhaka, Guangzhou and California let the business serve South Asian, North American and international customers from within their own time zones — and put buyers close to the manufacturing base they are sourcing from.",
+      "The name is deliberate. Triple S stands for Smart, Service and Solution, on a foundation the company defines as commitment, communication, response time, reliability and customer retention. For a buyer, the practical effect is fewer vendors to manage and lower purchasing and administration cost.",
+    ],
+    services: [
+      {
+        name: "Government Bids & Tenders",
+        body: "Supply against public tenders as a Government A-Class contractor — pumps, machinery, oil refinery spare parts, marine equipment, electrical poles, transformers and industrial generators.",
+      },
+      {
+        name: "Import & Sourcing",
+        body: "Identifying and qualifying suppliers globally for essential commodities, industrial and construction machinery, chemicals, cosmetics and medical equipment.",
+      },
+      {
+        name: "Export",
+        body: "Bangladeshi jute products, handicrafts, consumer food products and fresh produce into international markets.",
+      },
+      {
+        name: "Indenting",
+        body: "Acting as the local representative for overseas manufacturers selling into Bangladesh.",
+      },
+    ],
+    capabilities: [
+      "Mechanical, electrical and instrumentation supply",
+      "Safety products and industrial chemicals",
+      "Global supplier identification and registration",
+      "Technical evaluation of customer enquiries",
+      "Government A-Class contracting",
+      "Three-office coverage: Dhaka, Guangzhou, California",
+    ],
+    image: "/images/projects/payra-warehouse-racking-2.jpg",
+    imageAlt: "Steel racking bays running the depth of the Payra Port warehouse",
+  },
+  {
     slug: "electronics",
     legacyPath: "/Home/Electronics",
-    index: "02",
+    index: "03",
     name: "Triple S Electronics",
     shortName: "Electronics",
     discipline: "Electrical apparatus manufacturing",
@@ -162,50 +206,6 @@ export const divisions: Division[] = [
     image: "/images/scenes/electronics.png",
     imageAlt:
       "Consumer electronics arranged in front of a container port at dusk, with a cargo ship, gantry cranes and an airliner overhead",
-  },
-  {
-    slug: "business-hub",
-    legacyPath: "/Home/BusinessHub",
-    index: "03",
-    name: "Triple S Business Hub",
-    shortName: "Business Hub",
-    discipline: "Sourcing, procurement & trade",
-    statement: "One vendor between you and a thousand industrial suppliers.",
-    summary:
-      "Procurement and distribution of industrial and commercial spare parts, consumables and equipment — with offices in Dhaka, Guangzhou and California.",
-    body: [
-      "Triple S Business Hub provides procurement and distribution solutions for industrial and commercial spare parts, consumables, equipment and services. Its focus is business-to-business: mechanical, electrical and instrumentation products, safety equipment, chemicals and related industrial supply.",
-      "Offices in Dhaka, Guangzhou and California let the business serve South Asian, North American and international customers from within their own time zones — and put buyers close to the manufacturing base they are sourcing from.",
-      "The name is deliberate. Triple S stands for Smart, Service and Solution, on a foundation the company defines as commitment, communication, response time, reliability and customer retention. For a buyer, the practical effect is fewer vendors to manage and lower purchasing and administration cost.",
-    ],
-    services: [
-      {
-        name: "Government Bids & Tenders",
-        body: "Supply against public tenders as a Government A-Class contractor — pumps, machinery, oil refinery spare parts, marine equipment, electrical poles, transformers and industrial generators.",
-      },
-      {
-        name: "Import & Sourcing",
-        body: "Identifying and qualifying suppliers globally for cosmetics, toiletries, machinery, chemicals and handling equipment.",
-      },
-      {
-        name: "Export",
-        body: "Bangladeshi jute products, food products, fruits, vegetables and handicrafts into international markets.",
-      },
-      {
-        name: "Indenting",
-        body: "Acting as the local representative for overseas manufacturers selling into Bangladesh.",
-      },
-    ],
-    capabilities: [
-      "Mechanical, electrical and instrumentation supply",
-      "Safety products and industrial chemicals",
-      "Global supplier identification and registration",
-      "Technical evaluation of customer enquiries",
-      "Government A-Class contracting",
-      "Three-office coverage: Dhaka, Guangzhou, California",
-    ],
-    image: "/images/projects/payra-warehouse-racking-2.jpg",
-    imageAlt: "Steel racking bays running the depth of the Payra Port warehouse",
   },
   {
     slug: "tech-park",

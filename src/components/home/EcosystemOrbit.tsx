@@ -37,16 +37,18 @@ export default function EcosystemOrbit({
   className?: string;
 }) {
   return (
-    <div className={`reveal ${className}`}>
+    <div className={`reveal orbit3d-shell ${className}`}>
       <div className={`orbit3d-stage ${compact ? "orbit3d-stage--compact" : ""}`}>
         <div className="orbit3d-scene">
-          {/* Upright at the centre of the 3D space, so cards pass behind it. */}
+          {/* Stands in front of the ring in z, so cards pass behind it. */}
           <div className={`orbit3d-core flex justify-center md:mb-0 ${compact ? "mb-8" : "mb-10"}`}>
-            <div
-              className={`orbit3d-mark flex items-center justify-center rounded-full border border-tint-line bg-paper ${
-                compact ? "h-20 w-20 md:h-24 md:w-24" : "h-28 w-28 md:h-36 md:w-36"
-              }`}
-            >
+            <div className="orbit3d-mark flex items-center justify-center rounded-full border border-tint-line bg-paper">
+              {/*
+                Sized in globals.css, not here: above md both the disc and the
+                mark inside it are fractions of --r, and a Tailwind height would
+                outrank that rule's layer. `sizes` stays generous — the mark is
+                also scaled up by perspective at --core-z.
+              */}
               <Image
                 src="/images/brand/triple-s-mark.png"
                 alt="Triple S Group"
@@ -55,7 +57,6 @@ export default function EcosystemOrbit({
                 sizes="(min-width: 768px) 112px, 80px"
                 /* Flat-colour mark — see Logo. */
                 quality={95}
-                className={compact ? "h-11 w-auto md:h-14" : "h-16 w-auto md:h-24"}
               />
             </div>
           </div>
@@ -93,7 +94,7 @@ export default function EcosystemOrbit({
                     </span>
                     <span
                       className={`block leading-tight tracking-tight ${
-                        compact ? "mt-2.5 text-[0.875rem]" : "mt-3.5 text-base"
+                        compact ? "mt-3 text-[0.9375rem]" : "mt-3.5 text-base"
                       }`}
                     >
                       {slot.name}
@@ -116,7 +117,7 @@ export default function EcosystemOrbit({
 
                 /* No backdrop-filter here — inside a preserve-3d subtree it
                    forces a flattening context and collapses the depth. */
-                const shared = `orbit3d-card card-lift block ${compact ? "px-3 py-3" : "px-4 py-4"}`;
+                const shared = `orbit3d-card card-lift block ${compact ? "px-3.5 py-3.5" : "px-4 py-4"}`;
 
                 return (
                   <li

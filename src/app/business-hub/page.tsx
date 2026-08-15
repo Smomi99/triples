@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import DivisionHero from "@/components/division/DivisionHero";
 import CtaSection from "@/components/sections/CtaSection";
@@ -6,8 +7,10 @@ import CrossLinks from "@/components/division/CrossLinks";
 import DeliveredWork from "@/components/division/DeliveredWork";
 import ProcessSteps from "@/components/division/ProcessSteps";
 import SectionIndex from "@/components/ui/SectionIndex";
+import { ArrowUpRight } from "@/components/ui/Icons";
 import { getDivision } from "@/content/divisions";
 import { businessHubDetail, businessHubProcess } from "@/content/division-detail";
+import { directionLabels, tradeExports, tradeImports } from "@/content/trade";
 import { offices } from "@/content/site";
 import { breadcrumbSchema, divisionSchema, jsonLd } from "@/lib/jsonld";
 import { pageMeta } from "@/lib/seo";
@@ -17,10 +20,20 @@ import { pageMeta } from "@/lib/seo";
   opposition: what comes into Bangladesh set against what goes out, either side
   of a centre rule. Government tenders sit beneath as a third, separate band
   because they are a different kind of transaction.
+
+  Each side of that rule is now an index rather than a list of nouns. The ten
+  traded categories have their own pages under this route — see
+  `src/content/trade.ts` — because a buyer sourcing industrial chemicals and a
+  buyer exporting handicrafts share a desk and nothing else.
 */
 
 const division = getDivision("business-hub")!;
-const { acronym, flows, tenders, markets, teams } = businessHubDetail;
+const { acronym, tenders, markets, teams } = businessHubDetail;
+
+const flows = [
+  { key: "import", entries: tradeImports },
+  { key: "export", entries: tradeExports },
+] as const;
 
 const tradeOffices = offices.filter((office) =>
   ["dhaka", "guangzhou", "california"].includes(office.id)
@@ -114,6 +127,11 @@ export default function BusinessHubPage() {
 
             <div>
               <h2 className="display-md reveal max-w-[18ch]">Goods move both ways.</h2>
+              <p className="reveal mt-8 max-w-2xl text-lg leading-relaxed text-mist">
+                Ten categories, and each one is its own trade — different buyers, different
+                documentation, and in the case of the commodities a published specification you can
+                contract against. Every line below opens the page for it.
+              </p>
 
               <div className="relative mt-14 grid gap-12 lg:mt-20 lg:grid-cols-2 lg:gap-20">
                 <span
@@ -121,25 +139,44 @@ export default function BusinessHubPage() {
                   className="absolute inset-y-0 left-1/2 hidden w-px bg-white/15 lg:block"
                 />
 
-                {[flows.inbound, flows.outbound].map((flow, side) => (
-                  <div key={flow.label} className="reveal" style={{ "--reveal-delay": `${side * 110}ms` } as React.CSSProperties}>
+                {flows.map(({ key, entries }, side) => (
+                  <div
+                    key={key}
+                    className="reveal"
+                    style={{ "--reveal-delay": `${side * 110}ms` } as React.CSSProperties}
+                  >
                     <p className="eyebrow flex items-center gap-3 text-brand-400">
                       <span aria-hidden className={side === 0 ? "" : "rotate-180"}>
                         ↓
                       </span>
-                      <span>{flow.label}</span>
+                      <span>{directionLabels[key].label}</span>
                     </p>
 
-                    <p className="mt-5 max-w-sm leading-relaxed text-mist">{flow.note}</p>
+                    <p className="mt-5 max-w-sm leading-relaxed text-mist">
+                      {directionLabels[key].note}
+                    </p>
 
                     <ul className="mt-8 border-t border-white/20">
-                      {flow.items.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-baseline gap-4 border-b border-white/10 py-4"
-                        >
-                          <span aria-hidden className="h-1 w-1 shrink-0 bg-brand-500" />
-                          <span className="text-lg tracking-tight">{item}</span>
+                      {entries.map((entry) => (
+                        <li key={entry.slug}>
+                          <Link
+                            href={`/business-hub/${entry.slug}`}
+                            className="group flex gap-4 border-b border-white/10 py-4 transition-colors duration-300 hover:border-white/40"
+                          >
+                            <span
+                              aria-hidden
+                              className="mt-[0.6875rem] h-1 w-1 shrink-0 bg-brand-500 transition-colors group-hover:bg-brand-400"
+                            />
+                            <span className="min-w-0 flex-1">
+                              <span className="block text-lg leading-snug tracking-tight">
+                                {entry.name}
+                              </span>
+                              <span className="mt-1.5 block text-sm leading-relaxed text-mist">
+                                {entry.discipline}
+                              </span>
+                            </span>
+                            <ArrowUpRight className="mt-1.5 shrink-0 text-mist-dim transition-all duration-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper" />
+                          </Link>
                         </li>
                       ))}
                     </ul>

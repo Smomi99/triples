@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { SITE_URL } from "@/content/site";
 import { divisions } from "@/content/divisions";
+import { tradeCategories } from "@/content/trade";
 
 export const dynamic = "force-static";
 
@@ -15,6 +16,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...divisions.map((division) => ({
       path: `/${division.slug}`,
       priority: 0.9,
+      changeFrequency: "monthly" as const,
+    })),
+    /*
+      The Business Hub trade book. Ranked below the businesses themselves but
+      above the supporting pages: these are the long-tail commercial queries
+      ("ICUMSA 45 supplier Bangladesh", "jute geotextile export"), and each one
+      answers a search the division pages only gesture at.
+    */
+    ...tradeCategories.map((category) => ({
+      path: `/business-hub/${category.slug}`,
+      priority: 0.85,
       changeFrequency: "monthly" as const,
     })),
     { path: "/projects", priority: 0.8, changeFrequency: "monthly" },

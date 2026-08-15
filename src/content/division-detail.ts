@@ -231,18 +231,11 @@ export const businessHubDetail = {
     { letter: "S", word: "Service", body: "Response time the company holds out as among the best in its industry." },
     { letter: "S", word: "Solution", body: "Fewer vendors to manage, and lower purchasing and administration cost." },
   ],
-  flows: {
-    inbound: {
-      label: "Into Bangladesh",
-      note: "Sourced globally, qualified, and delivered against a local requirement.",
-      items: ["Essentinal commodities","Cosmetics", "Toiletries", "Machinery", "Chemicals", "Handling equipment"],
-    },
-    outbound: {
-      label: "Out of Bangladesh",
-      note: "Bangladeshi production placed into international markets.",
-      items: ["Jute products", "Food products", "Fruits", "Vegetables", "Handicrafts"],
-    },
-  },
+  /*
+    The two trade directions used to be listed here as bare nouns. They now live
+    in `trade.ts`, one entry per category with a page behind it — see the header
+    of that file for why, and for what is sourced versus written.
+  */
   tenders: {
     label: "Government bids & tenders",
     note: "Supplied as a Government A-Class contractor.",

@@ -40,8 +40,12 @@ export default function Introduction() {
               than a section away from it. On phones it flattens to a card list
               and goes below the copy — a stack of five cards ahead of the text
               would bury the paragraph that explains it.
+
+              The orbit's track widens above lg and the ring grows into it: --r
+              is a fraction of this column, not of the viewport. It holds at
+              26rem through lg itself, where the copy beside it has none to give.
             */}
-            <div className="mt-14 grid items-center gap-10 lg:mt-20 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-16">
+            <div className="mt-14 grid items-center gap-10 lg:mt-20 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] 2xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)]">
               <EcosystemOrbit compact className="order-2 lg:order-1" />
 
               <div className="order-1 flex flex-col gap-8 lg:order-2">
@@ -86,46 +90,49 @@ export default function Introduction() {
                 </p>
               </div>
             </div>
-
-            {/*
-              Checkable numbers, except the client count, which is the group's
-              own stated figure (see `company.clients`). Still no headcount,
-              revenue or shipment count — the company has never published one.
-
-              Five markers, so all five go in one row from tablet up. At two
-              columns an odd count pushed the fifth onto a third row a screen
-              below the rest, where it sat unrevealed while you were looking at
-              the other Five — it read as missing. Phones keep two columns and
-              give the last cell the full width rather than a half-width gap.
-            */}
-            <dl className="mt-16 grid grid-cols-2 border-t border-line-strong md:grid-cols-5 lg:mt-24">
-              {markers.map((marker, i) => (
-                <div
-                  key={marker.label}
-                  className="reveal flex flex-col border-b border-line py-6 pr-6 last:col-span-2 md:border-b-0 md:border-r md:pl-6 md:first:pl-0 md:last:col-span-1 md:last:border-r-0"
-                  style={{ "--reveal-delay": `${i * 70}ms` } as React.CSSProperties}
-                >
-                  {/* Number above label, with DOM order kept dt-then-dd for semantics. */}
-                  <dt className="eyebrow order-2 mt-3 text-ink-faint">{marker.label}</dt>
-                  <dd className="order-1 font-mono text-4xl tracking-tight lg:text-5xl">
-                    {marker.count ? (
-                      <CountUp
-                        value={marker.value}
-                        suffix={marker.suffix}
-                        className="text-orange-ink"
-                      />
-                    ) : (
-                      <span className="text-navy-900">
-                        {marker.value}
-                        {marker.suffix}
-                      </span>
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
+
+        {/*
+          Checkable numbers, except the client count, which is the group's own
+          stated figure (see `company.clients`). Still no headcount, revenue or
+          shipment count — the company has never published one.
+
+          Deliberately outside the rail rather than in its content column. As a
+          band across the whole section its rule starts where the "01
+          Introduction" rule starts and the first figure sits under the "01" —
+          the two hairlines read as one horizontal, which is the point of the
+          rail device. Indented into the content column it was a third left
+          edge, agreeing with the heading but with nothing else on the page.
+
+          Five markers, so all five go in one row from tablet up. At two columns
+          an odd count pushed the fifth onto a third row a screen below the
+          rest, where it sat unrevealed while you were looking at the other
+          Five — it read as missing. Phones keep two columns and give the last
+          cell the full width rather than a half-width gap.
+        */}
+        <dl className="mt-16 grid grid-cols-2 border-t border-line-strong md:grid-cols-5 lg:mt-24">
+          {markers.map((marker, i) => (
+            <div
+              key={marker.label}
+              className="reveal flex flex-col border-b border-line py-6 pr-6 last:col-span-2 md:border-b-0 md:border-r md:pl-6 md:first:pl-0 md:last:col-span-1 md:last:border-r-0"
+              style={{ "--reveal-delay": `${i * 70}ms` } as React.CSSProperties}
+            >
+              {/* Number above label, with DOM order kept dt-then-dd for semantics. */}
+              <dt className="eyebrow order-2 mt-3 text-ink-faint">{marker.label}</dt>
+              <dd className="order-1 font-mono text-4xl tracking-tight lg:text-5xl">
+                {marker.count ? (
+                  <CountUp value={marker.value} suffix={marker.suffix} className="text-orange-ink" />
+                ) : (
+                  <span className="text-navy-900">
+                    {marker.value}
+                    {marker.suffix}
+                  </span>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

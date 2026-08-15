@@ -517,12 +517,45 @@
     opacity: 1;
   }
 
+  /*
+    The stage is its own query container, so --r below can be a fraction of the
+    column the orbit was handed rather than a fraction of the viewport. Those
+    are only the same number when the grid beside it happens to be the width you
+    assumed — and it isn't, at every breakpoint.
+  */
+  .orbit3d-shell {
+    container-type: inline-size;
+  }
+
+  /*
+    Mark sizing lives here rather than on the element because at md it is
+    derived from --r: the ring is fluid, and a mark pinned to a fixed pixel
+    height inside it stops reading as the centre the five businesses answer to.
+    Tailwind utilities sit in a later layer than @layer components, so an `h-24`
+    on the element would silently win against the calc() further down.
+  */
   .orbit3d-mark {
+    width: 7rem;
+    height: 7rem;
     opacity: 0;
     transform: scale(0.9);
     transition:
       opacity 0.9s var(--ease-out-expo),
       transform 1.2s var(--ease-out-expo);
+  }
+
+  .orbit3d-mark img {
+    width: auto;
+    height: 4rem;
+  }
+
+  .orbit3d-stage--compact .orbit3d-mark {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .orbit3d-stage--compact .orbit3d-mark img {
+    height: 2.75rem;
   }
 
   [data-revealed="true"] .orbit3d-mark {
@@ -536,6 +569,12 @@
       --r: clamp(180px, 30vw, 400px);
       --node-w: clamp(9.5rem, 13vw, 12rem);
       --dur: 64s;
+      /*
+        How far forward of the orbital plane the mark stands. A card's own depth
+        peaks at r·sin(tilt), so anything above that factor puts the mark in
+        front of every card in the ring — see .orbit3d-core.
+      */
+      --core-z: calc(var(--r) * 0.9);
       /*
         Tall enough to hold the near card at full perspective scale. Cards are
         transformed, so they overflow this box rather than being clipped by it —
@@ -559,21 +598,61 @@
     */
     .orbit3d-stage--compact {
       /*
-        The floor matters more than the ceiling. Five cards 72° apart sit
-        2r·sin36° from each other, so a radius under ~120px puts them closer
-        together than a card is wide and they clip through one another.
+        Sized from the column, not the viewport. The orbit is a fixed-fraction
+        figure — two radii and a card span its full width — so 33cqw and 26cqw
+        add up to 92% of whatever it is given and it can never outgrow the
+        track. The floor still matters more than the ceiling: five cards 72°
+        apart sit 2r·sin36° from each other, and a radius under ~120px puts
+        them closer together than a card is wide.
       */
-      --r: clamp(124px, 13vw, 134px);
-      --node-w: clamp(6rem, 7vw, 7.5rem);
+      --r: clamp(120px, 33cqw, 178px);
+      --node-w: clamp(6.5rem, 26cqw, 8.75rem);
+      /*
+        Shallower than the section-scale ring, and this is what stopped the mark
+        being swallowed. The clearance between a card and the mark is the
+        ellipse's minor axis, r·cos(tilt); at 56° that was about 75px — less
+        than the mark's radius plus half a card, so the two cards crossing top
+        and bottom sat squarely over the logo twice a revolution. 40° opens the
+        ellipse out far enough that neither of them reaches it.
+      */
+      --tilt: 40deg;
+      --core-z: calc(var(--r) * 0.72);
       --dur: 46s;
-      height: clamp(300px, 24vw, 350px);
+      /* The near card's full extent: r·cos(tilt) each side of centre, plus a card. */
+      height: calc(var(--r) * 1.55 + 7.5rem);
       /*
         Still a long lens relative to --r. Scaling 1900px down proportionally
         put it near 800px, which blew the near card up to 1.7x its own width —
         wider than the column holding it. Depth is worth less here than a ring
         whose cards all stay roughly the size they were authored at.
       */
-      perspective: 1500px;
+      perspective: 1700px;
+    }
+
+    .orbit3d-mark {
+      width: 9rem;
+      height: 9rem;
+    }
+
+    .orbit3d-mark img {
+      height: 6rem;
+    }
+
+    /*
+      0.62 is the largest the disc goes before it starts eating the cards. The
+      binding case is the two cards on the diagonals, not the ones crossing top
+      and bottom: --core-z has already scaled the mark up by ~1.08, and past
+      this factor its rim reaches their inner corners. Cards do pass behind it
+      by a few pixels at the narrowest column — which is the right way round,
+      and the reason the mark is in front rather than in the plane.
+    */
+    .orbit3d-stage--compact .orbit3d-mark {
+      width: calc(var(--r) * 0.62);
+      height: calc(var(--r) * 0.62);
+    }
+
+    .orbit3d-stage--compact .orbit3d-mark img {
+      height: calc(var(--r) * 0.355);
     }
 
     .orbit3d-scene {
@@ -651,11 +730,24 @@
       animation-play-state: paused;
     }
 
+    /*
+      The mark stands forward of the orbital plane, not on it.
+
+      Left at z = 0 it shared the plane's depth, so every card crossing the near
+      half of the ring passed genuinely in front of it — correct 3D, but what it
+      read as was the logo blinking out twice a revolution. --core-z clears the
+      deepest a card ever gets (r·sin(tilt)), so cards only ever pass *behind*
+      the mark. That is the reading the ring wanted anyway: five businesses
+      going round one centre, with the centre never out of sight.
+
+      Both planes face the camera, so there is nothing for the compositor to
+      intersect — the sort is unambiguous at every angle.
+    */
     .orbit3d-core {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) translateZ(var(--core-z));
     }
 
     /* Only turn once the section has actually been seen. */
