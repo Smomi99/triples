@@ -131,7 +131,7 @@ const projects = [
   ["jetty-light1.jpg", "projects/payra-jetty-lighting-2.png"],
   ["street-light.jpg", "projects/payra-street-lighting.jpg"],
   ["street-light1.jpg", "projects/payra-street-lighting-2.jpg"],
-  ["building.jpg", "projects/payra-multipurpose-building.jpg"],
+  ["building.jpg", "projects/payra-multipurpose-building.png"],
   ["dormitory.png", "projects/payra-officer-dormitory.png"],
   ["rack.jpg", "projects/payra-warehouse-racking.jpg"],
   ["rack1.jpg", "projects/payra-warehouse-racking-2.jpg"],

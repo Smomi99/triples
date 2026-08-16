@@ -108,7 +108,7 @@ export const projects: Project[] = [
     status: "Delivered",
     note: "Delivered as a joint venture project.",
     image: {
-      src: "/images/projects/payra-multipurpose-building.jpg",
+      src: "/images/projects/payra-multipurpose-building.png",
       alt: "Architectural render of the multipurpose building at Payra Port",
       kind: "render",
     },
